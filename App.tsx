@@ -20,18 +20,13 @@ const theme = {
 
 Sentry.init({
     dsn: 'https://96c17a35888775dcde4a9fcbb055eb66@o4506316960038912.ingest.us.sentry.io/4507926617456640',
-    // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
-    // We recommend adjusting this value in production.
     tracesSampleRate: 1.0,
     _experiments: {
-        // profilesSampleRate is relative to tracesSampleRate.
-        // Here, we'll capture profiles for 100% of transactions.
         profilesSampleRate: 1.0,
     },
 });
 
 const App: FC = () => {
-
     return (
         <StoreProvider store={store}>
             <PersistGate loading={null} persistor={persistor}>
