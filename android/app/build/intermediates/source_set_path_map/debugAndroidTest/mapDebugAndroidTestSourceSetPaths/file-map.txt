@@ -1,4 +1,0 @@
-com.nidlefinishing.test.app-androidTest-0 /Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/android/app/build/generated/res/resValues/androidTest/debug
-com.nidlefinishing.test.app-mergeDebugAndroidTestResources-1 /Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/android/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
-com.nidlefinishing.test.app-mergeDebugAndroidTestResources-2 /Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/android/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
-com.nidlefinishing.test.app-debugAndroidTest-3 /Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/android/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources
