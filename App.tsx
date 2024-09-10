@@ -19,11 +19,15 @@ const theme = {
 };
 
 Sentry.init({
-    dsn: 'https://c2a97730d96c05c0a4a86ac98197deab@o4506316960038912.ingest.us.sentry.io/4507920948527104',
+    dsn: "https://96c17a35888775dcde4a9fcbb055eb66@o4506316960038912.ingest.us.sentry.io/4507926617456640",
+    // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+    // We recommend adjusting this value in production.
     tracesSampleRate: 1.0,
     _experiments: {
-        profilesSampleRate: 1.0
-    }
+        // profilesSampleRate is relative to tracesSampleRate.
+        // Here, we'll capture profiles for 100% of transactions.
+        profilesSampleRate: 1.0,
+    },
 });
 
 const App: FC = () => {
