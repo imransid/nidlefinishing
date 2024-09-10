@@ -6,6 +6,6 @@ module.exports = {
     'jira-task-id-max-length': [2, 'always', 30],
     'jira-task-id-case': [2, 'always', 'uppercase'],
     'jira-task-id-separator': [2, 'always', '-'],
-    'jira-task-id-project-key': [2, 'always', 'nidleFinsh'],
+    'jira-task-id-project-key': [2, 'always', 'finish'],
   },
 };
