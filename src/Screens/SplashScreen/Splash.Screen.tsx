@@ -1,54 +1,26 @@
-import React, { type FC } from 'react';
-import { SafeAreaView, View } from 'react-native';
-import Animated, {
-  Easing,
-  FadeInUp,
-  FadeOut,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from 'react-native-reanimated';
+import React, { type FC, useEffect, useRef } from 'react';
+import { View } from 'react-native';
+import { LANDSCAPE, OrientationLocker } from 'react-native-orientation-locker';
+import LottieView from 'lottie-react-native';
 
-import TeamPharmaLogo from '../../assets/team-pharma-logo';
-
-import styles from './style';
-
-const duration = 2000;
-const easing = Easing.bezier(0.25, -0.5, 0.25, 1);
-
+import Styles from './Styles';
 const SplashScreen: FC = () => {
-  const sv = useSharedValue(0);
-  const scale = useSharedValue(1);
+  const animationRef = useRef<LottieView>(null);
 
-  const scaleStyles = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }]
-  }));
-
-  React.useEffect(() => {
-    scale.value = withTiming(scale.value * 3, { duration: 1000 });
-    sv.value = withTiming(1, { duration, easing });
+  useEffect(() => {
+    animationRef.current?.play();
   }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Animated.View style={[styles.imageContainer, scaleStyles]}>
-          <TeamPharmaLogo />
-        </Animated.View>
-      </View>
-      <View style={styles.textContainer}>
-        <Animated.Text entering={FadeInUp.delay(1000)} exiting={FadeOut} style={styles.appTypeText}>
-          Medicine Reminder App
-        </Animated.Text>
-        <Animated.Text
-          entering={FadeInUp.delay(1000)}
-          exiting={FadeOut}
-          style={styles.appDeveloperNameText}>
-          Developed by Intellier Ltd.
-        </Animated.Text>
-      </View>
-    </SafeAreaView>
+    <View style={Styles.container}>
+      <OrientationLocker orientation={LANDSCAPE} />
+      <LottieView
+        speed={0.4}
+        loop={false}
+        style={Styles.nidleLogo}
+        ref={animationRef}
+        source={require('../../assets/logo-splash-animation.json')}
+      />
+    </View>
   );
 };
-
 export default SplashScreen;

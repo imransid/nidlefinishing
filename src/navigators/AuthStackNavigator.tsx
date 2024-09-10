@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Login } from '@/Screens/Login';
 
-import { Login } from '../Screens';
 const Stack = createStackNavigator();
 
-const AuthStackNav: any = () => {
+function AuthStackNav(): JSX.Element  {
   return (
     <Stack.Navigator
+    initialRouteName={'Login'}
       screenOptions={{
-        headerShown: true
+        headerShown: false
       }}>
       <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>

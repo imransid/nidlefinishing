@@ -1,8 +1,6 @@
-import React, { type FC } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import DrawerNavigator from './DrawerNavigator';
-import PublickStackNavigator from './PublicStackNavigator';
+import React, {type FC} from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import QCLaunchPad from '@/Screens/QCLauchPad/QCLaunchPad.screen';
 
 const Stack = createStackNavigator();
 
@@ -10,11 +8,10 @@ const AppStackNavigator: FC = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Public"
-        component={PublickStackNavigator}
-        options={{ headerShown: false }}
+        name={'QCLaunchPad'}
+        component={QCLaunchPad}
+        options={{headerShown: false}}
       />
-      <Stack.Screen name="MainTabs" component={DrawerNavigator} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
