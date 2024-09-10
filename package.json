@@ -17,7 +17,7 @@
     "format": "prettier --check './src/**/*.{ts,tsx,js,jsx}'",
     "format:fix": "prettier --write './src/**/*.{ts,tsx,js,jsx}'",
     "rename": "react-native-rename",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
@@ -79,7 +79,7 @@
     "@babel/runtime": "^7.20.0",
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.7",
-    "@react-native/eslint-config": "0.74.85",
+    "@react-native/eslint-config": "^0.75.2",
     "@react-native/metro-config": "0.74.85",
     "@react-native/typescript-config": "0.74.85",
     "@tsconfig/react-native": "^3.0.0",
@@ -97,6 +97,7 @@
     "eslint-config-standard-with-typescript": "^37.0.0",
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jest": "^28.8.3",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0",
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-promise": "^6.0.0",
