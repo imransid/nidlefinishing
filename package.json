@@ -17,7 +17,8 @@
     "format": "prettier --check './src/**/*.{ts,tsx,js,jsx}'",
     "format:fix": "prettier --write './src/**/*.{ts,tsx,js,jsx}'",
     "rename": "react-native-rename",
-    "prepare": "husky"
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
