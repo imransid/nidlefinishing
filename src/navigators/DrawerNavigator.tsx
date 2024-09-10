@@ -61,12 +61,12 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = (
       <LinearGradient colors={['#47B5FF', '#B09EFF']}>
         <View style={Styles.header}>
           <CustomTextItem
-            txt={userName !== undefined ? userName : ''}
+            txt="Lionel Messi"
             color="white"
             variant="titleMedium"
           />
           <CustomTextItem
-            txt={userEmail !== undefined ? userEmail : ''}
+            txt="admin@gmail.com"
             color="white"
             variant="titleSmall"
           />

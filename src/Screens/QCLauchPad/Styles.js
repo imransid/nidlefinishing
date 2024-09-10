@@ -14,7 +14,12 @@ const Styles = ScaledSheet.create({
     alignSelf: 'flex-start',
     position: 'absolute',
     left: scale(30),
-    top: verticalScale(15)
+    top: verticalScale(15),
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  nidleBlueLogo: {
+    marginStart: 10
   },
   linearGradientStyle: {
     borderBottomLeftRadius: scale(20),

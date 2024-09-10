@@ -20,10 +20,10 @@ const QCLaunchPad: FC = ({ navigation }) => {
   const qualityType = [
     {
       id: 1,
-      name: 'Receive',
+      name: 'Finishing Receive',
       workProcess: {
         id: 1,
-        name: 'Table'
+        name: 'Click to select'
       }
     }
   ];
@@ -62,10 +62,15 @@ const QCLaunchPad: FC = ({ navigation }) => {
   return (
     <View style={Styles.container}>
       <OrientationLocker orientation={LANDSCAPE} />
-      <LinearGradient colors={['#47B5FF', '#B09EFF']} style={Styles.linearGradientStyle}>
+      <LinearGradient colors={['#fff', '#fff']} style={Styles.linearGradientStyle}>
         <TouchableOpacity style={Styles.drawerBtn} onPress={() => navigation.openDrawer()}>
-          <Icon name="bars" size={25} color="#fff" />
+          <Icon name="bars" size={25} color="#1C98D8" />
+          <Image
+            style={Styles.nidleBlueLogo}
+            source={require('../../assets/images/nidle-logo-blue.png')}
+          />
         </TouchableOpacity>
+
         <View style={Styles.header}>
           <Text style={Styles.qualityTypeText}>Process Selection Pad</Text>
         </View>
