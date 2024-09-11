@@ -20,8 +20,12 @@ const FinishingReceiveScreen: FC = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        <View style={Styles.header}>
-          <Text style={Styles.qualityTypeText}>Process Selection Pad</Text>
+        <View style={Styles.userIcon}>
+          <View style={Styles.userIconTextContainer}>
+            <Text style={Styles.userIconsOrgText}>FINISHING ORG</Text>
+            <Text style={Styles.userIconProcessText}>PROCESS NAME</Text>
+          </View>
+          <Image style={Styles.nidleBlueLogo} source={require('../../assets/icons/userIcon.png')} />
         </View>
       </LinearGradient>
     </View>

@@ -33,6 +33,9 @@ const FinishingReceivePad: FC = ({ navigation }) => {
       return (
         <View style={Styles.launchPadContainer} key={index}>
           <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('SetLineProcess' as never);
+            }}
             style={[
               Styles.QualityTypBtn,
               index === 0 ? Styles.BgOne : null,

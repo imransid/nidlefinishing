@@ -1,12 +1,38 @@
 import React, { type FC } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import TreeView from 'react-native-animated-tree-view';
 import LinearGradient from 'react-native-linear-gradient';
 import { LANDSCAPE, OrientationLocker } from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import useBackButtonHandler from '@/utils/useBackButtonHandler';
 import Styles from './Styles';
-
+const data = [
+  {
+    name: 'Cheese',
+    value: 'cheese-value',
+    items: [
+      {
+        name: 'Spicy',
+        value: 'spicy-value'
+      },
+      {
+        name: 'Cheese',
+        value: 'cheese-value',
+        items: [
+          {
+            name: 'Spicy',
+            value: 'spicy-value'
+          },
+          {
+            name: 'Spicy',
+            value: 'spicy-value'
+          }
+        ]
+      }
+    ]
+  }
+];
 const SetLineProcessScreen: FC = ({ navigation }) => {
   return (
     <View style={Styles.container}>
@@ -20,10 +46,20 @@ const SetLineProcessScreen: FC = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        <View style={Styles.header}>
-          <Text style={Styles.qualityTypeText}>Process Selection Pad</Text>
+        <View style={Styles.userIcon}>
+          <View style={Styles.userIconTextContainer}>
+            <Text style={Styles.userIconsOrgText}>FINISHING ORG</Text>
+            <Text style={Styles.userIconProcessText}>PROCESS NAME</Text>
+          </View>
+          <Image style={Styles.nidleBlueLogo} source={require('../../assets/icons/userIcon.png')} />
         </View>
       </LinearGradient>
+      <View
+        style={{ flex: 1, alignContent: 'center', alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ height: '50%', width: '50%' }}>
+          <TreeView data={data} />
+        </View>
+      </View>
     </View>
   );
 };

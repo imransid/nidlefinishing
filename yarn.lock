@@ -10353,6 +10353,7 @@ __metadata:
     react: 18.3.1
     react-hook-form: ^7.53.0
     react-native: 0.75.2
+    react-native-animated-tree-view: ^0.1.4
     react-native-calendars: ^1.1306.0
     react-native-config: ^1.5.3
     react-native-date-picker: ^5.0.4
@@ -11248,6 +11249,13 @@ __metadata:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
+"react-native-animated-tree-view@npm:^0.1.4":
+  version: 0.1.4
+  resolution: "react-native-animated-tree-view@npm:0.1.4"
+  checksum: cdf0d1f28b532ea94c277232f064633d413d1f9eddbb2698730706b3bbc54f2c486ad05d107c37c8da51747a02c79feacc52f1cd099f3f46bbb71a561b8b9e0d
   languageName: node
   linkType: hard
 

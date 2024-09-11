@@ -14,18 +14,21 @@ const Styles = ScaledSheet.create({
     alignSelf: 'flex-start',
     position: 'absolute',
     left: scale(20),
-    top: verticalScale(15),
+    top: verticalScale(10),
     flexDirection: 'row',
     alignItems: 'center'
   },
   nidleBlueLogo: {
-    marginStart: 15
+    marginStart: 10
   },
   linearGradientStyle: {
     borderBottomLeftRadius: scale(20),
     borderBottomRightRadius: scale(20),
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    height: verticalScale(40),
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
   backgroundImageStyle: {
     flex: 1,
@@ -37,6 +40,10 @@ const Styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  userIcon: { flexDirection: 'row', alignItems: 'center', right: 20 },
+  userIconTextContainer: { flexDirection: 'column' },
+  userIconsOrgText: { color: '#222222', fontSize: 14, fontWeight: '600' },
+  userIconProcessText: { color: '#5E5E66', fontSize: 12, fontWeight: '600' },
   centerStyle: {
     flexDirection: 'column',
     justifyContent: 'center',
