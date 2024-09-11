@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 const AppStackNavigator: FC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="FinishingReceive">
       <Stack.Screen
         name={'FinishingReceivePad'}
         component={FinishingReceivePad}

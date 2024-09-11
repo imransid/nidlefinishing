@@ -111,6 +111,7 @@ const DrawerNavigator: FC = () => {
   return (
     <Drawer.Navigator
       initialRouteName="AppStackNavigator"
+screenOptions={{headerShown:true, headerStyle: {backgroundColor: '#fff'}, headerTintColor: '#000', headerTitleStyle: {color: '#000'}}}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         name="AppStackNavigator"

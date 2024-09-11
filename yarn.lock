@@ -10364,6 +10364,7 @@ __metadata:
     react-native-linear-gradient: ^2.8.3
     react-native-loading-spinner-overlay: ^3.0.1
     react-native-orientation-locker: ^1.7.0
+    react-native-pager-view: ^6.4.1
     react-native-paper: ^5.12.5
     react-native-permissions: ^4.1.5
     react-native-picker-weekday: ^1.1.2
@@ -10375,6 +10376,7 @@ __metadata:
     react-native-splash-screen: ^3.3.0
     react-native-svg: ^15.4.0
     react-native-svg-transformer: ^1.5.0
+    react-native-tab-view: ^3.5.2
     react-native-vector-icons: ^10.1.0
     react-native-vision-camera: ^4.5.1
     react-native-wheel-scrollview-picker: ^2.0.4
@@ -11380,6 +11382,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-pager-view@npm:^6.4.1":
+  version: 6.4.1
+  resolution: "react-native-pager-view@npm:6.4.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 558f08efccf748eed91a2a88be4f90e49e2b63a28c1b9db5de9711eb324a75e9565a3dbf92c523a623a2c7d5a7e0d8a0db88599bc85d33158544a7d0e724319e
+  languageName: node
+  linkType: hard
+
 "react-native-paper@npm:^5.12.5":
   version: 5.12.5
   resolution: "react-native-paper@npm:5.12.5"
@@ -11528,6 +11540,19 @@ __metadata:
   version: 1.0.5
   resolution: "react-native-swipe-gestures@npm:1.0.5"
   checksum: d637bc40baa50fa0ce3b6cf2b494efeceaea03cc3875cb7cf7d76922914a21d5e6b098d4a084fb291ce61bfbb0a241c03cff24b15bebf0cfae1c146f4ad10d92
+  languageName: node
+  linkType: hard
+
+"react-native-tab-view@npm:^3.5.2":
+  version: 3.5.2
+  resolution: "react-native-tab-view@npm:3.5.2"
+  dependencies:
+    use-latest-callback: ^0.1.5
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-pager-view: "*"
+  checksum: bd287e5543881aa662ee55418a3bd5dacb25033425a9fcb0fff21c3a3b96f956af1a77cd9bab4e7a8e94590080a5d8e3cb99cfa8613b19bf6da24bfc9b4942d4
   languageName: node
   linkType: hard
 
