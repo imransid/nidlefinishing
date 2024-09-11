@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { NidleLogo } from '@/assets';
 import { type RootState } from '@/store';
-import { getAppVersionName } from '@/utils/core';
 import { mobileSignInFormValidation } from '@/utils/formValidation';
 import useNetworkStatus from '@/utils/networkUtills';
 import ToastPopUp from '@/utils/Toast.android';
@@ -65,8 +64,8 @@ const Login: FC = () => {
         <View style={styles.subContainer}>
           <NidleLogo style={styles.nidleLogo} />
           <View style={styles.appNameContainer}>
-            <Text style={styles.appNameTxt}>QMS App</Text>
-            <Text style={styles.versionTxt}>Version : {` ${getAppVersionName()}`}</Text>
+            <Text style={styles.appNameTxt}>Finishing App</Text>
+            {/* <Text style={styles.versionTxt}>Version : {` ${getAppVersionName()}`}</Text> */}
           </View>
           <View>
             <Controller

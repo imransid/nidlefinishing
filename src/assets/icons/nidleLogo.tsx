@@ -7,7 +7,7 @@ const SvgComponent = (props: SvgProps) => {
 
   // Calculate the responsive width and height based on the screen width
   const responsiveWidth = moderateScale(200, 0.0);
-  const responsiveHeight = verticalScale(80);
+  const responsiveHeight = verticalScale(70);
 
   return (
   <Svg
