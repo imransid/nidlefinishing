@@ -13,13 +13,13 @@ const Styles = ScaledSheet.create({
   drawerBtn: {
     alignSelf: 'flex-start',
     position: 'absolute',
-    left: scale(30),
+    left: scale(20),
     top: verticalScale(15),
     flexDirection: 'row',
     alignItems: 'center'
   },
   nidleBlueLogo: {
-    marginStart: 10
+    marginStart: 15
   },
   linearGradientStyle: {
     borderBottomLeftRadius: scale(20),
