@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import { moderateScale, scale, ScaledSheet } from 'react-native-size-matters';
+import { moderateScale, scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
 
 import { colors } from '../../theme/colors';
 
@@ -10,9 +10,9 @@ const Styles = ScaledSheet.create({
     backgroundColor: colors.white,
     flex: 1
   },
-  subContainer: { alignSelf: 'center', marginTop: '3%', justifyContent: 'center' },
+  subContainer: { alignSelf: 'center', justifyContent: 'center', flex: 1 },
   nidleLogo: { alignSelf: 'center' },
-  appNameContainer: { marginBottom: 0 },
+  appNameContainer: { marginBottom: verticalScale(10) },
   appNameTxt: { fontSize: moderateScale(25), color: '#525252', textAlign: 'center' },
   versionTxt: {
     textAlign: 'center',

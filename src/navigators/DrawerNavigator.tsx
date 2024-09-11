@@ -23,7 +23,7 @@ import AppStackNavigator from './AppStackNavigator';
 import Styles from './Styles';
 import {scale} from 'react-native-size-matters';
 import CustomTextItem from '@/Components/TextItem';
-import QCLaunchPad from '@/Screens/QCLauchPad/QCLaunchPad.screen';
+import FinishingReceivePad from '@/Screens/FinishingReceivePad/FinishingReceivePad.screen';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 const CustomDrawerContent: FC<DrawerContentComponentProps> = (
@@ -86,7 +86,7 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = (
           }}
           label="Home"
           onPress={() => {
-            props.navigation.navigate('QCLaunchPad');
+            props.navigation.navigate('FinishingReceivePad');
           }}
         />
         {/* <Divider /> */}
@@ -118,8 +118,8 @@ const DrawerNavigator: FC = () => {
         options={{headerShown: false}}
       />
       <Drawer.Screen
-        name="QCLaunchPad"
-        component={QCLaunchPad}
+        name="FinishingReceivePad"
+        component={FinishingReceivePad}
         options={{headerShown: false}}
       />
     </Drawer.Navigator>
