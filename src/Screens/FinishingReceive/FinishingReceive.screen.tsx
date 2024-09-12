@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import ReceiveTab from '../../Components/ReceiveTab/ReceiveTab';
 
 import Styles from './Styles';
+import AlterResendTab from '@/Components/AlterResendTab/AlterResendTab';
+import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
 
 // Define the routes' components
 const FirstRoute: React.FC = () => {
@@ -19,8 +21,8 @@ const FirstRoute: React.FC = () => {
 };
 const SecondRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#673ab7' }]} />;
 const ThirdRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#b78f3a' }]} />;
-const FourthRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#650c83' }]} />;
-const FifthRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#058b43' }]} />;
+const FourthRoute: React.FC = () => <AlterResendTab/>;
+const FifthRoute: React.FC = () => <TodaySummaryTab/>;
 
 const FinishingReceiveScreen = () => {
   const navigation = useNavigation();

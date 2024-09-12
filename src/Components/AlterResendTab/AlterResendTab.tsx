@@ -1,9 +1,9 @@
-import React, { type FC } from 'react';
-import { Text, TouchableOpacity, View, FlatList } from 'react-native';
+import React, {type FC} from 'react';
+import {Text, TouchableOpacity, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
 
-const ReceiveTab: FC = () => {
+const AlterResendTab: FC = () => {
   const testData = [
     {
       color: 'White',
@@ -25,7 +25,7 @@ const ReceiveTab: FC = () => {
     },
   ];
 
-  const renderItem = ({ item }: { item: number }) => (
+  const renderItem = ({item}: {item: number}) => (
     <DataTableComponent
       buyer="Buyer"
       buyerName="Brothers Fashion Ltd."
@@ -48,9 +48,9 @@ const ReceiveTab: FC = () => {
   );
 
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
+    <View style={{backgroundColor: 'white', flex: 1}}>
       <FlatList
-      style={{marginBottom:100}}
+        style={{marginBottom: 100}}
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
@@ -66,13 +66,14 @@ const ReceiveTab: FC = () => {
           height: 50,
           backgroundColor: '#3C4FE9',
           flexDirection: 'row',
-        }}
-      >
-        <Icon name='tencent-weibo' size={20} color={'white'} />
-        <Text style={{ color: 'white', marginStart:10 }}>CONFIRM RECEIVE</Text>
+        }}>
+        <Icon name="send" size={20} color={'white'} />
+        <Text style={{color: 'white', marginStart: 10}}>
+          CONFIRM FINISHING ALTER RECEIVE
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default ReceiveTab;
+export default AlterResendTab;
