@@ -43,6 +43,9 @@ const FinishingReceiveScreen = () => {
 
   const renderTabBar = props => (
     <TabBar
+      indicatorContainerStyle={Styles.indicatorStyle}
+      // tabStyle={Styles.tabStyle2}
+      tabStyle={Styles.tabStyle2}
       {...props}
       renderIcon={({ route, focused, color }) => (
         <View style={Styles.tabIconContainer}>
@@ -50,11 +53,11 @@ const FinishingReceiveScreen = () => {
         </View>
       )}
       renderLabel={({ route, focused }) => (
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={Styles.tabLabelContainer}>
           <Text style={[Styles.label, focused && Styles.focusedLabel]}>{route.title}</Text>
-          {route.count && (
+          {route?.count && (
             <View style={Styles.counter}>
-              <Text style={Styles.counterText}>{route.count}</Text>
+              <Text style={Styles.counterText}>{route?.count}</Text>
             </View>
           )}
         </View>
@@ -90,7 +93,7 @@ const FinishingReceiveScreen = () => {
         onIndexChange={setIndex}
         initialLayout={{ width: Dimensions.get('window').width }}
         renderTabBar={renderTabBar}
-        style={{ margin: 20, borderRadius: 20 }}
+        style={Styles.TabStyle}
         swipeEnabled={true}
       />
     </>

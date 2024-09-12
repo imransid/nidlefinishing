@@ -184,6 +184,17 @@ const Styles = ScaledSheet.create({
     // flexDirection: 'row',
     // position: 'relative'
     flexDirection: 'row'
+  },
+  TabStyle: { margin: 20, borderRadius: 20 },
+  tabStyle2: {
+    flexDirection: 'row',
+    gap: 5
+  },
+  indicatorStyle: { backgroundColor: '#F3F3F3' },
+  tabLabelContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
