@@ -298,7 +298,7 @@ const TodaySummaryTab: FC = () => {
         </DataTable.Header>
 
         <FlatList
-        style={{marginBottom:100}}
+        style={{marginBottom:50}}
           data={testData}
           renderItem={renderItem}
           keyExtractor={(_, index) => index.toString()}
