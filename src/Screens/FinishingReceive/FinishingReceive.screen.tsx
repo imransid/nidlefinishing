@@ -10,6 +10,7 @@ import ReceiveTab from '../../Components/ReceiveTab/ReceiveTab';
 import Styles from './Styles';
 import AlterResendTab from '@/Components/AlterResendTab/AlterResendTab';
 import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
+import PendingTab from '@/Components/PendingTab/PendingTab';
 
 // Define the routes' components
 const FirstRoute: React.FC = () => {
@@ -19,7 +20,7 @@ const FirstRoute: React.FC = () => {
     </>
   );
 };
-const SecondRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#673ab7' }]} />;
+const SecondRoute: React.FC = () => <PendingTab/>;
 const ThirdRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#b78f3a' }]} />;
 const FourthRoute: React.FC = () => <AlterResendTab/>;
 const FifthRoute: React.FC = () => <TodaySummaryTab/>;
