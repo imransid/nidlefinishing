@@ -72,6 +72,30 @@
         }
       }
     },
+    "@react-native-community/checkbox": {
+      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-community\\checkbox",
+      "name": "@react-native-community/checkbox",
+      "platforms": {
+        "ios": {
+          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-community\\checkbox\\RNCCheckbox.podspec",
+          "version": "0.5.17",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-community\\checkbox\\android",
+          "packageImportPath": "import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;",
+          "packageInstance": "new ReactCheckBoxPackage()",
+          "buildTypes": [],
+          "componentDescriptors": [],
+          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/@react-native-community/checkbox/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
     "@react-native-community/netinfo": {
       "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-community/netinfo",
       "name": "@react-native-community/netinfo",
