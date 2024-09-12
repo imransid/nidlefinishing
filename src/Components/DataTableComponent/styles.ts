@@ -5,14 +5,15 @@ const Styles = StyleSheet.create({
   columnName: {
     color: '#4B4F61',
     fontSize: moderateScale(10),
-    fontWeight: '800'
+    fontWeight: 'bold',
   },
   container: {
     backgroundColor: '#F9F8FB',
     borderRadius: scale(3),
-    borderWidth: scale(0.15),
-    marginTop: verticalScale(10),
-    margin: scale(10),
+    borderWidth: 1,
+    borderColor:'#E3E1F0',
+    marginHorizontal: scale(10),
+    marginTop: verticalScale(8),
     padding: verticalScale(10)
   },
   header: {
@@ -27,23 +28,21 @@ const Styles = StyleSheet.create({
   },
   subHeaderText: {
     color: '#765492',
-    fontSize: moderateScale(12),
-    fontWeight: '800'
+    fontSize: moderateScale(11),
+    fontWeight: 'bold'
   },
   tableFooter: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 16
-  },
-  tableFooterText: {
-    color: '#765492',
-    fontSize: 16
+    justifyContent: 'space-between',
+    marginTop: 16,
+    borderTopWidth: 1,
+    borderColor: '#E3E1F0',
+    marginHorizontal:scale(8),
   },
   tableFooterValue: {
     color: '#765492',
-    fontSize: 16,
+    fontSize: moderateScale(11),
     fontWeight: 'bold',
-    marginLeft: 8
   },
   textInput: {
     borderColor: '#ddd',
