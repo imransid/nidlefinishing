@@ -1,4 +1,6 @@
-import React, {FC, useState} from 'react';
+import React, { type FC } from 'react';
+import { View } from 'react-native';
+
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
 
 const ReceiveTab: FC = () => {
@@ -10,7 +12,7 @@ const ReceiveTab: FC = () => {
       qcQty: 900,
       totalReceive: 500,
       balanceQty: 500,
-      receiveQty: 0,
+      receiveQty: 0
     },
     {
       color: 'Black',
@@ -19,11 +21,11 @@ const ReceiveTab: FC = () => {
       qcQty: 1900,
       totalReceive: 1000,
       balanceQty: 1000,
-      receiveQty: 0,
-    },
+      receiveQty: 0
+    }
   ];
   return (
-    <>
+    <View style={{ backgroundColor: 'white' }}>
       <DataTableComponent
         buyer="Buyer"
         buyerName="Brothers Fashion Ltd."
@@ -39,11 +41,11 @@ const ReceiveTab: FC = () => {
           'QC Qty.',
           'Total Receive',
           'Balance Qty.',
-          'Receive Qty.',
+          'Receive Qty.'
         ]}
         rowData={testData}
       />
-    </>
+    </View>
   );
 };
 

@@ -1,58 +1,60 @@
-import {StyleSheet} from 'react-native';
-import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import { StyleSheet } from 'react-native';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const Styles = StyleSheet.create({
+  columnName: {
+    color: '#4B4F61',
+    fontSize: moderateScale(10),
+    fontWeight: '800'
+  },
   container: {
-    borderWidth: scale(0.15),
+    backgroundColor: '#F9F8FB',
     borderRadius: scale(3),
-    padding: verticalScale(10),
+    borderWidth: scale(0.15),
     marginTop: verticalScale(10),
+    margin: scale(10),
+    padding: verticalScale(10)
   },
   header: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginBottom: verticalScale(4),
+    marginBottom: verticalScale(4)
   },
   headerText: {
-    fontSize: moderateScale(10),
-    fontWeight: '600',
     color: '#9B97C0',
+    fontSize: moderateScale(10),
+    fontWeight: '600'
   },
   subHeaderText: {
-    fontSize: moderateScale(12),
     color: '#765492',
-    fontWeight: '800',
-  },
-  columnName: {
-    fontSize: moderateScale(10),
-    fontWeight: '800',
-    color: '#4B4F61',
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    width: 100,
-    height: 35,
-    paddingHorizontal: 5,
-    marginLeft: 110,
-    color: 'black',
+    fontSize: moderateScale(12),
+    fontWeight: '800'
   },
   tableFooter: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 16,
+    marginTop: 16
   },
   tableFooterText: {
-    fontSize: 16,
     color: '#765492',
+    fontSize: 16
   },
   tableFooterValue: {
+    color: '#765492',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#765492',
-    marginLeft: 8,
+    marginLeft: 8
   },
+  textInput: {
+    borderColor: '#ddd',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: 'black',
+    height: 35,
+    marginLeft: 110,
+    paddingHorizontal: 5,
+    width: 100
+  }
 });
 
 export default Styles;

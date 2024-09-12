@@ -31,17 +31,7 @@ module.exports = {
     'simple-import-sort'
   ],
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        trailingComma: 'none',
-        singleQuote: true,
-        jsxSingleQuote: false,
-        printWidth: 100,
-        semi: true,
-        bracketSpacing: true
-      }
-    ],
+    'prettier/prettier': [],
     'global-require': 'off',
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
