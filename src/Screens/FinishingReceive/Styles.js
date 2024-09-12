@@ -1,4 +1,4 @@
-import { scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { moderateScale, scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
 
 const Styles = ScaledSheet.create({
   container: {
@@ -144,6 +144,46 @@ const Styles = ScaledSheet.create({
     right: 0,
     zIndex: -1,
     height: '100%'
+  },
+  counter: {
+    backgroundColor: '#1C98D8',
+    borderRadius: 50,
+    height: scale(8),
+    width: scale(8),
+    marginStart: scale(1)
+  },
+  counterText: {
+    color: '#fff',
+    fontSize: moderateScale(8),
+    fontWeight: '600',
+    alignSelf: 'center'
+  },
+  focusedLabel: {
+    color: '#1C98D8'
+  },
+  indicator: {
+    backgroundColor: '#1C98D8',
+    height: 3
+  },
+  label: {
+    color: '#898792',
+    fontSize: 16,
+    fontWeight: '600'
+  },
+  scene: {
+    backgroundColor: '#fff',
+    flex: 1
+  },
+  tabBar: {
+    backgroundColor: '#fff',
+
+    elevation: 5
+  },
+  tabIconContainer: {
+    // alignItems: 'center',
+    // flexDirection: 'row',
+    // position: 'relative'
+    flexDirection: 'row'
   }
 });
 

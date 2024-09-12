@@ -1,21 +1,21 @@
 {
-  "root": "C:\\react-native-projects\\nidlefinishing",
-  "reactNativePath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native",
+  "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing",
+  "reactNativePath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native",
   "reactNativeVersion": "0.75",
   "dependencies": {
     "react-native-vector-icons": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-vector-icons",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-vector-icons",
       "name": "react-native-vector-icons",
       "platforms": {
         "ios": null,
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-vector-icons\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-vector-icons/android",
           "packageImportPath": "import com.oblador.vectoricons.VectorIconsPackage;",
           "packageInstance": "new VectorIconsPackage()",
           "buildTypes": [],
           "libraryName": "RNVectorIconsSpec",
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -24,22 +24,22 @@
       }
     },
     "@nozbe/watermelondb": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@nozbe\\watermelondb",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@nozbe/watermelondb",
       "name": "@nozbe/watermelondb",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@nozbe\\watermelondb\\WatermelonDB.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@nozbe/watermelondb/WatermelonDB.podspec",
           "version": "0.27.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@nozbe\\watermelondb\\native\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@nozbe/watermelondb/native/android",
           "packageImportPath": "import com.nozbe.watermelondb.WatermelonDBPackage;",
           "packageInstance": "new WatermelonDBPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/@nozbe/watermelondb/native/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@nozbe/watermelondb/native/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -48,23 +48,23 @@
       }
     },
     "@react-native-async-storage/async-storage": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-async-storage\\async-storage",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-async-storage/async-storage",
       "name": "@react-native-async-storage/async-storage",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-async-storage\\async-storage\\RNCAsyncStorage.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec",
           "version": "1.24.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-async-storage\\async-storage\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-async-storage/async-storage/android",
           "packageImportPath": "import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;",
           "packageInstance": "new AsyncStoragePackage()",
           "buildTypes": [],
           "libraryName": "rnasyncstorage",
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -73,22 +73,22 @@
       }
     },
     "@react-native-community/netinfo": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-community\\netinfo",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-community/netinfo",
       "name": "@react-native-community/netinfo",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-community\\netinfo\\react-native-netinfo.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-community/netinfo/react-native-netinfo.podspec",
           "version": "11.3.2",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-community\\netinfo\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-community/netinfo/android",
           "packageImportPath": "import com.reactnativecommunity.netinfo.NetInfoPackage;",
           "packageInstance": "new NetInfoPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -97,22 +97,22 @@
       }
     },
     "@react-native-masked-view/masked-view": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-masked-view\\masked-view",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-masked-view/masked-view",
       "name": "@react-native-masked-view/masked-view",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-masked-view\\masked-view\\RNCMaskedView.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-masked-view/masked-view/RNCMaskedView.podspec",
           "version": "0.3.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@react-native-masked-view\\masked-view\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-masked-view/masked-view/android",
           "packageImportPath": "import org.reactnative.maskedview.RNCMaskedViewPackage;",
           "packageInstance": "new RNCMaskedViewPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/@react-native-masked-view/masked-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@react-native-masked-view/masked-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -121,23 +121,23 @@
       }
     },
     "@sentry/react-native": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@sentry\\react-native",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@sentry/react-native",
       "name": "@sentry/react-native",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@sentry\\react-native\\RNSentry.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@sentry/react-native/RNSentry.podspec",
           "version": "5.31.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\@sentry\\react-native\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@sentry/react-native/android",
           "packageImportPath": "import io.sentry.react.RNSentryPackage;",
           "packageInstance": "new RNSentryPackage()",
           "buildTypes": [],
           "libraryName": "RNSentrySpec",
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/@sentry/react-native/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/@sentry/react-native/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -146,17 +146,17 @@
       }
     },
     "lottie-react-native": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\lottie-react-native",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/lottie-react-native",
       "name": "lottie-react-native",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\lottie-react-native\\lottie-react-native.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/lottie-react-native/lottie-react-native.podspec",
           "version": "6.7.2",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\lottie-react-native\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/lottie-react-native/android",
           "packageImportPath": "import com.airbnb.android.react.lottie.LottiePackage;",
           "packageInstance": "new LottiePackage()",
           "buildTypes": [],
@@ -164,7 +164,7 @@
           "componentDescriptors": [
             "LottieAnimationViewComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/lottie-react-native/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/lottie-react-native/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -173,22 +173,22 @@
       }
     },
     "react-native-config": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-config",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-config",
       "name": "react-native-config",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-config\\react-native-config.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-config/react-native-config.podspec",
           "version": "1.5.3",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-config\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-config/android",
           "packageImportPath": "import com.lugg.RNCConfig.RNCConfigPackage;",
           "packageInstance": "new RNCConfigPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-config/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-config/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -197,17 +197,17 @@
       }
     },
     "react-native-date-picker": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-date-picker",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-date-picker",
       "name": "react-native-date-picker",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-date-picker\\react-native-date-picker.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-date-picker/react-native-date-picker.podspec",
           "version": "5.0.7",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-date-picker\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-date-picker/android",
           "packageImportPath": "import com.henninghall.date_picker.DatePickerPackage;",
           "packageInstance": "new DatePickerPackage()",
           "buildTypes": [],
@@ -215,7 +215,7 @@
           "componentDescriptors": [
             "RNDatePickerComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-date-picker/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-date-picker/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -224,22 +224,22 @@
       }
     },
     "react-native-device-info": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-device-info",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-device-info",
       "name": "react-native-device-info",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-device-info\\RNDeviceInfo.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-device-info/RNDeviceInfo.podspec",
           "version": "11.1.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-device-info\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-device-info/android",
           "packageImportPath": "import com.learnium.RNDeviceInfo.RNDeviceInfo;",
           "packageInstance": "new RNDeviceInfo()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-device-info/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-device-info/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -248,17 +248,17 @@
       }
     },
     "react-native-gesture-handler": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-gesture-handler",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-gesture-handler",
       "name": "react-native-gesture-handler",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-gesture-handler\\RNGestureHandler.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-gesture-handler/RNGestureHandler.podspec",
           "version": "2.19.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-gesture-handler\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-gesture-handler/android",
           "packageImportPath": "import com.swmansion.gesturehandler.RNGestureHandlerPackage;",
           "packageInstance": "new RNGestureHandlerPackage()",
           "buildTypes": [],
@@ -267,7 +267,7 @@
             "RNGestureHandlerButtonComponentDescriptor",
             "RNGestureHandlerRootViewComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -276,22 +276,22 @@
       }
     },
     "react-native-linear-gradient": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-linear-gradient",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-linear-gradient",
       "name": "react-native-linear-gradient",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-linear-gradient\\BVLinearGradient.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-linear-gradient/BVLinearGradient.podspec",
           "version": "2.8.3",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-linear-gradient\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-linear-gradient/android",
           "packageImportPath": "import com.BV.LinearGradient.LinearGradientPackage;",
           "packageInstance": "new LinearGradientPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -300,22 +300,22 @@
       }
     },
     "react-native-orientation-locker": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-orientation-locker",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-orientation-locker",
       "name": "react-native-orientation-locker",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-orientation-locker\\react-native-orientation-locker.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-orientation-locker/react-native-orientation-locker.podspec",
           "version": "1.7.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-orientation-locker\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-orientation-locker/android",
           "packageImportPath": "import org.wonday.orientation.OrientationPackage;",
           "packageInstance": "new OrientationPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-orientation-locker/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-orientation-locker/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -324,17 +324,17 @@
       }
     },
     "react-native-pager-view": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-pager-view",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-pager-view",
       "name": "react-native-pager-view",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-pager-view\\react-native-pager-view.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-pager-view/react-native-pager-view.podspec",
           "version": "6.4.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-pager-view\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-pager-view/android",
           "packageImportPath": "import com.reactnativepagerview.PagerViewPackage;",
           "packageInstance": "new PagerViewPackage()",
           "buildTypes": [],
@@ -343,7 +343,7 @@
             "LEGACY_RNCViewPagerComponentDescriptor",
             "RNCViewPagerComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-pager-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-pager-view/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -352,23 +352,23 @@
       }
     },
     "react-native-permissions": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-permissions",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-permissions",
       "name": "react-native-permissions",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-permissions\\RNPermissions.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-permissions/RNPermissions.podspec",
           "version": "4.1.5",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-permissions\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-permissions/android",
           "packageImportPath": "import com.zoontek.rnpermissions.RNPermissionsPackage;",
           "packageInstance": "new RNPermissionsPackage()",
           "buildTypes": [],
           "libraryName": "RNPermissionsSpec",
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-permissions/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-permissions/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -377,22 +377,22 @@
       }
     },
     "react-native-picker-weekday": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-picker-weekday",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-picker-weekday",
       "name": "react-native-picker-weekday",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-picker-weekday\\react-native-pickweekday.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-picker-weekday/react-native-pickweekday.podspec",
           "version": "1.1.2",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-picker-weekday\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-picker-weekday/android",
           "packageImportPath": "import com.saliksayyed.reactnativepickweekday.pickweekdayPackage;",
           "packageInstance": "new pickweekdayPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-picker-weekday/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-picker-weekday/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -401,23 +401,23 @@
       }
     },
     "react-native-reanimated": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-reanimated",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-reanimated",
       "name": "react-native-reanimated",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-reanimated\\RNReanimated.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-reanimated/RNReanimated.podspec",
           "version": "3.15.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-reanimated\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-reanimated/android",
           "packageImportPath": "import com.swmansion.reanimated.ReanimatedPackage;",
           "packageInstance": "new ReanimatedPackage()",
           "buildTypes": [],
           "libraryName": "rnreanimated",
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -426,17 +426,17 @@
       }
     },
     "react-native-safe-area-context": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-safe-area-context",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-safe-area-context",
       "name": "react-native-safe-area-context",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-safe-area-context\\react-native-safe-area-context.podspec",
-          "version": "4.11.0",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
+          "version": "4.10.9",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-safe-area-context\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-safe-area-context/android",
           "packageImportPath": "import com.th3rdwave.safeareacontext.SafeAreaContextPackage;",
           "packageInstance": "new SafeAreaContextPackage()",
           "buildTypes": [],
@@ -445,7 +445,7 @@
             "RNCSafeAreaProviderComponentDescriptor",
             "RNCSafeAreaViewComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -454,17 +454,17 @@
       }
     },
     "react-native-screens": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-screens",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-screens",
       "name": "react-native-screens",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-screens\\RNScreens.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-screens/RNScreens.podspec",
           "version": "3.34.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-screens\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-screens/android",
           "packageImportPath": "import com.swmansion.rnscreens.RNScreensPackage;",
           "packageInstance": "new RNScreensPackage()",
           "buildTypes": [],
@@ -480,7 +480,7 @@
             "RNSScreenComponentDescriptor",
             "RNSModalScreenComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -489,22 +489,22 @@
       }
     },
     "react-native-splash-screen": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-splash-screen",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-splash-screen",
       "name": "react-native-splash-screen",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-splash-screen\\react-native-splash-screen.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-splash-screen/react-native-splash-screen.podspec",
           "version": "3.3.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-splash-screen\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-splash-screen/android",
           "packageImportPath": "import org.devio.rn.splashscreen.SplashScreenReactPackage;",
           "packageInstance": "new SplashScreenReactPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-splash-screen/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-splash-screen/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -513,17 +513,17 @@
       }
     },
     "react-native-svg": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-svg",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-svg",
       "name": "react-native-svg",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-svg\\RNSVG.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-svg/RNSVG.podspec",
           "version": "15.6.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-svg\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-svg/android",
           "packageImportPath": "import com.horcrux.svg.SvgPackage;",
           "packageInstance": "new SvgPackage()",
           "buildTypes": [],
@@ -556,7 +556,7 @@
             "RNSVGTSpanComponentDescriptor",
             "RNSVGUseComponentDescriptor"
           ],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-svg/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-svg/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -565,22 +565,22 @@
       }
     },
     "react-native-vision-camera": {
-      "root": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-vision-camera",
+      "root": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-vision-camera",
       "name": "react-native-vision-camera",
       "platforms": {
         "ios": {
-          "podspecPath": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-vision-camera\\VisionCamera.podspec",
+          "podspecPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-vision-camera/VisionCamera.podspec",
           "version": "4.5.3",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "C:\\react-native-projects\\nidlefinishing\\node_modules\\react-native-vision-camera\\android",
+          "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-vision-camera/android",
           "packageImportPath": "import com.mrousavy.camera.react.CameraPackage;",
           "packageInstance": "new CameraPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "C:/react-native-projects/nidlefinishing/node_modules/react-native-vision-camera/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/node_modules/react-native-vision-camera/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -750,7 +750,7 @@
         {
           "name": "--path <path>",
           "description": "Path to the React Native project root.",
-          "default": "C:\\react-native-projects\\nidlefinishing"
+          "default": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing"
         },
         {
           "name": "--platform <string>",
@@ -802,7 +802,7 @@
         {
           "name": "--terminal <string>",
           "description": "Launches the Metro Bundler in a new window using the specified terminal path.",
-          "default": "cmd.exe"
+          "default": "vscode"
         },
         {
           "name": "--binary-path <string>",
@@ -958,7 +958,7 @@
         {
           "name": "--terminal <string>",
           "description": "Launches the Metro Bundler in a new window using the specified terminal path.",
-          "default": "cmd.exe"
+          "default": "vscode"
         },
         {
           "name": "--appId <string>",
@@ -1035,7 +1035,7 @@
   ],
   "project": {
     "ios": {
-      "sourceDir": "C:\\react-native-projects\\nidlefinishing\\ios",
+      "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/ios",
       "xcodeProject": {
         "name": "nidlefinishing.xcodeproj",
         "path": ".",
@@ -1044,7 +1044,7 @@
       "assets": []
     },
     "android": {
-      "sourceDir": "C:\\react-native-projects\\nidlefinishing\\android",
+      "sourceDir": "/Users/skrchowdhury/Documents/GitHub/nidlefinishing/android",
       "appName": "app",
       "packageName": "com.nidlefinishing",
       "applicationId": "com.nidlefinishing",

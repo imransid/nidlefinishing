@@ -22,20 +22,6 @@ import {
 } from '../database/helper/defectEntry.helper';
 // import { type Defect } from '../database/model/defectTable';
 import { type OperationBreakDown } from '../database/model/operationBreakdownTable';
-import {
-  addfilterdItemImages,
-  addQueryDataForDefectEntry,
-  resetfilterdItemImages
-} from '../slices/features/DefectList/slice';
-import { stopEndTableLoader } from '../slices/features/endTableCheck/slice';
-import {
-  stopSettingLoader,
-  updateGlobalLoader,
-  updateSyncData,
-  updateSyncFailed
-} from '../slices/features/setting/slice';
-import { type TreeNode } from '../slices/features/setting/types';
-import { checkLoaderAction, stopInfiniteLoader, usersSlice } from '../slices/features/users/slice';
 import { type AccessTokenInfo, type LoginResponse } from '../types/types';
 import { type RootState } from '..';
 
@@ -46,7 +32,6 @@ import {
   getQmsDefectSequence
 } from './defectApi';
 import { offlineQCData } from './offline.qcLunchData';
-import { syncProcessNow } from './sync.saga';
 import { getVariance } from './variance.saga';
 const { call } = Effects;
 
