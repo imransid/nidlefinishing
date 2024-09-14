@@ -106,7 +106,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
 
       <View style={Styles.tableFooter}>
         {columnNames.map((name, index) => (
-          <Text style={Styles.tableFooterValue}>
+          <Text key={index} style={Styles.tableFooterValue}>
             {name === 'Color'
               ? 'Total = '
               : name === 'Size'

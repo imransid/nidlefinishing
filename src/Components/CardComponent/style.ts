@@ -21,25 +21,27 @@ const styles = StyleSheet.create({
   },
   cardContentStyle: {
     borderColor: '#EEEEEE',
-    borderWidth: 1,
+    borderBottomWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   lineContentStyle: {
-    height: verticalScale(18),
-    width: scale(35),
     backgroundColor: '#1C98D8',
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    height:verticalScale(15),
+    alignContent:"center"
   },
   lineText: {
     color: '#fff',
   },
   informationContentStyle: {
     flexDirection: 'column',
+    paddingHorizontal: scale(5),
   },
   receiveInfoText: {
     fontSize: moderateScale(8),
@@ -55,11 +57,23 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#765492',
   },
-  statusText: {
+  statusTextConfirm: {
     fontSize: moderateScale(8),
     fontWeight: '600',
     color: '#4BB543',
-    marginTop: verticalScale(5),
+    alignSelf:'center'
+  },
+  statusTextCancel: {
+    fontSize: moderateScale(8),
+    fontWeight: '600',
+    color: '#E62E2D',
+    alignSelf:'center'
+  },
+  statusTextPending: {
+    fontSize: moderateScale(8),
+    fontWeight: '600',
+    color: '#D1B00D',
+    alignSelf:'center'
   },
 });
 
