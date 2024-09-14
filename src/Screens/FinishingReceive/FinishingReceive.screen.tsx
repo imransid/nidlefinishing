@@ -13,17 +13,7 @@ import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
 import PendingTab from '@/Components/PendingTab/PendingTab';
 
 // Define the routes' components
-const FirstRoute: React.FC = () => {
-  return (
-    <>
-      <ReceiveTab />
-    </>
-  );
-};
-const SecondRoute: React.FC = () => <PendingTab/>;
-const ThirdRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#b78f3a' }]} />;
-const FourthRoute: React.FC = () => <AlterResendTab/>;
-const FifthRoute: React.FC = () => <TodaySummaryTab/>;
+
 
 const FinishingReceiveScreen = () => {
   const navigation = useNavigation();
@@ -36,6 +26,19 @@ const FinishingReceiveScreen = () => {
     {key: 'summary', title: 'TODAY SUMMARY', icon: 'calendar-check-o'},
   ]);
 
+  const FirstRoute: React.FC = () => {
+    return (
+      <>
+        <ReceiveTab />
+      </>
+    );
+  };
+  const SecondRoute: React.FC = () => <PendingTab/>;
+  const ThirdRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#b78f3a' }]} />;
+  const FourthRoute: React.FC = () => <AlterResendTab/>;
+  const FifthRoute: React.FC = () => <TodaySummaryTab/>;
+
+
   const renderScene = SceneMap({
     receive: FirstRoute,
     pending: SecondRoute,
@@ -43,6 +46,7 @@ const FinishingReceiveScreen = () => {
     resend: FourthRoute,
     summary: FifthRoute,
   });
+  
 
   const renderTabBar = props => (
     <TabBar

@@ -74,6 +74,7 @@
     "react-native-svg": "^15.4.0",
     "react-native-svg-transformer": "^1.5.0",
     "react-native-tab-view": "^3.5.2",
+    "react-native-tree-select": "^2.2.0",
     "react-native-vector-icons": "^10.1.0",
     "react-native-vision-camera": "^4.5.1",
     "react-native-wheel-scrollview-picker": "^2.0.4",
