@@ -1,24 +1,9 @@
-// Yunusco
-const BASE_URL = 'http://172.17.8.20:8081';
+// Rafa
+const BASE_URL = 'http://192.168.10.53:8081';
 
 const SIGN_IN_URL = 'auth/login';
+const FINISHING_ORG = 'api/finishingOrg';
+const FINISHING_PROCESS_LIST = 'api/v1/getFinishingProcessList';
+const SUMMARY = 'api/v1/getTodaysFinishingSummary';
 
-const QUALITY_TYPES_URL = '/api/v1/';
-
-const CURRENT_ORDER_VARIANCE_URL = '/api/v1/appSync/';
-
-const CURRENT_CUSTOMERS_URL = '/api/v1/appSync/';
-
-const LOGGED_USER_ORG_TREE_URL = '/api/org:';
-
-const API_VERSION_TWO = '/api/v2/appSync/';
-
-export {
-  API_VERSION_TWO,
-  BASE_URL,
-  CURRENT_CUSTOMERS_URL,
-  CURRENT_ORDER_VARIANCE_URL,
-  LOGGED_USER_ORG_TREE_URL,
-  QUALITY_TYPES_URL,
-  SIGN_IN_URL
-};
+export {BASE_URL, SIGN_IN_URL, FINISHING_ORG, FINISHING_PROCESS_LIST, SUMMARY};

@@ -24,7 +24,7 @@ import Styles from './Styles';
 import { scale } from 'react-native-size-matters';
 import CustomTextItem from '@/Components/TextItem';
 import FinishingReceivePad from '@/Screens/FinishingReceivePad/FinishingReceivePad.screen';
-import { logoutUser } from '@/store/slices/features/settings/slice';
+import { logoutUser } from '@/store/slices/features/users/slice';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 const CustomDrawerContent: FC<DrawerContentComponentProps> = (
