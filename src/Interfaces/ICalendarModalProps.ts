@@ -1,9 +1,7 @@
 interface ICalendarModalProps {
-  modalVisible: boolean;
-  setModalVisible: (visible: boolean) => void;
-  setStartDate?: (date: string) => void;
-  setEndDate?: (date: string) => void;
-  modalFOr: string;
+  calendarModalVisible: boolean;
+  setCalendarModalVisible: (visible: boolean) => void;
+  setDate?: (date: string) => void;
 }
 
 export default ICalendarModalProps;

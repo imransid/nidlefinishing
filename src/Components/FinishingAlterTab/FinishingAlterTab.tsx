@@ -8,12 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
+import DataTableComponent from '../DataTableComponent/DataTableComponent';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
 import TreeSelect from 'react-native-tree-select';
 import CalendarModal from '../CalendarModal/CalenderModal';
 import Styles from './style';
-const AlterResendTab: FC = () => {
+const FinishingAlterTab: FC = () => {
   const orgTreeData = [
     {
       id: 352,
@@ -2706,4 +2706,4 @@ const AlterResendTab: FC = () => {
   );
 };
 
-export default AlterResendTab;
+export default FinishingAlterTab;

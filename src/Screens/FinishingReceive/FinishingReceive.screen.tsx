@@ -11,6 +11,7 @@ import Styles from './Styles';
 import AlterResendTab from '@/Components/AlterResendTab/AlterResendTab';
 import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
 import PendingTab from '@/Components/PendingTab/PendingTab';
+import FinishingAlterTab from '@/Components/FinishingAlterTab/FinishingAlterTab';
 
 // Define the routes' components
 
@@ -34,7 +35,7 @@ const FinishingReceiveScreen = () => {
     );
   };
   const SecondRoute: React.FC = () => <PendingTab/>;
-  const ThirdRoute: React.FC = () => <View style={[Styles.scene, { backgroundColor: '#b78f3a' }]} />;
+  const ThirdRoute: React.FC = () => <FinishingAlterTab/>;
   const FourthRoute: React.FC = () => <AlterResendTab/>;
   const FifthRoute: React.FC = () => <TodaySummaryTab/>;
 

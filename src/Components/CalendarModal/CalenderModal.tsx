@@ -18,29 +18,25 @@ interface DayObject {
 }
 
 const CalendarModal: React.FC<ICalendarModalProps> = ({
-  modalVisible,
-  setModalVisible,
-  setStartDate,
-  setEndDate,
-  modalFOr
+  calendarModalVisible,
+  setCalendarModalVisible,
+  setDate,
 }) => {
   const handleDayPress: any = (day: DayObject) => {
-    if (modalFOr === 'startDate' && setStartDate != null) {
-      setStartDate(day.dateString);
-    } else if (modalFOr === 'endDate' && setEndDate != null) {
-      setEndDate(day.dateString);
-    }
-    setModalVisible(false);
+    if (setDate != null) {
+      setDate(day.dateString);
+    } 
+    setCalendarModalVisible(false);
   };
 
   return (
     <View>
       <Modal
         transparent={true}
-        visible={modalVisible}
+        visible={calendarModalVisible}
         animationType="slide"
         onRequestClose={() => {
-          setModalVisible(false);
+          setCalendarModalVisible(false);
         }}>
         <View style={styles.modalContainer}>
           <Calendar
@@ -55,9 +51,9 @@ const CalendarModal: React.FC<ICalendarModalProps> = ({
               textDayFontWeight: '400',
               textMonthFontWeight: '500',
               textDayHeaderFontWeight: '500',
-              textMonthFontSize: moderateScale(16),
-              textDayFontSize: moderateScale(18),
-              textDayHeaderFontSize: moderateScale(14)
+              textMonthFontSize: moderateScale(10),
+              textDayFontSize: moderateScale(10),
+              textDayHeaderFontSize: moderateScale(10)
             }}
             style={styles.calendarShape}
           />

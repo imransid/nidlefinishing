@@ -5,8 +5,9 @@ import { colors } from '../../theme/colors';
 
 const styles = StyleSheet.create({
   calendarShape: {
-    height: verticalScale(260),
-    width: scale(270)
+    height: verticalScale(180),
+    width: scale(180),
+    borderRadius:15
   },
   horizontalLine: {
     backgroundColor: colors.buttonBg,
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.modalBackground,
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   scrollViewContainer: {
     maxHeight: '27%',

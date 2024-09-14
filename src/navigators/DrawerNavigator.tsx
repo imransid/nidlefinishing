@@ -23,7 +23,6 @@ import AppStackNavigator from './AppStackNavigator';
 import Styles from './Styles';
 import { scale } from 'react-native-size-matters';
 import CustomTextItem from '@/Components/TextItem';
-import FinishingReceivePad from '@/Screens/FinishingReceivePad/FinishingReceivePad.screen';
 import { logoutUser } from '@/store/slices/features/users/slice';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -87,7 +86,7 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = (
           }}
           label="Home"
           onPress={() => {
-            props.navigation.navigate('FinishingReceivePad');
+            props.navigation.navigate('FinishingReceive');
           }}
         />
         {/* <Divider /> */}
@@ -117,11 +116,6 @@ const DrawerNavigator: FC = () => {
       <Drawer.Screen
         name="AppStackNavigator"
         component={AppStackNavigator}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="FinishingReceivePad"
-        component={FinishingReceivePad}
         options={{ headerShown: false }}
       />
     </Drawer.Navigator>
