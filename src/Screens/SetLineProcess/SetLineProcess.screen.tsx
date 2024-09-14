@@ -1,21 +1,28 @@
-import React, {useState, type FC} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState, type FC } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {LANDSCAPE, OrientationLocker} from 'react-native-orientation-locker';
+import { LANDSCAPE, OrientationLocker } from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Dropdown} from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 // import useBackButtonHandler from '@/utils/useBackButtonHandler';
 import Styles from './Styles';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
-const finishingOrganizationData = [
-  {label: 'Item 1', value: '4A-1 2ND/4A-1-07'},
-  {label: 'Item 2', value: '2'},
-  {label: 'Item 3', value: '3'},
-  {label: 'Item 4', value: '4'},
-  {label: 'Item 5', value: '5'},
+const finishingOrganizationData_ = [
+  { label: 'Item 1', value: '4A-1 2ND/4A-1-07' },
+  { label: 'Item 2', value: '2' },
+  { label: 'Item 3', value: '3' },
+  { label: 'Item 4', value: '4' },
+  { label: 'Item 5', value: '5' },
 ];
 
-const SetLineProcessScreen: FC = ({navigation}) => {
+const SetLineProcessScreen: FC = ({ navigation }) => {
+
+  const finishingOrganizationData = useSelector(
+    (e: RootState) => e.setLine.finishingOrg
+  );
+
   const [finishingOrganization, setFinishingOrganization] = useState(null);
   const [finishingProcess, setFinishingProcess] = useState(null);
 
@@ -64,10 +71,10 @@ const SetLineProcessScreen: FC = ({navigation}) => {
               paddingLeft: 15,
               paddingRight: 15,
             }}
-            itemTextStyle={{color: '#444444', fontSize: 16}}
-            selectedTextStyle={{color: '#444444', fontSize: 16}}
+            itemTextStyle={{ color: '#444444', fontSize: 16 }}
+            selectedTextStyle={{ color: '#444444', fontSize: 16 }}
             placeholder="Select Finishing Organization"
-            placeholderStyle={{color: '#444444', fontSize: 16}}
+            placeholderStyle={{ color: '#444444', fontSize: 16 }}
             data={finishingOrganizationData}
             value={finishingOrganization}
             maxHeight={150}
@@ -75,7 +82,7 @@ const SetLineProcessScreen: FC = ({navigation}) => {
               setFinishingOrganization(item.value);
             }}
             iconColor="#444444"
-            iconStyle={{width: 20, height: 25}}
+            iconStyle={{ width: 20, height: 25 }}
             labelField="label"
             valueField="value"></Dropdown>
         </View>
@@ -89,24 +96,24 @@ const SetLineProcessScreen: FC = ({navigation}) => {
               paddingLeft: 15,
               paddingRight: 15,
             }}
-            itemTextStyle={{color: '#444444', fontSize: 16}}
-            selectedTextStyle={{color: '#444444', fontSize: 16}}
+            itemTextStyle={{ color: '#444444', fontSize: 16 }}
+            selectedTextStyle={{ color: '#444444', fontSize: 16 }}
             placeholder="Select Finishing Process"
-            placeholderStyle={{color: '#444444', fontSize: 16}}
-            data={finishingOrganizationData}
+            placeholderStyle={{ color: '#444444', fontSize: 16 }}
+            data={finishingOrganizationData_}
             value={finishingProcess}
             maxHeight={150}
             onChange={item => {
               setFinishingProcess(item.value);
             }}
             iconColor="#444444"
-            iconStyle={{width: 20, height: 25}}
+            iconStyle={{ width: 20, height: 25 }}
             labelField="label"
             valueField="value"></Dropdown>
         </View>
         <View>
           <TouchableOpacity
-          onPress={() => navigation.navigate('FinishingReceive' as never)}
+            onPress={() => navigation.navigate('FinishingReceive' as never)}
             style={{
               height: 50,
               width: 450,
@@ -115,7 +122,7 @@ const SetLineProcessScreen: FC = ({navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{color: '#fff', fontSize: 18}}>Next</Text>
+            <Text style={{ color: '#fff', fontSize: 18 }}>Next</Text>
           </TouchableOpacity>
         </View>
       </View>

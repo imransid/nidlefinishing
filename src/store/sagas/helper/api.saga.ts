@@ -9,6 +9,11 @@ interface IPayload {
   password: string;
 }
 
+interface ICommonGetAPIProps {
+  url: string;
+  token: string;
+}
+
 export const loginAPI = async (
   payload: IPayload,
 ): Promise<LoginResponse | undefined> => {
@@ -30,6 +35,34 @@ export const loginAPI = async (
     return response.data;
   } catch (error) {
     console.error('Error in loginAPI:', error);
+    return undefined; // Or you could return a specific error object here
+  }
+};
+
+export const commonGetAPI = async (props: ICommonGetAPIProps): Promise<any> => {
+  try {
+    let data = '';
+
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: props.url,
+      headers: {
+        Authorization: 'Bearer ' + props.token,
+      },
+      data: data,
+    };
+
+    return axios
+      .request(config)
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        return undefined;
+      });
+  } catch (error) {
+    console.error('Error in commonGetAPI:', error);
     return undefined; // Or you could return a specific error object here
   }
 };
