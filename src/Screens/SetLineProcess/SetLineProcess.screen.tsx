@@ -1,48 +1,11 @@
 import React, {useState, type FC} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import TreeView from 'react-native-animated-tree-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {LANDSCAPE, OrientationLocker} from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Dropdown} from 'react-native-element-dropdown';
 // import useBackButtonHandler from '@/utils/useBackButtonHandler';
 import Styles from './Styles';
-const data = [
-  {
-    name: 'Select Finishing Organization',
-    value: 'cheese-value',
-    items: [
-      {
-        name: 'Spicy',
-        value: 'spicy-value',
-      },
-      {
-        name: 'Cheese',
-        value: 'cheese-value',
-        items: [
-          {
-            name: 'Spicy',
-            value: 'spicy-value',
-          },
-          {
-            name: 'Spicy',
-            value: 'spicy-value',
-            items: [
-              {
-                name: 'Spicy',
-                value: 'spicy-value',
-              },
-              {
-                name: 'Spicy',
-                value: 'spicy-value',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
 
 const finishingOrganizationData = [
   {label: 'Item 1', value: '4A-1 2ND/4A-1-07'},
@@ -53,7 +16,8 @@ const finishingOrganizationData = [
 ];
 
 const SetLineProcessScreen: FC = ({navigation}) => {
-  const [value, setValue] = useState(null);
+  const [finishingOrganization, setFinishingOrganization] = useState(null);
+  const [finishingProcess, setFinishingProcess] = useState(null);
 
   return (
     <View style={Styles.container}>
@@ -90,28 +54,6 @@ const SetLineProcessScreen: FC = ({navigation}) => {
           justifyContent: 'center',
           gap: 15,
         }}>
-        <View
-          style={{
-            height: '50%',
-            width: 450,
-            backgroundColor: '#fff',
-            borderRadius: 10,
-          }}>
-          <TreeView
-            listContainerStyle={{innerWidth: 15}}
-            data={data}
-            textStyle={{
-              color: '#444444',
-              fontSize: 16,
-              marginLeft: -15,
-            }}
-            rightImageStyle={{
-              width: 15,
-              height: 15,
-              color: '#444444',
-            }}
-          />
-        </View>
         <View>
           <Dropdown
             style={{
@@ -127,10 +69,35 @@ const SetLineProcessScreen: FC = ({navigation}) => {
             placeholder="Select Finishing Organization"
             placeholderStyle={{color: '#444444', fontSize: 16}}
             data={finishingOrganizationData}
-            value={value}
+            value={finishingOrganization}
             maxHeight={150}
             onChange={item => {
-              setValue(item.value);
+              setFinishingOrganization(item.value);
+            }}
+            iconColor="#444444"
+            iconStyle={{width: 20, height: 25}}
+            labelField="label"
+            valueField="value"></Dropdown>
+        </View>
+        <View>
+          <Dropdown
+            style={{
+              height: 50,
+              width: 450,
+              backgroundColor: '#fff',
+              borderRadius: 10,
+              paddingLeft: 15,
+              paddingRight: 15,
+            }}
+            itemTextStyle={{color: '#444444', fontSize: 16}}
+            selectedTextStyle={{color: '#444444', fontSize: 16}}
+            placeholder="Select Finishing Process"
+            placeholderStyle={{color: '#444444', fontSize: 16}}
+            data={finishingOrganizationData}
+            value={finishingProcess}
+            maxHeight={150}
+            onChange={item => {
+              setFinishingProcess(item.value);
             }}
             iconColor="#444444"
             iconStyle={{width: 20, height: 25}}
@@ -139,6 +106,7 @@ const SetLineProcessScreen: FC = ({navigation}) => {
         </View>
         <View>
           <TouchableOpacity
+          onPress={() => navigation.navigate('FinishingReceive' as never)}
             style={{
               height: 50,
               width: 450,

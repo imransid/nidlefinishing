@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 const AppStackNavigator: FC = () => {
   return (
-    <Stack.Navigator initialRouteName="FinishingReceive">
+    <Stack.Navigator initialRouteName="SetLineProcess">
       <Stack.Screen
         name={'FinishingReceivePad'}
         component={FinishingReceivePad}
