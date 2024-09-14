@@ -1,7 +1,7 @@
 // Import necessary functions and types
-import { all } from 'redux-saga/effects';
+import {all, takeEvery} from 'redux-saga/effects';
 
-// import { checkLoader, loginSaga, syncNow } from './sagas/auth.saga';
+import { loginSaga} from './sagas/auth.saga';
 // import {
 //   alterQualityTransactionsList,
 //   getReportColorValue,
@@ -17,7 +17,7 @@ import { all } from 'redux-saga/effects';
 // import { getVariance } from './sagas/variance.saga';
 // Create a watcher saga
 function* watchGetUserAction(): Generator {
-  // yield takeEvery('users/getUserAction', loginSaga);
+  yield takeEvery('users/getUserAction', loginSaga);
   // // pass button press
   // yield takeEvery('endTableCheck/sendQueryTransactionsAction', passQualityTransactionsList);
   // yield takeEvery('endTableCheck/undoQueryTransactionsAction', undoQueryTransaction);
@@ -41,7 +41,7 @@ function* watchGetUserAction(): Generator {
 // Export the root saga
 export default function* rootSaga(): Generator {
   yield all([
-    watchGetUserAction()
+    watchGetUserAction(),
     // Add other watchers if needed
   ]);
 }

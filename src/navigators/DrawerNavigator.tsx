@@ -1,29 +1,30 @@
 /* eslint-disable */
 
-import React, {type FC, useEffect, useRef} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import React, { type FC, useEffect, useRef } from 'react';
+import { TouchableOpacity, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import LinearGradient from 'react-native-linear-gradient';
-import {Divider, Drawer as PaperDrawer} from 'react-native-paper';
+import { Divider, Drawer as PaperDrawer } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconLogOut from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createDrawerNavigator,
   type DrawerContentComponentProps,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import {type RootState} from '@/store';
+import { type RootState } from '@/store';
 
-import {getAppVersionName} from '@/utils/core';
+import { getAppVersionName } from '@/utils/core';
 
-import {type DrawerParamList} from '../models';
+import { type DrawerParamList } from '../models';
 
 import AppStackNavigator from './AppStackNavigator';
 import Styles from './Styles';
-import {scale} from 'react-native-size-matters';
+import { scale } from 'react-native-size-matters';
 import CustomTextItem from '@/Components/TextItem';
 import FinishingReceivePad from '@/Screens/FinishingReceivePad/FinishingReceivePad.screen';
+import { logoutUser } from '@/store/slices/features/settings/slice';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 const CustomDrawerContent: FC<DrawerContentComponentProps> = (
@@ -97,9 +98,9 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = (
             return <IconLogOut size={scale(12)} name="logout" />;
           }}
           label="logout"
-          // onPress={() => {
-          //   dispatch(logoutUser());
-          // }}
+          onPress={() => {
+            dispatch(logoutUser());
+          }}
         />
         <Divider />
       </DrawerContentScrollView>
@@ -111,17 +112,17 @@ const DrawerNavigator: FC = () => {
   return (
     <Drawer.Navigator
       initialRouteName="AppStackNavigator"
-screenOptions={{headerShown:true, headerStyle: {backgroundColor: '#fff'}, headerTintColor: '#000', headerTitleStyle: {color: '#000'}}}
+      screenOptions={{ headerShown: true, headerStyle: { backgroundColor: '#fff' }, headerTintColor: '#000', headerTitleStyle: { color: '#000' } }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         name="AppStackNavigator"
         component={AppStackNavigator}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Drawer.Screen
         name="FinishingReceivePad"
         component={FinishingReceivePad}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Drawer.Navigator>
   );
