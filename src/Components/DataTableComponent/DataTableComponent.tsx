@@ -1,9 +1,10 @@
-import React, {FC, useState} from 'react';
-import {View, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
-import {DataTable} from 'react-native-paper';
+import React, { FC, useState } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
 import DataTableRow from 'react-native-paper/lib/typescript/components/DataTable/DataTableRow';
+import { Breakdown } from '../ReceiveTab/interface';
 interface IDataTableProps {
   buyer: string;
   buyerName: string;
@@ -13,7 +14,7 @@ interface IDataTableProps {
   orderNumber: string;
   showCheckbox?: boolean;
   columnNames: string[];
-  rowData: any;
+  rowData: Breakdown[];
 }
 
 const DataTableComponent: FC<IDataTableProps> = ({
@@ -30,13 +31,13 @@ const DataTableComponent: FC<IDataTableProps> = ({
   const [receiveQty, setReceiveQty] = useState(rowData);
 
   const totalReceiveQuantity = receiveQty.reduce(
-    (total, row) => total + row.receiveQty,
+    (total, row) => total + row.totalReceived,
     0,
   );
 
   const handleAdjustmentChange = (index: number, value: string) => {
     const updatedQty = [...receiveQty];
-    updatedQty[index].receiveQty = parseInt(value, 10) || 0;
+    updatedQty[index].totalReceived = parseInt(value, 10) || 0;
     setReceiveQty(updatedQty);
   };
 
@@ -69,7 +70,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
           </View>
         </View>
         <View
-          style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+          style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
           {showCheckbox && <CheckboxComponent />}
         </View>
       </View>
@@ -88,14 +89,14 @@ const DataTableComponent: FC<IDataTableProps> = ({
             <DataTable.Row key={index}>
               <DataTable.Cell>{row.color}</DataTable.Cell>
               <DataTable.Cell>{row.size}</DataTable.Cell>
-              <DataTable.Cell numeric>{row.inputQty}</DataTable.Cell>
+              <DataTable.Cell numeric>{row.balance}</DataTable.Cell>
               <DataTable.Cell numeric>{row.qcQty}</DataTable.Cell>
-              <DataTable.Cell numeric>{row.totalReceive}</DataTable.Cell>
+              <DataTable.Cell numeric>{row.totalReceived}</DataTable.Cell>
               <DataTable.Cell>
                 <TextInput
                   style={Styles.textInput}
                   keyboardType="numeric"
-                  value={row.receiveQty.toString()}
+                  value={'0'}
                   onChangeText={value => handleAdjustmentChange(index, value)}
                 />
               </DataTable.Cell>

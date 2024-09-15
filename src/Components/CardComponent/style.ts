@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   },
   lineText: {
     color: '#fff',
+    fontSize: moderateScale(7),
   },
   informationContentStyle: {
     flexDirection: 'column',

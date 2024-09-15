@@ -45,7 +45,6 @@ export function* loginSaga(
 
       const responseFinishProcessList: any = yield call(commonGetAPI, props);
 
-
       if (responseSetLineProcess !== undefined) {
         let modFinishData = responseSetLineProcess.data.map((e: any) => {
           e.label = e.name;
@@ -64,7 +63,7 @@ export function* loginSaga(
           return e;
         });
 
-        yield put(setLineSlice.actions.setFinishOrg(modFinishData));
+        yield put(setLineSlice.actions.setProcessList(modFinishData));
       }
     } else {
       // case undefined

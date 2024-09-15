@@ -1,12 +1,5 @@
 import React, {type FC} from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-  Modal,
-  ScrollView,
-} from 'react-native';
+import {View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
@@ -2578,6 +2571,7 @@ const AlterResendTab: FC = () => {
         setSelectedLine={setSelectedLine}
         lineModalVisible={lineModalVisible}
         setLineModalVisible={setLineModalVisible}
+        pageName={''}
       />
       <CalendarModal
         setDate={setDate}

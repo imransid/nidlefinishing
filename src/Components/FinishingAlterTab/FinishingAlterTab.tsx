@@ -2564,6 +2564,7 @@ const FinishingAlterTab: FC = () => {
         setSelectedLine={setSelectedLine}
         lineModalVisible={lineModalVisible}
         setLineModalVisible={setLineModalVisible}
+        pageName={''}
       />
       <CalendarModal
         setDate={setDate}
