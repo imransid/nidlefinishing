@@ -24,6 +24,9 @@ interface DataItem {
 }
 
 const TodaySummaryTab: FC = () => {
+  useFocusEffect(() => {
+    console.log("summary")
+  })
   const [data, setData] = useState<DataItem[]>([]);
   const [loading, setLoading] = useState(true);
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
