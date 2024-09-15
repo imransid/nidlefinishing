@@ -114,12 +114,19 @@ const ReceiveTab: FC = () => {
         pageName="receive"
         onClickAble={(e: number) => onClickLeaf(e.toString())}
       />
-      <FlatList
-        style={{marginBottom: 100}}
-        data={tableData}
-        renderItem={renderItem}
-        keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
-      />
+      {selectedLine === '' ? (
+        <View style={{flex: 1, width: '100%',height:'100%', alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{fontSize: 16}}>No Line Selected</Text>
+        </View>
+      ) : (
+        <FlatList
+          style={{marginBottom: 100}}
+          data={tableData}
+          renderItem={renderItem}
+          keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
+        />
+      )}
+
       <CustomSubmitButton
         icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
         text="CONFIRM RECEIVE"

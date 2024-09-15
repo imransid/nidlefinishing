@@ -2571,12 +2571,26 @@ const FinishingAlterTab: FC = () => {
         calendarModalVisible={calendarModalVisible}
         setCalendarModalVisible={setCalendarModalVisible}
       />
-      <FlatList
-        style={{marginBottom: 100}}
-        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      {selectedLine === '' && selectedDate === '' ? (
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text style={{fontSize: 16}}>No Line & Date Selected</Text>
+        </View>
+      ) : (
+        <FlatList
+          style={{marginBottom: 100}}
+          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      )}
+
       <CustomSubmitButton
         icon={<Icon name="send" size={20} color={'white'} />}
         text="SEND TO ALTER"

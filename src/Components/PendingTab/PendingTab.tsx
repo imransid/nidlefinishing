@@ -113,7 +113,7 @@ const PendingTab: FC = () => {
       };
       let response = await commonGetAPI(props);
       if (response !== undefined) {
-        setData(response.data);
+        setData(response.data.statusBar);
       }
     } catch (error) {
       console.error('Error fetching data:', error);

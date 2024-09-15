@@ -1,5 +1,5 @@
 import React, {type FC} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList,Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
@@ -2578,12 +2578,26 @@ const AlterResendTab: FC = () => {
         calendarModalVisible={calendarModalVisible}
         setCalendarModalVisible={setCalendarModalVisible}
       />
-      <FlatList
+            {selectedLine === '' && selectedDate === '' ? (
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text style={{fontSize: 16}}>No Line & Date Selected</Text>
+        </View>
+      ) : (
+        <FlatList
         style={{marginBottom: 100}}
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
+      )}
+
       <CustomSubmitButton
         icon={<Icon name="send" size={20} color={'white'} />}
         text="CONFIRM FINISHING ALTER RECEIVE"

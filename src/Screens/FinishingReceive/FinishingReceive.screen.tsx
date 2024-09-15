@@ -12,6 +12,7 @@ import FinishingAlterTab from '@/Components/FinishingAlterTab/FinishingAlterTab'
 
 import Styles from './Styles';
 import LinearGradient from 'react-native-linear-gradient';
+import {moderateScale} from 'react-native-size-matters';
 
 // Create Top Tab Navigator
 const Tab = createMaterialTopTabNavigator();
@@ -47,7 +48,7 @@ const FinishingReceiveScreen = () => {
       </LinearGradient>
 
       <Tab.Navigator
-      style={{margin: 20, borderRadius: 20}}
+        style={{margin: 20, borderRadius: 20}}
         initialRouteName="Receive"
         tabBarOptions={{
           showIcon: true,
@@ -56,9 +57,21 @@ const FinishingReceiveScreen = () => {
         }}
         screenOptions={({route}) => ({
           title: route.name,
-          tabBarActiveTintColor:'#898792',
-          tabBarInactiveTintColor: '#555',
-          tabBarItemStyle: {flexDirection:'row'},
+          tabBarActiveTintColor: '#1C98D8',
+          tabBarInactiveTintColor: '#898792',
+          tabBarItemStyle: {flexDirection: 'row'},
+
+          tabBarBadge() {
+            if (route.name === 'Pending') {
+              return (
+                <View style={Styles.counter}>
+                  <Text style={Styles.counterText}>{'100'}</Text>
+                </View>
+              );
+            }
+            return undefined;
+          },
+          tabBarLabelStyle: {fontSize: moderateScale(9), fontWeight: '700'},
           tabBarIcon: ({focused, color}) => {
             let iconName;
             switch (route.name) {
@@ -81,11 +94,14 @@ const FinishingReceiveScreen = () => {
                 iconName = 'question';
             }
             return (
-              <Icon name={iconName} size={20} color={focused ? '#1C98D8' : '#555'} />
+              <Icon
+                name={iconName}
+                size={20}
+                color={focused ? '#1C98D8' : '#555'}
+              />
             );
           },
-        })}
-      >
+        })}>
         <Tab.Screen name="Receive" component={ReceiveTab} />
         <Tab.Screen name="Pending" component={PendingTab} />
         <Tab.Screen name="Finishing Alter" component={FinishingAlterTab} />

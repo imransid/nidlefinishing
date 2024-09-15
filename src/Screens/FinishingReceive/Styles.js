@@ -149,8 +149,12 @@ const Styles = ScaledSheet.create({
     backgroundColor: '#1C98D8',
     borderRadius: 50,
     height: scale(8),
-    width: scale(8),
-    marginStart: scale(1)
+    width: 'auto',
+    paddingHorizontal:scale(5),
+    marginStart: scale(1),
+    position :'absolute',
+    top: verticalScale(8),
+    right: scale(10)
   },
   counterText: {
     color: '#fff',
