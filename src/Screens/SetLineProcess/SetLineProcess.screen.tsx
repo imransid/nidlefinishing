@@ -4,23 +4,18 @@ import LinearGradient from 'react-native-linear-gradient';
 import { LANDSCAPE, OrientationLocker } from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Dropdown } from 'react-native-element-dropdown';
-// import useBackButtonHandler from '@/utils/useBackButtonHandler';
 import Styles from './Styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
-const finishingOrganizationData_ = [
-  { label: 'Item 1', value: '4A-1 2ND/4A-1-07' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-];
-
-const SetLineProcessScreen: FC = ({ navigation }) => {
+const SetLineProcessScreen: FC = ({ navigation }: any) => {
 
   const finishingOrganizationData = useSelector(
     (e: RootState) => e.setLine.finishingOrg
+  );
+
+  const finishingProgressListData = useSelector(
+    (e: RootState) => e.setLine.finishingProcessList
   );
 
   const [finishingOrganization, setFinishingOrganization] = useState(null);
@@ -75,7 +70,7 @@ const SetLineProcessScreen: FC = ({ navigation }) => {
             selectedTextStyle={{ color: '#444444', fontSize: 16 }}
             placeholder="Select Finishing Organization"
             placeholderStyle={{ color: '#444444', fontSize: 16 }}
-            data={finishingOrganizationData}
+            data={finishingProgressListData}
             value={finishingOrganization}
             maxHeight={150}
             onChange={item => {
@@ -100,7 +95,7 @@ const SetLineProcessScreen: FC = ({ navigation }) => {
             selectedTextStyle={{ color: '#444444', fontSize: 16 }}
             placeholder="Select Finishing Process"
             placeholderStyle={{ color: '#444444', fontSize: 16 }}
-            data={finishingOrganizationData_}
+            data={finishingOrganizationData}
             value={finishingProcess}
             maxHeight={150}
             onChange={item => {

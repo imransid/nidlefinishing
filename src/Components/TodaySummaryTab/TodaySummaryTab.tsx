@@ -38,6 +38,7 @@ const TodaySummaryTab: FC = () => {
       }
       let response = await commonGetAPI(props);
       if (response !== undefined) {
+        console.log('response', response)
         setData(response.data)
       }
 
