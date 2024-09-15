@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 const Styles = StyleSheet.create({
-  selectLineDateButton: {
+  buttonContainer: {
     width: '40%',
     height: 50,
     borderRadius: 10,
@@ -14,7 +14,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
-  selectLineDateButtonText: {
+  buttonText: {
     fontSize: 16,
     color: '#000',
   },

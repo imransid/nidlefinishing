@@ -3,6 +3,10 @@ import {Text, TouchableOpacity, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import Styles from './style';
+
 const ReceiveTab: FC = () => {
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
@@ -2543,25 +2547,13 @@ const ReceiveTab: FC = () => {
 
   return (
     <View style={{backgroundColor: 'white', flex: 1}}>
-      <TouchableOpacity
-        style={{
-          width: '40%',
-          height: 50,
-          borderRadius: 10,
-          flexDirection: 'row',
-          borderWidth: 1,
-          borderColor: '#E5E5E5',
-          marginTop: 20,
-          marginLeft: 20,
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingHorizontal: 20,
-        }}
-        onPress={() => setLineModalVisible(true)}>
-        <Text style={{fontSize: 16, color: '#000'}}>Select Line</Text>
-        <Icon name="caret-down" size={25} color="#1C98D8" />
-      </TouchableOpacity>
-
+      <CustomModalButton
+        buttonStyle={Styles.selectLineDateButton}
+        buttonTextStyle={Styles.selectLineDateButtonText}
+        onPress={() => setLineModalVisible(true)}
+        text={selectedLine !== '' ? selectedLine : 'Select Line'}
+        icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
+      />
       {/* Modal for TreeSelect */}
       <SelectLineModal
         orgTreeData={orgTreeData}
@@ -2575,21 +2567,10 @@ const ReceiveTab: FC = () => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
-
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: 50,
-          backgroundColor: '#3C4FE9',
-          flexDirection: 'row',
-        }}>
-        <Icon name="tencent-weibo" size={20} color={'white'} />
-        <Text style={{color: 'white', marginStart: 10}}>CONFIRM RECEIVE</Text>
-      </TouchableOpacity>
+      <CustomSubmitButton
+        icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
+        text="CONFIRM RECEIVE"
+      />
     </View>
   );
 };
