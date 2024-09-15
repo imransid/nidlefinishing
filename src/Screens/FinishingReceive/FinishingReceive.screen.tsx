@@ -48,19 +48,16 @@ const FinishingReceiveScreen = () => {
       </LinearGradient>
 
       <Tab.Navigator
-        style={{margin: 20, borderRadius: 20}}
+        style={Styles.tabNavigatorStyle}
         initialRouteName="Receive"
-        tabBarOptions={{
-          showIcon: true,
-          style: Styles.tabBar,
-          indicatorStyle: Styles.indicator,
-        }}
+      
         screenOptions={({route}) => ({
           title: route.name,
+          tabBarStyle: Styles.tabBarStyle,
+          tabBarIndicatorStyle: Styles.tabBarIndicatorStyle,
           tabBarActiveTintColor: '#1C98D8',
           tabBarInactiveTintColor: '#898792',
-          tabBarItemStyle: {flexDirection: 'row'},
-
+          tabBarItemStyle: Styles.tabBarItemStyle,
           tabBarBadge() {
             if (route.name === 'Pending') {
               return (
@@ -71,7 +68,7 @@ const FinishingReceiveScreen = () => {
             }
             return undefined;
           },
-          tabBarLabelStyle: {fontSize: moderateScale(9), fontWeight: '700'},
+          tabBarLabelStyle: Styles.tabBarLabelStyle,
           tabBarIcon: ({focused, color}) => {
             let iconName;
             switch (route.name) {
