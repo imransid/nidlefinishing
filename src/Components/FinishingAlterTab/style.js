@@ -1,12 +1,17 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import {StyleSheet} from 'react-native';
+import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 
-import { colors } from '../../theme/colors';
+import {colors} from '../../theme/colors';
 
 const Styles = StyleSheet.create({
-    alterResendTabContainer:{backgroundColor: 'white', flex: 1},
-    selectButtonContainer:{flexDirection: 'row', marginBottom:10},
-  confirmButton:{
+  alterResendTabContainer: {
+    backgroundColor: 'white',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectButtonContainer: {flexDirection: 'row', marginBottom: 10},
+  confirmButton: {
     position: 'absolute',
     bottom: 0,
     justifyContent: 'center',
@@ -16,8 +21,8 @@ const Styles = StyleSheet.create({
     backgroundColor: '#3C4FE9',
     flexDirection: 'row',
   },
-  confirmButtonText:{color: 'white', marginStart: 10},
-  selectLineDateButton:{
+  confirmButtonText: {color: 'white', marginStart: 10},
+  selectLineDateButton: {
     width: '30%',
     height: 50,
     borderRadius: 10,
@@ -30,7 +35,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
-  selectLineDateButtonText:{fontSize: 16, color: '#000'}
+  selectLineDateButtonText: {fontSize: 16, color: '#000'},
 });
 
 export default Styles;

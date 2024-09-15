@@ -13,6 +13,7 @@ import TreeIcon from 'react-native-vector-icons/Ionicons';
 import TreeSelect from 'react-native-tree-select';
 import CalendarModal from '../CalendarModal/CalenderModal';
 import Styles from './style';
+import FinishingAlterDataTableComponent from '../FinishingAlterDataTableComponent/FinishingAlterDataTableComponent';
 const FinishingAlterTab: FC = () => {
   const orgTreeData = [
     {
@@ -2508,20 +2509,14 @@ const FinishingAlterTab: FC = () => {
     {
       color: 'White',
       size: 'M',
-      inputQty: 1000,
-      qcQty: 900,
-      totalReceive: 500,
-      balanceQty: 500,
-      receiveQty: 0,
+      receiveQty: 1000,
+      finishingAlterSendQty:0,
     },
     {
       color: 'Black',
       size: 'L',
-      inputQty: 2000,
-      qcQty: 1900,
-      totalReceive: 1000,
-      balanceQty: 1000,
-      receiveQty: 0,
+      receiveQty: 1000,
+      finishingAlterSendQty:0,
     },
   ];
   const [treeOpen, setTreeOpen] = React.useState<boolean>(false);
@@ -2529,23 +2524,20 @@ const FinishingAlterTab: FC = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
   const [selectedDate, setDate] = React.useState('');
+
   const renderItem = ({item}: {item: number}) => (
-    <DataTableComponent
+    <FinishingAlterDataTableComponent
       buyer="Buyer"
       buyerName="Brothers Fashion Ltd."
       style="Style"
       styleName="Brother-5060OD"
       order="PO"
       orderNumber="PO-5623147855"
-      showCheckbox={true}
       columnNames={[
         'Color',
         'Size',
-        'Input Qty.',
-        'QC Qty.',
-        'Total Receive',
-        'Balance Qty.',
         'Receive Qty.',
+        'Finishing Alter Send Qty.',
       ]}
       rowData={testData}
     />
@@ -2699,7 +2691,7 @@ const FinishingAlterTab: FC = () => {
         style={Styles.confirmButton}>
         <Icon name="send" size={20} color={'white'} />
         <Text style={Styles.confirmButtonText}>
-          CONFIRM FINISHING ALTER RECEIVE
+          SEND TO ALTER
         </Text>
       </TouchableOpacity>
     </View>
