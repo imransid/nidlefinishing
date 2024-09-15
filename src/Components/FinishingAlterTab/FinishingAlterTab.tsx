@@ -7,6 +7,8 @@ import CalendarModal from '../CalendarModal/CalenderModal';
 import Styles from './style';
 import FinishingAlterDataTableComponent from '../FinishingAlterDataTableComponent/FinishingAlterDataTableComponent';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
 const FinishingAlterTab: FC = () => {
   const orgTreeData = [
     {
@@ -2539,22 +2541,22 @@ const FinishingAlterTab: FC = () => {
   return (
     <View style={Styles.alterResendTabContainer}>
       <View style={Styles.selectButtonContainer}>
-        <TouchableOpacity
-          style={Styles.selectLineDateButton}
-          onPress={() => setLineModalVisible(true)}>
-          <Text style={Styles.selectLineDateButtonText}>
-            {selectedLine !== '' ? selectedLine : 'Select Line'}
-          </Text>
-          <Icon name="caret-down" size={25} color="#1C98D8" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={Styles.selectLineDateButton}
-          onPress={() => setCalendarModalVisible(true)}>
-          <Text style={Styles.selectLineDateButtonText}>
-            {selectedDate !== '' ? selectedDate : 'Select Date'}{' '}
-          </Text>
-          <TreeIcon name="calendar-clear-outline" size={25} color="#1C98D8" />
-        </TouchableOpacity>
+        <CustomModalButton
+          buttonStyle={Styles.selectLineDateButton}
+          buttonTextStyle={Styles.selectLineDateButtonText}
+          onPress={() => setLineModalVisible(true)}
+          text={selectedLine !== '' ? selectedLine : 'Select Line'}
+          icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
+        />
+        <CustomModalButton
+          buttonStyle={Styles.selectLineDateButton}
+          buttonTextStyle={Styles.selectLineDateButtonText}
+          onPress={() => setCalendarModalVisible(true)}
+          text={selectedDate !== '' ? selectedDate : 'Select Date'}
+          icon={
+            <TreeIcon name="calendar-clear-outline" size={25} color="#1C98D8" />
+          }
+        />
       </View>
       {/* Modal for TreeSelect */}
       <SelectLineModal
@@ -2562,6 +2564,7 @@ const FinishingAlterTab: FC = () => {
         setSelectedLine={setSelectedLine}
         lineModalVisible={lineModalVisible}
         setLineModalVisible={setLineModalVisible}
+        pageName={''}
       />
       <CalendarModal
         setDate={setDate}
@@ -2574,10 +2577,10 @@ const FinishingAlterTab: FC = () => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
-      <TouchableOpacity style={Styles.confirmButton}>
-        <Icon name="send" size={20} color={'white'} />
-        <Text style={Styles.confirmButtonText}>SEND TO ALTER</Text>
-      </TouchableOpacity>
+      <CustomSubmitButton
+        icon={<Icon name="send" size={20} color={'white'} />}
+        text="SEND TO ALTER"
+      />
     </View>
   );
 };

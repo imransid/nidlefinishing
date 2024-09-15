@@ -1,18 +1,13 @@
 import React, {type FC} from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-  Modal,
-  ScrollView,
-} from 'react-native';
+import {View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
-import TreeSelect from 'react-native-tree-select';
 import CalendarModal from '../CalendarModal/CalenderModal';
 import Styles from './style';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import SelectLineModal from '../SelectLineModal/SelectLineModal';
 const AlterResendTab: FC = () => {
   const orgTreeData = [
     {
@@ -2524,9 +2519,8 @@ const AlterResendTab: FC = () => {
       receiveQty: 0,
     },
   ];
-  const [treeOpen, setTreeOpen] = React.useState<boolean>(false);
+  const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [selectedLine, setSelectedLine] = React.useState<string>('');
-  const [modalVisible, setModalVisible] = React.useState(false);
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
   const [selectedDate, setDate] = React.useState('');
   const renderItem = ({item}: {item: number}) => (
@@ -2551,139 +2545,34 @@ const AlterResendTab: FC = () => {
     />
   );
 
-  const onClickLeaf = async (data: any): Promise<any> => {
-    const dataObj = {
-      selectedLine: data?.item?.name.toString(),
-      selectedLineID: data?.item?.id,
-      selectedRootPath: data?.item?.rootPath,
-    };
-
-    try {
-      // setLoader(true);
-      // dispatch(cleanData());
-      // if (logicPlanRequired) {
-      //   // clear all master Data
-      //   dispatch(clearStyleAndBuyer());
-      //   await deleteAllMasterInDB();
-
-      //   const currentDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
-      //   dispatch(setLastPullTime(currentDateTime));
-      // }
-
-      // dispatch(updateStatus(true));
-      // dispatch(updateSetting(dataObj));
-      // check internet and call lunch Time
-
-      // if (isInternetReachable) {
-      //   dispatch(getVarianceSetting());
-      //   dispatch(getLunchTime(data?.item?.id));
-      // }
-      //
-      setSelectedLine(data.item.name);
-      setModalVisible(false);
-    } catch (error) {
-      console.error('Error during onClickLeaf execution:', error);
-      // setLoader(false); // Stop loader
-    } finally {
-      // setLoader(false); // Stop loader
-      setTreeOpen(false);
-    }
-  };
-
   return (
     <View style={Styles.alterResendTabContainer}>
       <View style={Styles.selectButtonContainer}>
-        <TouchableOpacity
-          style={Styles.selectLineDateButton}
-          onPress={() => setModalVisible(true)}>
-          <Text style={Styles.selectLineDateButtonText}>
-            {selectedLine !== '' ? selectedLine : 'Select Line'}
-          </Text>
-          <Icon name="caret-down" size={25} color="#1C98D8" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={Styles.selectLineDateButton}
-          onPress={() => setCalendarModalVisible(true)}>
-          <Text style={Styles.selectLineDateButtonText}>
-            {selectedDate !== '' ? selectedDate : 'Select Date'}{' '}
-          </Text>
-          <TreeIcon name="calendar-clear-outline" size={25} color="#1C98D8" />
-        </TouchableOpacity>
+        <CustomModalButton
+          buttonStyle={Styles.selectLineDateButton}
+          buttonTextStyle={Styles.selectLineDateButtonText}
+          onPress={() => setLineModalVisible(true)}
+          text={selectedLine !== '' ? selectedLine : 'Select Line'}
+          icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
+        />
+        <CustomModalButton
+          buttonStyle={Styles.selectLineDateButton}
+          buttonTextStyle={Styles.selectLineDateButtonText}
+          onPress={() => setCalendarModalVisible(true)}
+          text={selectedDate !== '' ? selectedDate : 'Select Date'}
+          icon={
+            <TreeIcon name="calendar-clear-outline" size={25} color="#1C98D8" />
+          }
+        />
       </View>
       {/* Modal for TreeSelect */}
-      <Modal
-        style={{flex: 1, height: '100%', width: '100%'}}
-        visible={modalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0,0,0.5)', // semi-transparent background
-          }}>
-          <View
-            style={{
-              maxWidth: '50%',
-              minWidth: '50%',
-              maxHeight: '50%',
-              backgroundColor: 'white',
-              borderWidth: 1,
-              borderColor: '#ededed',
-              padding: 20,
-            }}>
-            <ScrollView
-              nestedScrollEnabled
-              showsVerticalScrollIndicator={false}
-              style={{backgroundColor: 'transparent'}}>
-              <TreeSelect
-                onClickLeaf={onClickLeaf}
-                data={orgTreeData}
-                isOpen={treeOpen}
-                defaultSelectedId={['B062']}
-                isShowTreeId={false}
-                selectType="single"
-                itemStyle={{
-                  backgroundColor: 'transparent',
-                  fontSize: 14,
-                  color: '#747474',
-                }}
-                selectedItemStyle={{
-                  backgroundColor: 'transparent',
-                  fontSize: 14,
-                  color: '#8BC6FC',
-                }}
-                treeNodeStyle={{
-                  openIcon: (
-                    <TreeIcon
-                      style={{
-                        fontSize: 20,
-                        color: '#6CAEF1',
-                      }}
-                      name="checkmark"
-                    />
-                  ),
-                  closeIcon: <TreeIcon style={{fontSize: 20}} name="menu" />,
-                }}
-              />
-            </ScrollView>
-            {/* Close modal button */}
-            <TouchableOpacity
-              style={{
-                marginTop: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 10,
-                backgroundColor: '#3C4FE9',
-              }}
-              onPress={() => setModalVisible(false)}>
-              <Text style={{color: 'white'}}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <SelectLineModal
+        orgTreeData={orgTreeData}
+        setSelectedLine={setSelectedLine}
+        lineModalVisible={lineModalVisible}
+        setLineModalVisible={setLineModalVisible}
+        pageName={''}
+      />
       <CalendarModal
         setDate={setDate}
         calendarModalVisible={calendarModalVisible}
@@ -2695,13 +2584,10 @@ const AlterResendTab: FC = () => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
-      <TouchableOpacity
-        style={Styles.confirmButton}>
-        <Icon name="send" size={20} color={'white'} />
-        <Text style={Styles.confirmButtonText}>
-          CONFIRM FINISHING ALTER RECEIVE
-        </Text>
-      </TouchableOpacity>
+      <CustomSubmitButton
+        icon={<Icon name="send" size={20} color={'white'} />}
+        text="CONFIRM FINISHING ALTER RECEIVE"
+      />
     </View>
   );
 };

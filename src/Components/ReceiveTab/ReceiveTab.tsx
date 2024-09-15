@@ -1,14 +1,22 @@
-import React, { type FC } from 'react';
-import { Text, TouchableOpacity, View, FlatList } from 'react-native';
+import React, {type FC} from 'react';
+import {Text, TouchableOpacity, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
-import { Detail, StockViewItem } from './interface';
-import { commonGetAPI } from '@/store/sagas/helper/api.saga';
-import { BASE_URL, GET_QMS_STOCK_FOR_RECEIVE, ORG_TREE } from '@/utils/environment';
-import { useFocusEffect } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import Styles from './style';
+
+import {Detail, StockViewItem} from './interface';
+import {commonGetAPI} from '@/store/sagas/helper/api.saga';
+import {
+  BASE_URL,
+  GET_QMS_STOCK_FOR_RECEIVE,
+  ORG_TREE,
+} from '@/utils/environment';
+import {useFocusEffect} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/store';
 const ReceiveTab: FC = () => {
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
@@ -16,7 +24,9 @@ const ReceiveTab: FC = () => {
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
 
-  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
+  const accessToken = useSelector(
+    (state: RootState) => state.users.user.data?.accessToken,
+  );
 
   // Function to fetch data from API
   const fetchData = async () => {
@@ -24,13 +34,12 @@ const ReceiveTab: FC = () => {
       // setLoading(true);
       let props = {
         url: BASE_URL + '/' + ORG_TREE,
-        token: accessToken !== undefined ? accessToken : ''
-      }
+        token: accessToken !== undefined ? accessToken : '',
+      };
       let response = await commonGetAPI(props);
       if (response !== undefined) {
-        setOrgTree(response.data[0].children)
+        setOrgTree(response.data[0].children);
       }
-
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -42,22 +51,20 @@ const ReceiveTab: FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchData(); // Call API whenever the screen comes into focus
-    }, [])
+    }, []),
   );
-
 
   const onClickLeaf = async (id: string): Promise<any> => {
     try {
       let props = {
-        url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + '2002',//data.item.id,
-        token: accessToken !== undefined ? accessToken : ''
-      }
+        url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + '2002', //data.item.id,
+        token: accessToken !== undefined ? accessToken : '',
+      };
       let response = await commonGetAPI(props);
 
       if (response !== undefined) {
-        setTableData(response.data.details)
+        setTableData(response.data.details);
       }
-
     } catch (error) {
       console.error('Error during onClickLeaf execution:', error);
       // setLoader(false); // Stop loader
@@ -66,51 +73,38 @@ const ReceiveTab: FC = () => {
     }
   };
 
-
-
   const renderItem = (item: StockViewItem) => {
-
-    return <DataTableComponent
-      buyer="Buyer"
-      buyerName={item.item.customer}
-      style="Style"
-      styleName={item.item.style}
-      order="PO"
-      orderNumber="PO-5623147855"
-      showCheckbox={true}
-      columnNames={[
-        'Color',
-        'Size',
-        'QC Qty.',
-        'Total Receive',
-        'Balance Qty.',
-        'Receive Qty.',
-      ]}
-      rowData={item.item.breakdowns}
-    />
+    return (
+      <DataTableComponent
+        buyer="Buyer"
+        buyerName={item.item.customer}
+        style="Style"
+        styleName={item.item.style}
+        order="PO"
+        orderNumber="PO-5623147855"
+        showCheckbox={true}
+        columnNames={[
+          'Color',
+          'Size',
+          'QC Qty.',
+          'Total Receive',
+          'Balance Qty.',
+          'Receive Qty.',
+        ]}
+        rowData={item.item.breakdowns}
+      />
+    );
   };
 
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
-      <TouchableOpacity
-        style={{
-          width: '40%',
-          height: 50,
-          borderRadius: 10,
-          flexDirection: 'row',
-          borderWidth: 1,
-          borderColor: '#E5E5E5',
-          marginTop: 20,
-          marginLeft: 20,
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingHorizontal: 20,
-        }}
-        onPress={() => setLineModalVisible(true)}>
-        <Text style={{ fontSize: 16, color: '#000' }}>Select Line</Text>
-        <Icon name="caret-down" size={25} color="#1C98D8" />
-      </TouchableOpacity>
-
+    <View style={{backgroundColor: 'white', flex: 1}}>
+      <CustomModalButton
+        buttonStyle={Styles.selectLineDateButton}
+        buttonTextStyle={Styles.selectLineDateButtonText}
+        onPress={() => setLineModalVisible(true)}
+        text={selectedLine !== '' ? selectedLine : 'Select Line'}
+        icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
+      />
       {/* Modal for TreeSelect */}
       <SelectLineModal
         orgTreeData={orgTree}
@@ -119,30 +113,18 @@ const ReceiveTab: FC = () => {
         setLineModalVisible={setLineModalVisible}
         pageName="receive"
         onClickAble={(e: number) => onClickLeaf(e.toString())}
-
       />
       <FlatList
-        style={{ marginBottom: 100 }}
+        style={{marginBottom: 100}}
         data={tableData}
         renderItem={renderItem}
-        keyExtractor={(item) => `${Math.random()}` + `${item.varienceId}`}
+        keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
       />
-
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: 50,
-          backgroundColor: '#3C4FE9',
-          flexDirection: 'row',
-        }}>
-        <Icon name="tencent-weibo" size={20} color={'white'} />
-        <Text style={{ color: 'white', marginStart: 10 }}>CONFIRM RECEIVE</Text>
-      </TouchableOpacity>
-    </View >
+      <CustomSubmitButton
+        icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
+        text="CONFIRM RECEIVE"
+      />
+    </View>
   );
 };
 
