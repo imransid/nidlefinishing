@@ -26,6 +26,6 @@ export const setLineSlice = createSlice({
   },
 });
 
-export const {setFinishOrg} = setLineSlice.actions;
+export const {setFinishOrg, setProcessList} = setLineSlice.actions;
 
 export default setLineSlice.reducer;
