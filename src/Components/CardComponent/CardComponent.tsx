@@ -18,28 +18,42 @@ interface ICardComponentProps {
 }
 
 const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
-  const renderItem = ({
-    item
-  }) => {
-   return <Grid style={styles.cardContentStyle}>
+  const renderItem = ({item}) => {
+    console.log(item, `item`);
+    return (
+      <Grid style={styles.cardContentStyle}>
         <Col size={1.5} style={styles.lineContentStyle}>
-          <Text style={styles.lineText}>Line 01</Text>
+          <Text style={styles.lineText}>{item.transanction.qmsOrgName}</Text>
         </Col>
         <Col size={3.5} style={styles.informationContentStyle}>
-          <Text style={styles.receiveInfoText}>Rcv: {item.transanction.qty}pcs confirmation confirm</Text>
+          <Text style={styles.receiveInfoText}>
+            Rcv: {item.transanction.qty}pcs confirmation confirm
+          </Text>
           <View style={styles.sizeContentStyle}>
             <Text style={styles.sizeQtyText}>
-              S:
-              20
+              {item.transanction.size}:{item.transanction.qty}
             </Text>
           </View>
         </Col>
         <Col size={1.5}>
-          <Text style={item.confirmationStatus === 'ACCEPTED' ? styles.statusTextConfirm : item.confirmationStatus === 'CONFIRMED' ? styles.statusTextConfirm : item.confirmationStatus === 'CANCEL' ? styles.statusTextCancel: item.confirmationStatus === 'PENDING' ? styles.statusTextPending : '' }>{item.confirmationStatus}</Text>
+          <Text
+            style={
+              item.confirmationStatus === 'ACCEPTED'
+                ? styles.statusTextConfirm
+                : item.confirmationStatus === 'CONFIRMED'
+                  ? styles.statusTextConfirm
+                  : item.confirmationStatus === 'CANCEL'
+                    ? styles.statusTextCancel
+                    : item.confirmationStatus === 'PENDING'
+                      ? styles.statusTextPending
+                      : ''
+            }>
+            {item.confirmationStatus}
+          </Text>
         </Col>
-   
-    </Grid>
-}
+      </Grid>
+    );
+  };
   return (
     <Grid>
       <Col>
@@ -52,7 +66,7 @@ const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
         </Row>
         <Row style={styles.cardStyle} size={8}>
           <FlatList
-          maxToRenderPerBatch={5}
+            maxToRenderPerBatch={5}
             renderItem={renderItem}
             data={cardContent}
             keyExtractor={(item, index) => index.toString()}

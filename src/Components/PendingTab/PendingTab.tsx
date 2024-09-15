@@ -140,7 +140,7 @@ const PendingTab: FC = () => {
         }}>
         <CardComponent
           cardHeading="Receive Confirmation"
-          cardContent={data.finishReceive}
+          cardContent={( data as any).finishReceive}
         />
       </Col>
       <Col
@@ -153,7 +153,7 @@ const PendingTab: FC = () => {
         }}>
         <CardComponent
           cardHeading="F. Alter Acceptance"
-          cardContent={data.finishAlterAcceptance}
+          cardContent={( data as any).finishAlterAcceptance}
         />
       </Col>
       <Col
@@ -166,7 +166,7 @@ const PendingTab: FC = () => {
         }}>
         <CardComponent
           cardHeading="F. Alter Receive Confirmation "
-          cardContent={data.finishAlterReceive}
+          cardContent={( data as any).finishAlterReceive}
         />
       </Col>
     </Grid>
