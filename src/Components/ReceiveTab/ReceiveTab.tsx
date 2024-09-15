@@ -15,7 +15,6 @@ const ReceiveTab: FC = () => {
   const [treeOpen, setTreeOpen] = React.useState<boolean>(false);
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [modalVisible, setModalVisible] = React.useState(false);
-  console.log(selectedLine, treeOpen);
 
   const orgTreeData = [
     {

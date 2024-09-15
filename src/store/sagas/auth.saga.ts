@@ -45,7 +45,6 @@ export function* loginSaga(
 
       const responseFinishProcessList: any = yield call(commonGetAPI, props);
 
-      console.log('responseFinishProcessList', responseFinishProcessList);
 
       if (responseSetLineProcess !== undefined) {
         let modFinishData = responseSetLineProcess.data.map((e: any) => {

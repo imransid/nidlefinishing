@@ -19,52 +19,27 @@ interface ICardComponentProps {
 
 const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
   const renderItem = ({
-    item,
-  }: {
-    item: {
-      line: string;
-      receiveInfo: string;
-      sizeS: number;
-      sizeM: number;
-      sizeL: number;
-      status: string;
-    };
-  }) => (
-    <Grid style={styles.cardContentStyle}>
+    item
+  }) => {
+   return <Grid style={styles.cardContentStyle}>
         <Col size={1.5} style={styles.lineContentStyle}>
-          <Text style={styles.lineText}>{item.line}</Text>
+          <Text style={styles.lineText}>Line 01</Text>
         </Col>
-        <Col size={3} style={styles.informationContentStyle}>
-          <Text style={styles.receiveInfoText}>{item.receiveInfo}</Text>
+        <Col size={3.5} style={styles.informationContentStyle}>
+          <Text style={styles.receiveInfoText}>Rcv: {item.transanction.qty}pcs confirmation confirm</Text>
           <View style={styles.sizeContentStyle}>
             <Text style={styles.sizeQtyText}>
               S:
-              {item.sizeS}
-            </Text>
-            <Text style={styles.sizeQtyText}>
-              M:
-              {item.sizeM}
-            </Text>
-            <Text style={styles.sizeQtyText}>
-              L:
-              {item.sizeL}
-            </Text>
-            <Text style={styles.sizeQtyText}>
-              M:
-              {item.sizeM}
-            </Text>
-            <Text style={styles.sizeQtyText}>
-              L:
-              {item.sizeL}
+              20
             </Text>
           </View>
         </Col>
-        <Col size={1}>
-          <Text style={item.status === 'CONFIRM' ? styles.statusTextConfirm : item.status === 'CANCEL' ? styles.statusTextCancel: item.status === 'PENDING' ? styles.statusTextPending : '' }>{item.status}</Text>
+        <Col size={1.5}>
+          <Text style={item.confirmationStatus === 'ACCEPTED' ? styles.statusTextConfirm : item.confirmationStatus === 'CONFIRMED' ? styles.statusTextConfirm : item.confirmationStatus === 'CANCEL' ? styles.statusTextCancel: item.confirmationStatus === 'PENDING' ? styles.statusTextPending : '' }>{item.confirmationStatus}</Text>
         </Col>
    
     </Grid>
-  );
+}
   return (
     <Grid>
       <Col>
@@ -77,6 +52,7 @@ const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
         </Row>
         <Row style={styles.cardStyle} size={8}>
           <FlatList
+          maxToRenderPerBatch={5}
             renderItem={renderItem}
             data={cardContent}
             keyExtractor={(item, index) => index.toString()}

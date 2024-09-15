@@ -53,18 +53,18 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   sizeQtyText: {
-    fontSize: moderateScale(8),
+    fontSize: moderateScale(7),
     fontWeight: '500',
     color: '#765492',
   },
   statusTextConfirm: {
-    fontSize: moderateScale(8),
+    fontSize: moderateScale(7),
     fontWeight: '600',
     color: '#4BB543',
     alignSelf:'center'
   },
   statusTextCancel: {
-    fontSize: moderateScale(8),
+    fontSize: moderateScale(7),
     fontWeight: '600',
     color: '#E62E2D',
     alignSelf:'center'
