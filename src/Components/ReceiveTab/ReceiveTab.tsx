@@ -1,20 +1,11 @@
 import React, {type FC} from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-  ScrollView,
-  Modal,
-} from 'react-native';
+import {Text, TouchableOpacity, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import TreeIcon from 'react-native-vector-icons/Ionicons';
 import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
-import TreeSelect from 'react-native-tree-select';
+import SelectLineModal from '../SelectLineModal/SelectLineModal';
 const ReceiveTab: FC = () => {
-  const [treeOpen, setTreeOpen] = React.useState<boolean>(false);
   const [selectedLine, setSelectedLine] = React.useState<string>('');
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [lineModalVisible, setLineModalVisible] = React.useState(false);
 
   const orgTreeData = [
     {
@@ -2528,45 +2519,6 @@ const ReceiveTab: FC = () => {
     },
   ];
 
-  const onClickLeaf = async (data: any): Promise<any> => {
-    const dataObj = {
-      selectedLine: data?.item?.name.toString(),
-      selectedLineID: data?.item?.id,
-      selectedRootPath: data?.item?.rootPath,
-    };
-
-    try {
-      // setLoader(true);
-      // dispatch(cleanData());
-      // if (logicPlanRequired) {
-      //   // clear all master Data
-      //   dispatch(clearStyleAndBuyer());
-      //   await deleteAllMasterInDB();
-
-      //   const currentDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
-      //   dispatch(setLastPullTime(currentDateTime));
-      // }
-
-      // dispatch(updateStatus(true));
-      // dispatch(updateSetting(dataObj));
-      // check internet and call lunch Time
-
-      // if (isInternetReachable) {
-      //   dispatch(getVarianceSetting());
-      //   dispatch(getLunchTime(data?.item?.id));
-      // }
-      //
-      setSelectedLine(data.item.name);
-      setModalVisible(false);
-    } catch (error) {
-      console.error('Error during onClickLeaf execution:', error);
-      // setLoader(false); // Stop loader
-    } finally {
-      // setLoader(false); // Stop loader
-      setTreeOpen(false);
-    }
-  };
-
   const renderItem = ({item}: {item: number}) => (
     <DataTableComponent
       buyer="Buyer"
@@ -2605,86 +2557,18 @@ const ReceiveTab: FC = () => {
           justifyContent: 'space-between',
           paddingHorizontal: 20,
         }}
-        onPress={() => setModalVisible(true)}>
+        onPress={() => setLineModalVisible(true)}>
         <Text style={{fontSize: 16, color: '#000'}}>Select Line</Text>
         <Icon name="caret-down" size={25} color="#1C98D8" />
       </TouchableOpacity>
 
       {/* Modal for TreeSelect */}
-      <Modal
-        style={{flex: 1, height: '100%', width: '100%'}}
-        visible={modalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0,0,0.5)', // semi-transparent background
-          }}>
-          <View
-            style={{
-              maxWidth: "50%",
-              minWidth: "50%",
-              maxHeight: "50%",
-              backgroundColor: 'white',
-              borderWidth: 1,
-              borderColor: '#ededed',
-              padding: 20,
-            }}>
-            <ScrollView
-              nestedScrollEnabled
-              showsVerticalScrollIndicator={false}
-              style={{backgroundColor: 'transparent'}}>
-              <TreeSelect
-                onClickLeaf={onClickLeaf}
-                data={orgTreeData}
-                isOpen={treeOpen}
-                defaultSelectedId={['B062']}
-                isShowTreeId={false}
-                selectType="single"
-                itemStyle={{
-                  backgroundColor: 'transparent',
-                  fontSize: 14,
-                  color: '#747474',
-                }}
-                selectedItemStyle={{
-                  backgroundColor: 'transparent',
-                  fontSize: 14,
-                  color: '#8BC6FC',
-                }}
-                treeNodeStyle={{
-                  openIcon: (
-                    <TreeIcon
-                      style={{
-                        fontSize: 20,
-                        color: '#6CAEF1',
-                      }}
-                      name="checkmark"
-                    />
-                  ),
-                  closeIcon: <TreeIcon style={{fontSize: 20}} name="menu" />,
-                }}
-              />
-            </ScrollView>
-
-            {/* Close modal button */}
-            <TouchableOpacity
-              style={{
-                marginTop: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 10,
-                backgroundColor: '#3C4FE9',
-              }}
-              onPress={() => setModalVisible(false)}>
-              <Text style={{color: 'white'}}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <SelectLineModal
+        orgTreeData={orgTreeData}
+        setSelectedLine={setSelectedLine}
+        lineModalVisible={lineModalVisible}
+        setLineModalVisible={setLineModalVisible}
+      />
       <FlatList
         style={{marginBottom: 100}}
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
