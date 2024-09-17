@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import {StyleSheet} from 'react-native';
+import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 
 const Styles = StyleSheet.create({
   columnName: {
@@ -11,25 +11,25 @@ const Styles = StyleSheet.create({
     backgroundColor: '#F9F8FB',
     borderRadius: scale(3),
     borderWidth: 1,
-    borderColor:'#E3E1F0',
+    borderColor: '#E3E1F0',
     marginHorizontal: scale(10),
     marginTop: verticalScale(8),
-    padding: verticalScale(10)
+    padding: verticalScale(10),
   },
   header: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginBottom: verticalScale(4)
+    marginBottom: verticalScale(4),
   },
   headerText: {
     color: '#9B97C0',
     fontSize: moderateScale(10),
-    fontWeight: '600'
+    fontWeight: '600',
   },
   subHeaderText: {
     color: '#765492',
     fontSize: moderateScale(11),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   tableFooter: {
     flexDirection: 'row',
@@ -37,23 +37,13 @@ const Styles = StyleSheet.create({
     marginTop: 16,
     borderTopWidth: 1,
     borderColor: '#E3E1F0',
-    marginHorizontal:scale(8),
+    marginHorizontal: scale(8),
   },
   tableFooterValue: {
     color: '#765492',
     fontSize: moderateScale(11),
     fontWeight: 'bold',
   },
-  textInput: {
-    borderColor: '#ddd',
-    borderRadius: 8,
-    borderWidth: 1,
-    color: 'black',
-    height: 35,
-    marginLeft: 110,
-    paddingHorizontal: 5,
-    width: 100
-  }
 });
 
 export default Styles;

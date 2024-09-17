@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { DataTable } from 'react-native-paper';
+import React, {FC, useState} from 'react';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {DataTable} from 'react-native-paper';
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
-import { Breakdown } from '../ReceiveTab/interface';
+import {Breakdown} from '../ReceiveTab/interface';
+import CustomTextInput from '../CustomTextInput/CustomTextInput';
 
 export interface ApiDataItem {
   id?: string; // Unique identifier for each item
@@ -41,11 +42,9 @@ const DataTableComponent: FC<IDataTableProps> = ({
   columnNames,
   rowData,
   onUpdatedArray,
-  styleID
-
+  styleID,
 }) => {
-
-  console.log('rowData', rowData)
+  console.log('rowData', rowData);
 
   const [receiveQty, setReceiveQty] = useState(rowData);
 
@@ -57,7 +56,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
     rowData.map(row => ({
       ...row,
       tempReceived: '0',
-    }))
+    })),
   );
 
   const handleTextInputChange = (index: number, value: string) => {
@@ -80,7 +79,6 @@ const DataTableComponent: FC<IDataTableProps> = ({
       qty: row.tempReceived, // Use the updated quantity
       isPacked: isPacked === undefined ? false : isPacked,
     }));
-
 
     // Call the handler to update the parent component's ref
     onUpdatedArray(updatedArray);
@@ -127,9 +125,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
   //   onUpdatedArray(updatedArray);
   // };
 
-
   return (
-
     <View style={Styles.container}>
       <View
         style={{
@@ -158,9 +154,11 @@ const DataTableComponent: FC<IDataTableProps> = ({
           </View>
         </View>
         <View
-          style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+          style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
           {/* {showCheckbox && <CheckboxComponent />} */}
-          {showCheckbox && <CheckboxComponent onChange={handleCheckboxChange} />}
+          {showCheckbox && (
+            <CheckboxComponent onChange={handleCheckboxChange} />
+          )}
         </View>
       </View>
 
@@ -181,8 +179,9 @@ const DataTableComponent: FC<IDataTableProps> = ({
             <DataTable.Cell numeric>{row.qcQty}</DataTable.Cell>
             <DataTable.Cell numeric>{row.totalReceived}</DataTable.Cell>
             <DataTable.Cell>
-              <TextInput
-                style={Styles.textInput}
+              <CustomTextInput
+                type="quantity"
+                maxLength={4}
                 keyboardType="numeric"
                 value={row.tempReceived} // Bind to textInputValues state
                 onChangeText={value => handleTextInputChange(index, value)}
@@ -198,7 +197,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
             {name === 'Color'
               ? 'Total = '
               : name === 'Size'
-                ? ' '
+                ? '                                  '
                 : name === 'Input Qty.'
                   ? ' '
                   : name === 'QC Qty.'
@@ -216,38 +215,5 @@ const DataTableComponent: FC<IDataTableProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  textInput: {
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-    padding: 4,
-    fontSize: 16,
-  },
-  tableFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-  },
-  tableFooterValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  footerButtons: {
-    marginTop: 10,
-    alignItems: 'center',
-  },
-  saveButton: {
-    backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-  },
-  saveButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-});
 
 export default DataTableComponent;
