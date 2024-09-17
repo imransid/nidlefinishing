@@ -1,10 +1,21 @@
 import React, { FC, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
-import DataTableRow from 'react-native-paper/lib/typescript/components/DataTable/DataTableRow';
 import { Breakdown } from '../ReceiveTab/interface';
+
+export interface ApiDataItem {
+  id: string; // Unique identifier for each item
+  styleId: string;
+  orderentityId: string;
+  varienceId: number;
+  qmsOrgId: string;
+  finishingOrgId: string;
+  qty: string;
+  isPacked: boolean;
+}
+
 interface IDataTableProps {
   buyer: string;
   buyerName: string;
@@ -15,6 +26,7 @@ interface IDataTableProps {
   showCheckbox?: boolean;
   columnNames: string[];
   rowData: Breakdown[];
+  onUpdatedArray: any
 }
 
 const DataTableComponent: FC<IDataTableProps> = ({
@@ -27,21 +39,92 @@ const DataTableComponent: FC<IDataTableProps> = ({
   showCheckbox = false,
   columnNames,
   rowData,
+  onUpdatedArray,
 }) => {
+
   const [receiveQty, setReceiveQty] = useState(rowData);
 
+  // State to track if the checkbox is checked
+  const [isPacked, setIsPacked] = useState(false);
+
+  // Initialize textInputValues with empty strings or existing values
+  const [textInputValues, setTextInputValues] = useState(
+    rowData.map(row => ({
+      ...row,
+      tempReceived: '0',
+    }))
+  );
+
+  const handleTextInputChange = (index: number, value: string) => {
+    // Ensure the value is a number and defaults to 0 if empty
+    const newValue = value.trim() === '' ? '0' : value;
+    const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
+
+    const updatedTextInputs = [...textInputValues];
+    updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
+    setTextInputValues(updatedTextInputs);
+
+    // Generate and log the array when input value changes
+    const updatedArray = updatedTextInputs.map((row: any, i) => ({
+      id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+      styleId: styleName,
+      orderentityId: POnumber,
+      varienceId: row.varienceId,
+      qmsOrgId: '2002',
+      finishingOrgId: '2002',
+      qty: row.tempReceived, // Use the updated quantity
+      isPacked: isPacked === undefined ? false : isPacked,
+    }));
+
+
+    // Call the handler to update the parent component's ref
+    onUpdatedArray(updatedArray);
+    // Optionally pass the updated array to the parent component
+  };
+
   const totalReceiveQuantity = receiveQty.reduce(
-    (total, row) => total + row.totalReceived,
+    (total, row) => total + (row.totalReceived || 0),
     0,
   );
 
-  const handleAdjustmentChange = (index: number, value: string) => {
-    const updatedQty = [...receiveQty];
-    updatedQty[index].totalReceived = parseInt(value, 10) || 0;
-    setReceiveQty(updatedQty);
+  const handleCheckboxChange = (checked: boolean) => {
+    setIsPacked(checked);
+    // Optionally, update the textInputValues to reflect this change
+    const updatedTextInputs = textInputValues.map(row => ({
+      ...row,
+      isPacked: checked,
+    }));
+    setTextInputValues(updatedTextInputs);
   };
 
+  // const handleCheckboxChange = (checked: boolean) => {
+  //   setIsPacked(checked);
+
+  //   // Update the textInputValues with the new isPacked value
+  //   const updatedTextInputs = textInputValues.map(row => ({
+  //     ...row,
+  //     isPacked: checked,  // Set the checkbox state for all rows
+  //   }));
+  //   setTextInputValues(updatedTextInputs);
+
+  //   // Update the array based on the new checkbox state
+  //   const updatedArray = updatedTextInputs.map((row: any) => ({
+  //     styleId: styleName,
+  //     orderentityId: POnumber,
+  //     varienceId: row.varienceId,
+  //     qmsOrgId: '2002',
+  //     finishingOrgId: '2002',
+  //     qty: row.tempReceived, // Use the updated quantity
+  //     isPacked: checked,  // Ensure the checkbox state is reflected in the array
+  //   }));
+
+  //   // Call the handler to update the parent component
+  //   onUpdatedArray(updatedArray);
+  // };
+
+
   return (
+
     <View style={Styles.container}>
       <View
         style={{
@@ -71,7 +154,8 @@ const DataTableComponent: FC<IDataTableProps> = ({
         </View>
         <View
           style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-          {showCheckbox && <CheckboxComponent />}
+          {/* {showCheckbox && <CheckboxComponent />} */}
+          {showCheckbox && <CheckboxComponent onChange={handleCheckboxChange} />}
         </View>
       </View>
 
@@ -84,24 +168,22 @@ const DataTableComponent: FC<IDataTableProps> = ({
           ))}
         </DataTable.Header>
 
-        {receiveQty.map((row, index) => (
-          <>
-            <DataTable.Row key={index}>
-              <DataTable.Cell>{row.color}</DataTable.Cell>
-              <DataTable.Cell>{row.size}</DataTable.Cell>
-              <DataTable.Cell numeric>{row.balance}</DataTable.Cell>
-              <DataTable.Cell numeric>{row.qcQty}</DataTable.Cell>
-              <DataTable.Cell numeric>{row.totalReceived}</DataTable.Cell>
-              <DataTable.Cell>
-                <TextInput
-                  style={Styles.textInput}
-                  keyboardType="numeric"
-                  value={'0'}
-                  onChangeText={value => handleAdjustmentChange(index, value)}
-                />
-              </DataTable.Cell>
-            </DataTable.Row>
-          </>
+        {textInputValues.map((row, index) => (
+          <DataTable.Row key={index}>
+            <DataTable.Cell>{row.color}</DataTable.Cell>
+            <DataTable.Cell>{row.size}</DataTable.Cell>
+            <DataTable.Cell numeric>{row.balance}</DataTable.Cell>
+            <DataTable.Cell numeric>{row.qcQty}</DataTable.Cell>
+            <DataTable.Cell numeric>{row.totalReceived}</DataTable.Cell>
+            <DataTable.Cell>
+              <TextInput
+                style={Styles.textInput}
+                keyboardType="numeric"
+                value={row.tempReceived} // Bind to textInputValues state
+                onChangeText={value => handleTextInputChange(index, value)}
+              />
+            </DataTable.Cell>
+          </DataTable.Row>
         ))}
       </DataTable>
 
@@ -129,5 +211,38 @@ const DataTableComponent: FC<IDataTableProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  textInput: {
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+    padding: 4,
+    fontSize: 16,
+  },
+  tableFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderTopWidth: 1,
+    borderColor: '#ddd',
+  },
+  tableFooterValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  footerButtons: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  saveButton: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+});
 
 export default DataTableComponent;
