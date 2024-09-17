@@ -1,7 +1,7 @@
-import React, { type FC } from 'react';
-import { Text, TouchableOpacity, View, FlatList } from 'react-native';
+import React, { useCallback, type FC } from 'react';
+import { Text, TouchableOpacity, View, FlatList, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DataTableComponent from '../../Components/DataTableComponent/DataTableComponent';
+import DataTableComponent, { ApiDataItem } from '../../Components/DataTableComponent/DataTableComponent';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
 import { Detail, StockViewItem } from './interface';
 import { commonGetAPI } from '@/store/sagas/helper/api.saga';
@@ -9,14 +9,36 @@ import { BASE_URL, GET_QMS_STOCK_FOR_RECEIVE, ORG_TREE } from '@/utils/environme
 import { useFocusEffect } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+
 const ReceiveTab: FC = () => {
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
-  const [modalVisible, setModalVisible] = React.useState(false);
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
-
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
+
+  // Use useRef to store the updated array without re-rendering
+  const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
+
+
+  const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {
+    // Filter out items where qty is "0"
+    const filteredArray = updatedArray.filter(item => item.qty !== "0");
+
+    // Create a new array by merging the old ref with the new filtered array
+    updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
+      const newItem = filteredArray.find(item => item.id === oldItem.id);
+      return newItem ? { ...oldItem, ...newItem } : oldItem;
+    });
+
+    // Add any new items that aren't already in the ref
+    const newItems = filteredArray.filter(
+      newItem => !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id)
+    );
+
+    updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
+  }, []);
+
 
   // Function to fetch data from API
   const fetchData = async () => {
@@ -67,6 +89,22 @@ const ReceiveTab: FC = () => {
   };
 
 
+  // Callback to confirm receiving the items using useCallback
+  const confirmReceive = useCallback(() => {
+    if (updatedArrayRef.current.length > 0) {
+      // Perform your API call or any other action with the updated array
+      console.log('Confirmed Receive for:', updatedArrayRef.current);
+
+      // Show a success message
+      Alert.alert('Success', 'Items received successfully.');
+    } else {
+      // If no items have been updated, show a warning message
+      Alert.alert('Warning', 'No items have been updated.');
+    }
+  }, []);
+
+
+
 
   const renderItem = (item: StockViewItem) => {
 
@@ -86,6 +124,7 @@ const ReceiveTab: FC = () => {
         'Balance Qty.',
         'Receive Qty.',
       ]}
+      onUpdatedArray={handleUpdatedArray}
       rowData={item.item.breakdowns}
     />
   };
@@ -138,7 +177,8 @@ const ReceiveTab: FC = () => {
           height: 50,
           backgroundColor: '#3C4FE9',
           flexDirection: 'row',
-        }}>
+        }}
+        onPress={confirmReceive}>
         <Icon name="tencent-weibo" size={20} color={'white'} />
         <Text style={{ color: 'white', marginStart: 10 }}>CONFIRM RECEIVE</Text>
       </TouchableOpacity>
