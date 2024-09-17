@@ -78,27 +78,28 @@ export const commonPostAPI = async (
   props: ICommonPostAPIProps,
 ): Promise<any> => {
   try {
-    const axios = require('axios');
+    console.log('props', props);
     let data = JSON.stringify(props.data);
 
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://192.168.10.53:8081/api/v1/confirmReceiveRequest',
+      url: props.url,
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0Iiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJvcmdJZCI6MjUyLCJpYXQiOjE3MjYyOTU0MzcsImV4cCI6MTcyODg4NzQzN30.-yLfZwaQ8nfoz-y-eZLppIe0mFojtDfuZwHeprPdIOz5cEgTF5B3DqgwXsQgQogg7HxvC5I99LhA866u9nwIHA',
+        Authorization: 'Bearer ' + props.token,
       },
       data: data,
     };
 
-    axios
+    return axios
       .request(config)
-      .then(response => {
+      .then((response: any) => {
         console.log(JSON.stringify(response.data));
+        return response.data;
       })
-      .catch(() => {
+      .catch((err: any) => {
+        console.log('err', err);
         return undefined;
       });
   } catch (error) {

@@ -9,11 +9,10 @@ import Styles from './style';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { Detail, StockViewItem } from './interface';
-import { BASE_URL, GET_QMS_STOCK_FOR_RECEIVE, ORG_TREE } from '@/utils/environment';
-import { commonGetAPI } from '@/store/sagas/helper/api.saga';
+import { BASE_URL, CONFIRM_RECEIVE_REQUEST, GET_QMS_STOCK_FOR_RECEIVE, ORG_TREE } from '@/utils/environment';
+import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
 import { useFocusEffect } from '@react-navigation/native';
-
-
+import ToastPopUp from '@/utils/Toast.android';
 
 const ReceiveTab: FC = () => {
   const [selectedLine, setSelectedLine] = React.useState<string>('');
@@ -28,7 +27,7 @@ const ReceiveTab: FC = () => {
 
   const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {
     // Filter out items where qty is "0"
-    const filteredArray = updatedArray.filter(item => item.qty !== "0");
+    const filteredArray = updatedArray.filter(item => item.qty !== 0);
 
     // Create a new array by merging the old ref with the new filtered array
     updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
@@ -79,6 +78,8 @@ const ReceiveTab: FC = () => {
       };
       let response = await commonGetAPI(props);
 
+      console.log('response', response)
+
       if (response !== undefined) {
         setTableData(response.data.details);
       }
@@ -92,13 +93,22 @@ const ReceiveTab: FC = () => {
 
 
   // Callback to confirm receiving the items using useCallback
-  const confirmReceive = useCallback(() => {
+  const confirmReceive = useCallback(async () => {
     if (updatedArrayRef.current.length > 0) {
       // Perform your API call or any other action with the updated array
-      console.log('Confirmed Receive for:', updatedArrayRef.current);
+      let itemData = updatedArrayRef.current
+      const filteredData = itemData.map(({ id, ...rest }) => rest);
 
-      // Show a success message
-      Alert.alert('Success', 'Items received successfully.');
+      let props = {
+        url: BASE_URL + '/' + CONFIRM_RECEIVE_REQUEST,
+        token: accessToken !== undefined ? accessToken : '',
+        data: filteredData
+      }
+
+      let response = await commonPostAPI(props)
+
+      if (response !== undefined) ToastPopUp('Submit Successfully.')
+
     } else {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
@@ -115,8 +125,9 @@ const ReceiveTab: FC = () => {
       buyerName={item.item.customer}
       style="Style"
       styleName={item.item.style}
+      styleID={item.item.styleId}
       order="PO"
-      orderNumber="PO-5623147855"
+      orderNumber={item.item.orderId}
       showCheckbox={true}
       columnNames={[
         'Color',

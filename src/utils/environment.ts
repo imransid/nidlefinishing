@@ -7,6 +7,7 @@ const FINISHING_PROCESS_LIST = 'api/v1/getFinishingProcessList';
 const SUMMARY = 'api/v1/getTodaysFinishingSummary';
 const FINISHING_STATUS = 'api/v1/getFinishingStatus';
 const ORG_TREE = 'api/org:loggedUserOrgtree';
+const CONFIRM_RECEIVE_REQUEST = 'api/v1/confirmReceiveRequest';
 
 const GET_QMS_STOCK_FOR_RECEIVE = 'api/v1/getQmsStockForReceive?lineId=';
 
@@ -19,4 +20,5 @@ export {
   ORG_TREE,
   GET_QMS_STOCK_FOR_RECEIVE,
   FINISHING_STATUS,
+  CONFIRM_RECEIVE_REQUEST,
 };

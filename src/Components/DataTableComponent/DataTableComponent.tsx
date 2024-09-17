@@ -6,13 +6,13 @@ import Styles from './styles';
 import { Breakdown } from '../ReceiveTab/interface';
 
 export interface ApiDataItem {
-  id: string; // Unique identifier for each item
-  styleId: string;
-  orderentityId: string;
+  id?: string; // Unique identifier for each item
+  styleId: number;
+  orderentityId: number;
   varienceId: number;
-  qmsOrgId: string;
-  finishingOrgId: string;
-  qty: string;
+  qmsOrgId: number;
+  finishingOrgId: number;
+  qty: number;
   isPacked: boolean;
 }
 
@@ -22,11 +22,12 @@ interface IDataTableProps {
   style: string;
   styleName: string;
   order: string;
-  orderNumber: string;
+  orderNumber: number;
   showCheckbox?: boolean;
   columnNames: string[];
   rowData: Breakdown[];
-  onUpdatedArray: any
+  onUpdatedArray: any;
+  styleID: number;
 }
 
 const DataTableComponent: FC<IDataTableProps> = ({
@@ -40,7 +41,11 @@ const DataTableComponent: FC<IDataTableProps> = ({
   columnNames,
   rowData,
   onUpdatedArray,
+  styleID
+
 }) => {
+
+  console.log('rowData', rowData)
 
   const [receiveQty, setReceiveQty] = useState(rowData);
 
@@ -67,11 +72,11 @@ const DataTableComponent: FC<IDataTableProps> = ({
     // Generate and log the array when input value changes
     const updatedArray = updatedTextInputs.map((row: any, i) => ({
       id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-      styleId: styleName,
+      styleId: styleID,
       orderentityId: POnumber,
       varienceId: row.varienceId,
-      qmsOrgId: '2002',
-      finishingOrgId: '2002',
+      qmsOrgId: 2002,
+      finishingOrgId: 2002,
       qty: row.tempReceived, // Use the updated quantity
       isPacked: isPacked === undefined ? false : isPacked,
     }));
