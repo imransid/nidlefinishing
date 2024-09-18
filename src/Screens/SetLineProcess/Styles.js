@@ -144,6 +144,34 @@ const Styles = ScaledSheet.create({
     right: 0,
     zIndex: -1,
     height: '100%'
+  },
+  nextButton: {
+    height: 50,
+    width: 450,
+    backgroundColor: '#3C4FE9',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  nextButtonText: { color: '#fff', fontSize: 18 },
+  dropDownStyle: {
+    height: 50,
+    width: 450,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  dropdownItemTextStyle: { color: '#444444', fontSize: 16 },
+  dropdownSelectedTextStyle: { color: '#444444', fontSize: 16 },
+  dropdownPlaceholderStyle: { color: '#444444', fontSize: 16 },
+  dropdownIconStyle: { width: 20, height: 25 },
+  dropdownContainer: {
+    flex: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 15
   }
 });
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import {FC} from 'react';
-import {View, Text} from 'react-native';
+import React, { type FC } from 'react';
+import { Text, View } from 'react-native';
+import { Col, Grid, Row } from 'react-native-easy-grid';
+import { FlatList } from 'react-native-gesture-handler';
+
 import styles from './style';
-import {FlatList} from 'react-native-gesture-handler';
-import {Col, Grid, Row} from 'react-native-easy-grid';
 
 interface ICardComponentProps {
   cardHeading: string;
@@ -17,9 +17,8 @@ interface ICardComponentProps {
   }>;
 }
 
-const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
-  const renderItem = ({item}) => {
-    console.log(item, `item`);
+const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) => {
+  const renderItem: any = ({ item }) => {
     return (
       <Grid style={styles.cardContentStyle}>
         <Col size={1.5} style={styles.lineContentStyle}>
@@ -46,7 +45,11 @@ const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
                     ? styles.statusTextCancel
                     : item.confirmationStatus === 'PENDING'
                       ? styles.statusTextPending
-                      : ''
+                      : item.confirmationStatus === 'CANCELLED'
+                        ? styles.statusTextCancel
+                        : item.confirmationStatus === 'RECEIVED'
+                          ? styles.statusTextConfirm
+                          : ''
             }>
             {item.confirmationStatus}
           </Text>
@@ -57,11 +60,7 @@ const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
   return (
     <Grid>
       <Col>
-        <Row
-          size={1}
-          style={{
-            alignItems: 'center',
-          }}>
+        <Row size={1} style={styles.cardHeaderContainer}>
           <Text style={styles.cardHeading}>{cardHeading}</Text>
         </Row>
         <Row style={styles.cardStyle} size={8}>
