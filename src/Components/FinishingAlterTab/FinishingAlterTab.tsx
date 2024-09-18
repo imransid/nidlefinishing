@@ -61,8 +61,6 @@ const FinishingAlterTab: FC = () => {
   // UseEffect to call API when selectedLine or selectedDate changes
   useEffect(() => {
 
-    console.log(selectedLine, selectedDate, 'selectedLine, selectedDate')
-
     if (selectedLine && selectedDate) {
       fetchDataLineWise(selectedLine, selectedDate);
     }
