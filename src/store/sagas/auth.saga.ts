@@ -35,13 +35,13 @@ export function* loginSaga(
       yield put(usersSlice.actions.getUserSuccessAction(response.data));
 
       let props = {
-        url: BASE_URL + '/' + FINISHING_ORG,
+        url: BASE_URL + '/' + FINISHING_PROCESS_LIST,
         token: response.data.accessToken,
       };
 
       const responseSetLineProcess: any = yield call(commonGetAPI, props);
 
-      props.url = BASE_URL + '/' + FINISHING_PROCESS_LIST;
+      props.url = BASE_URL + '/' + FINISHING_ORG;
 
       const responseFinishProcessList: any = yield call(commonGetAPI, props);
 
