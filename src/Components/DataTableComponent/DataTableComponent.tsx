@@ -1,9 +1,9 @@
-import React, {FC, useState} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
-import {DataTable} from 'react-native-paper';
+import React, { FC, useState } from 'react';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
-import {Breakdown} from '../ReceiveTab/interface';
+import { Breakdown } from '../ReceiveTab/interface';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
 
 export interface ApiDataItem {
@@ -99,31 +99,6 @@ const DataTableComponent: FC<IDataTableProps> = ({
     setTextInputValues(updatedTextInputs);
   };
 
-  // const handleCheckboxChange = (checked: boolean) => {
-  //   setIsPacked(checked);
-
-  //   // Update the textInputValues with the new isPacked value
-  //   const updatedTextInputs = textInputValues.map(row => ({
-  //     ...row,
-  //     isPacked: checked,  // Set the checkbox state for all rows
-  //   }));
-  //   setTextInputValues(updatedTextInputs);
-
-  //   // Update the array based on the new checkbox state
-  //   const updatedArray = updatedTextInputs.map((row: any) => ({
-  //     styleId: styleName,
-  //     orderentityId: POnumber,
-  //     varienceId: row.varienceId,
-  //     qmsOrgId: '2002',
-  //     finishingOrgId: '2002',
-  //     qty: row.tempReceived, // Use the updated quantity
-  //     isPacked: checked,  // Ensure the checkbox state is reflected in the array
-  //   }));
-
-  //   // Call the handler to update the parent component
-  //   onUpdatedArray(updatedArray);
-  // };
-
   return (
     <View style={Styles.container}>
       <View
@@ -153,7 +128,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
           </View>
         </View>
         <View
-          style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+          style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
           {/* {showCheckbox && <CheckboxComponent />} */}
           {showCheckbox && (
             <CheckboxComponent onChange={handleCheckboxChange} />
