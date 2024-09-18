@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   TextInput,
   type TextInputProps,
@@ -18,6 +18,11 @@ const CustomTextInput: React.FC<ICustomTextInputProps & TextInputProps> = ({
   maxLength,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState(''); // State to manage the input value
+
+  const handleInputChange: any = text => {
+    setInputValue(text); // Update the state on change
+  };
 
   const getKeyboardType: any = () => {
     switch (type) {
@@ -34,11 +39,11 @@ const CustomTextInput: React.FC<ICustomTextInputProps & TextInputProps> = ({
         style={[
           styles.container,
           styles.textInput,
-          { borderColor: isFocused ? '#1C98D8' : '#ddd' },
+          {borderColor: isFocused ? '#1C98D8' : '#ddd'},
         ]}
         value={value}
         maxLength={maxLength}
-        onChangeText={onChangeText}
+        onChangeText={handleInputChange}
         keyboardType={getKeyboardType()}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
