@@ -12,6 +12,10 @@ const CONFIRM_RECEIVE_REQUEST = 'api/v1/confirmReceiveRequest';
 const GET_QMS_STOCK_FOR_RECEIVE = 'api/v1/getQmsStockForReceive?lineId=';
 const GET_FINISHING_ALTER_LIST = 'api/v1/getFinishingAlterList';
 const SEND_TO_ALTER = 'api/v1/sendToAlter';
+
+const GET_FINISHING_ALTER_RECEIVE_LIST = 'api/v1/getFinishingAlterReceiveList';
+const SEND_TO_FINISHING_ALTER_RECEIVE = 'api/v1/sendToFinishingAlterReceive';
+
 export {
   BASE_URL,
   SIGN_IN_URL,
@@ -24,4 +28,6 @@ export {
   CONFIRM_RECEIVE_REQUEST,
   GET_FINISHING_ALTER_LIST,
   SEND_TO_ALTER,
+  GET_FINISHING_ALTER_RECEIVE_LIST,
+  SEND_TO_FINISHING_ALTER_RECEIVE,
 };
