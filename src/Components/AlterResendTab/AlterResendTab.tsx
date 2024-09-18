@@ -1,5 +1,5 @@
-import React, { useEffect, type FC } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import React, { useCallback, useEffect, type FC } from 'react';
+import { View, FlatList, Text, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DataTableComponent, { ApiDataItem } from '../../Components/DataTableComponent/DataTableComponent';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
@@ -8,35 +8,16 @@ import Styles from './style';
 import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import CustomModalButton from '../CustomModalButton/CustomModalButton';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
-import { commonGetAPI } from '@/store/sagas/helper/api.saga';
-import { BASE_URL, GET_FINISHING_ALTER_LIST, GET_FINISHING_ALTER_RECEIVE_LIST, ORG_TREE } from '@/utils/environment';
+import { commonGetAPI, commonPutAPI } from '@/store/sagas/helper/api.saga';
+import { BASE_URL, GET_FINISHING_ALTER_LIST, GET_FINISHING_ALTER_RECEIVE_LIST, ORG_TREE, SEND_TO_FINISHING_ALTER_RECEIVE } from '@/utils/environment';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { AlterAPIDetails } from '../FinishingAlterTab/interface';
 import { RootState } from '@/store';
 import moment from 'moment';
+import { Detail, StockViewItem } from '../ReceiveTab/interface';
+import ToastPopUp from '@/utils/Toast.android';
 const AlterResendTab: FC = () => {
-
-  const testData = [
-    {
-      color: 'White',
-      size: 'M',
-      inputQty: 1000,
-      qcQty: 900,
-      totalReceive: 500,
-      balanceQty: 500,
-      receiveQty: 0,
-    },
-    {
-      color: 'Black',
-      size: 'L',
-      inputQty: 2000,
-      qcQty: 1900,
-      totalReceive: 1000,
-      balanceQty: 1000,
-      receiveQty: 0,
-    },
-  ];
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
@@ -44,11 +25,7 @@ const AlterResendTab: FC = () => {
 
   const [orgTree, setOrgTree] = React.useState([]);
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
-  const [tableData, setTableData] = React.useState<AlterAPIDetails[]>([]);
-
-
-
-
+  const [tableData, setTableData] = React.useState<Detail[]>([]);
 
 
 
@@ -58,7 +35,7 @@ const AlterResendTab: FC = () => {
   const fetchDataLineWise = async (lineId: string, date: string) => {
     try {
       const formattedDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
-      console.log('lineId', lineId, 'date', formattedDate);
+
       let props = {
         url:
           BASE_URL + '/' + GET_FINISHING_ALTER_RECEIVE_LIST + `?lineId=${lineId}&date=${formattedDate}`,
@@ -106,6 +83,26 @@ const AlterResendTab: FC = () => {
     }
   };
 
+
+  const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {
+    // Filter out items where qty is "0"
+    const filteredArray = updatedArray.filter(item => item.qty !== 0);
+
+    // Create a new array by merging the old ref with the new filtered array
+    updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
+      const newItem = filteredArray.find(item => item.id === oldItem.id);
+      return newItem ? { ...oldItem, ...newItem } : oldItem;
+    });
+
+    // Add any new items that aren't already in the ref
+    const newItems = filteredArray.filter(
+      newItem =>
+        !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id),
+    );
+
+    updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
+  }, []);
+
   // Trigger API call when screen is focused
   useFocusEffect(
     React.useCallback(() => {
@@ -114,15 +111,38 @@ const AlterResendTab: FC = () => {
   );
 
 
+  // Callback to confirm receiving the items using useCallback
+  const confirmReceive = useCallback(async () => {
+    if (updatedArrayRef.current.length > 0) {
+      // Perform your API call or any other action with the updated array
+      let itemData = updatedArrayRef.current;
+      const filteredData = itemData.map(({ id, ...rest }) => rest);
 
-  const renderItem = ({ item }: { item: number }) => (
+      let props = {
+        url: BASE_URL + '/' + SEND_TO_FINISHING_ALTER_RECEIVE,
+        token: accessToken !== undefined ? accessToken : '',
+        data: filteredData,
+      };
+
+      let response = await commonPutAPI(props);
+      if (response !== undefined) ToastPopUp('Submit Successfully.');
+
+    } else {
+      // If no items have been updated, show a warning message
+      Alert.alert('Warning', 'No items have been updated.');
+    }
+  }, []);
+
+
+
+  const renderItem = (item: StockViewItem) => (
     <DataTableComponent
       buyer="Buyer"
-      buyerName="Brothers Fashion Ltd."
+      buyerName={item.item.customer}
       style="Style"
-      styleName="Brother-5060OD"
+      styleName={item.item.style}
       order="PO"
-      orderNumber="PO-5623147855"
+      orderNumber={item.item.orderId}
       showCheckbox={true}
       columnNames={[
         'Color',
@@ -133,8 +153,9 @@ const AlterResendTab: FC = () => {
         'Balance Qty.',
         'Receive Qty.',
       ]}
-      rowData={testData}
-    />
+      rowData={item.item.breakdowns}
+      onUpdatedArray={handleUpdatedArray}
+      styleID={item.item.styleId} />
   );
 
   return (
@@ -186,13 +207,13 @@ const AlterResendTab: FC = () => {
           style={{ marginBottom: 100 }}
           data={tableData}
           renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={item => `${Math.random()}`}
         />
       )}
 
       <CustomSubmitButton
         icon={<Icon name="send" size={20} color={'white'} />}
-        text="CONFIRM FINISHING ALTER RECEIVE" onPress={undefined} />
+        text="CONFIRM FINISHING ALTER RECEIVE" onPress={confirmReceive} />
     </View>
   );
 };
