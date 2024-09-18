@@ -1,22 +1,26 @@
 import React, { type FC, useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import LinearGradient from 'react-native-linear-gradient';
 import { LANDSCAPE, OrientationLocker } from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { type RootState } from '@/store';
 
 import Styles from './Styles';
+import { setDropdownFinishValue, setDropdownOrgValue } from '@/store/slices/features/setLineProcess/slice';
 
 const SetLineProcessScreen: FC = ({ navigation }: any) => {
   const finishingOrganizationData = useSelector((e: RootState) => e.setLine.finishingOrg);
 
   const finishingProgressListData = useSelector((e: RootState) => e.setLine.finishingProcessList);
 
-  const [finishingOrganization, setFinishingOrganization] = useState(null);
-  const [finishingProcess, setFinishingProcess] = useState(null);
+  const [finishingOrganization, setFinishingOrganization] = useState<null | string>(null);
+  const [finishingProcess, setFinishingProcess] = useState<null | string>(null);
+
+
+  const dispatch = useDispatch()
 
   return (
     <View style={Styles.container}>
@@ -50,7 +54,8 @@ const SetLineProcessScreen: FC = ({ navigation }: any) => {
             value={finishingOrganization}
             maxHeight={150}
             onChange={item => {
-              setFinishingOrganization(item.value);
+              if (item.id !== undefined) dispatch(setDropdownOrgValue(item.id))
+              setFinishingOrganization(item.value.toString());
             }}
             iconColor="#444444"
             iconStyle={Styles.dropdownIconStyle}
@@ -68,7 +73,8 @@ const SetLineProcessScreen: FC = ({ navigation }: any) => {
             value={finishingProcess}
             maxHeight={150}
             onChange={item => {
-              setFinishingProcess(item.value);
+              if (item.id !== undefined) dispatch(setDropdownFinishValue(item.id))
+              setFinishingProcess(item.value.toString());
             }}
             iconColor="#444444"
             iconStyle={Styles.dropdownIconStyle}
@@ -77,7 +83,13 @@ const SetLineProcessScreen: FC = ({ navigation }: any) => {
         </View>
         <View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('FinishingReceive' as never)}
+            onPress={() => {
+              if (finishingProcess === null || finishingOrganization === null) {
+                Alert.alert('PLease Select Finishing Line & Process.')
+              } else {
+                navigation.navigate('FinishingReceive' as never)
+              }
+            }}
             style={Styles.nextButton}>
             <Text style={Styles.nextButtonText}>Next</Text>
           </TouchableOpacity>

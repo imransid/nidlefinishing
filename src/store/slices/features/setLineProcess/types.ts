@@ -26,4 +26,8 @@ export interface IReceiveItem {
 export interface ISetLineState {
   finishingOrg: LineData[];
   finishingProcessList: IReceiveItem[];
+  selectedOrgDrop: number;
+  selectedProcessList: number;
 }
+
+export interface dropdownValue {}

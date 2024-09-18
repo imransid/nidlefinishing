@@ -5,6 +5,8 @@ import {IReceiveItem, LineData, type ISetLineState} from './types';
 const setLineInitialState: ISetLineState = {
   finishingOrg: [],
   finishingProcessList: [],
+  selectedOrgDrop: 0,
+  selectedProcessList: 0,
 };
 
 export const setLineSlice = createSlice({
@@ -23,9 +25,26 @@ export const setLineSlice = createSlice({
     ) => {
       state.finishingProcessList = payload.payload;
     },
+    setDropdownOrgValue: (
+      state: ISetLineState,
+      payload: PayloadAction<number>,
+    ) => {
+      state.selectedOrgDrop = payload.payload;
+    },
+    setDropdownFinishValue: (
+      state: ISetLineState,
+      payload: PayloadAction<number>,
+    ) => {
+      state.selectedProcessList = payload.payload;
+    },
   },
 });
 
-export const {setFinishOrg, setProcessList} = setLineSlice.actions;
+export const {
+  setFinishOrg,
+  setProcessList,
+  setDropdownOrgValue,
+  setDropdownFinishValue,
+} = setLineSlice.actions;
 
 export default setLineSlice.reducer;
