@@ -1,32 +1,30 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useNavigation} from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useNavigation } from '@react-navigation/native';
+
+import AlterResendTab from '@/Components/AlterResendTab/AlterResendTab';
+import FinishingAlterTab from '@/Components/FinishingAlterTab/FinishingAlterTab';
+import PendingTab from '@/Components/PendingTab/PendingTab';
+import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
 
 import ReceiveTab from '../../Components/ReceiveTab/ReceiveTab';
-import AlterResendTab from '@/Components/AlterResendTab/AlterResendTab';
-import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
-import PendingTab from '@/Components/PendingTab/PendingTab';
-import FinishingAlterTab from '@/Components/FinishingAlterTab/FinishingAlterTab';
 
 import Styles from './Styles';
-import LinearGradient from 'react-native-linear-gradient';
 
 // Create Top Tab Navigator
 const Tab = createMaterialTopTabNavigator();
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const FinishingReceiveScreen = () => {
   const navigation = useNavigation();
 
   return (
     <>
-      <LinearGradient
-        colors={['#fff', '#fff']}
-        style={Styles.linearGradientStyle}>
-        <TouchableOpacity
-          style={Styles.drawerBtn}
-          onPress={() => navigation.openDrawer()}>
+      <LinearGradient colors={['#fff', '#fff']} style={Styles.linearGradientStyle}>
+        <TouchableOpacity style={Styles.drawerBtn} onPress={() => navigation.openDrawer()}>
           <Icon name="bars" size={25} color="#1C98D8" />
           <Image
             style={Styles.nidleBlueLogo}
@@ -39,17 +37,14 @@ const FinishingReceiveScreen = () => {
             <Text style={Styles.userIconsOrgText}>FINISHING ORG</Text>
             <Text style={Styles.userIconProcessText}>PROCESS NAME</Text>
           </View>
-          <Image
-            style={Styles.nidleBlueLogo}
-            source={require('../../assets/icons/userIcon.png')}
-          />
+          <Image style={Styles.nidleBlueLogo} source={require('../../assets/icons/userIcon.png')} />
         </View>
       </LinearGradient>
 
       <Tab.Navigator
         style={Styles.tabNavigatorStyle}
         initialRouteName="Receive"
-        screenOptions={({route}) => ({
+        screenOptions={({ route }) => ({
           swipeEnabled: false,
           title: route.name,
           tabBarStyle: Styles.tabBarStyle,
@@ -68,7 +63,7 @@ const FinishingReceiveScreen = () => {
             return undefined;
           },
           tabBarLabelStyle: Styles.tabBarLabelStyle,
-          tabBarIcon: ({focused, color}) => {
+          tabBarIcon: ({ focused, color }) => {
             let iconName;
             switch (route.name) {
               case 'Receive':
@@ -89,14 +84,8 @@ const FinishingReceiveScreen = () => {
               default:
                 iconName = 'question';
             }
-            return (
-              <Icon
-                name={iconName}
-                size={20}
-                color={focused ? '#1C98D8' : '#555'}
-              />
-            );
-          },
+            return <Icon name={iconName} size={20} color={focused ? '#1C98D8' : '#555'} />;
+          }
         })}>
         <Tab.Screen name="Receive" component={ReceiveTab} />
         <Tab.Screen name="Pending" component={PendingTab} />

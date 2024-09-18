@@ -1,4 +1,5 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+/* eslint-disable */
+import React, { type Dispatch, type FC, type SetStateAction } from 'react';
 import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import TreeSelect from 'react-native-tree-select';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
@@ -9,7 +10,7 @@ interface ISelectLineModalProps {
   orgTreeData: Array<{}>;
   setLineModalVisible: (visible: boolean) => void;
   onClickAble?: (e: number) => void;
-  pageName: string
+  pageName: string;
 }
 const SelectLineModal: FC<ISelectLineModalProps> = ({
   lineModalVisible,
@@ -17,15 +18,16 @@ const SelectLineModal: FC<ISelectLineModalProps> = ({
   orgTreeData,
   setLineModalVisible,
   onClickAble,
-  pageName
+  setSelectedLineName
 }) => {
   const [treeOpen, setTreeOpen] = React.useState<boolean>(false);
   const onClickLeaf = async (data: any): Promise<any> => {
     try {
-      if (onClickAble) {
-        onClickAble(data.item.id);  // or pass any number you need
+      if (onClickAble != null) {
+        onClickAble(data.item.id); // or pass any number you need
       }
       setSelectedLine(data.item.id);
+      setSelectedLineName(data.item.name);
       setLineModalVisible(false);
     } catch (error) {
       console.error('Error during onClickLeaf execution:', error);
@@ -42,13 +44,15 @@ const SelectLineModal: FC<ISelectLineModalProps> = ({
         visible={lineModalVisible}
         transparent={true}
         animationType="slide"
-        onRequestClose={() => setLineModalVisible(false)}>
+        onRequestClose={() => {
+          setLineModalVisible(false);
+        }}>
         <View
           style={{
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'rgba(0,0,0,0.5)', // semi-transparent background
+            backgroundColor: 'rgba(0,0,0,0.5)' // semi-transparent background
           }}>
           <View
             style={{
@@ -58,7 +62,7 @@ const SelectLineModal: FC<ISelectLineModalProps> = ({
               backgroundColor: 'white',
               borderWidth: 1,
               borderColor: '#ededed',
-              padding: 20,
+              padding: 20
             }}>
             <ScrollView
               nestedScrollEnabled
@@ -74,24 +78,24 @@ const SelectLineModal: FC<ISelectLineModalProps> = ({
                 itemStyle={{
                   backgroundColor: 'transparent',
                   fontSize: 14,
-                  color: '#747474',
+                  color: '#747474'
                 }}
                 selectedItemStyle={{
                   backgroundColor: 'transparent',
                   fontSize: 14,
-                  color: '#8BC6FC',
+                  color: '#8BC6FC'
                 }}
                 treeNodeStyle={{
                   openIcon: (
                     <TreeIcon
                       style={{
                         fontSize: 20,
-                        color: '#6CAEF1',
+                        color: '#6CAEF1'
                       }}
                       name="checkmark"
                     />
                   ),
-                  closeIcon: <TreeIcon style={{ fontSize: 20 }} name="menu" />,
+                  closeIcon: <TreeIcon style={{ fontSize: 20 }} name="menu" />
                 }}
               />
             </ScrollView>
@@ -102,9 +106,11 @@ const SelectLineModal: FC<ISelectLineModalProps> = ({
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: 10,
-                backgroundColor: '#3C4FE9',
+                backgroundColor: '#3C4FE9'
               }}
-              onPress={() => setLineModalVisible(false)}>
+              onPress={() => {
+                setLineModalVisible(false);
+              }}>
               <Text style={{ color: 'white' }}>Close</Text>
             </TouchableOpacity>
           </View>

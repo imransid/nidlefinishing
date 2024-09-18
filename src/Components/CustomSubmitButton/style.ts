@@ -1,20 +1,21 @@
-import {StyleSheet} from 'react-native';
+/* eslint-disable */
+import { StyleSheet } from 'react-native';
 
 const Styles = StyleSheet.create({
   buttonContainer: {
-    position: 'absolute',
-    bottom: 0,
-    justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    height: 50,
     backgroundColor: '#3C4FE9',
+    bottom: 0,
     flexDirection: 'row',
+    height: 50,
+    justifyContent: 'center',
+    position: 'absolute',
+    width: '100%'
   },
   buttonText: {
     color: 'white',
-    marginStart: 10,
-  },
+    marginStart: 10
+  }
 });
 
 export default Styles;

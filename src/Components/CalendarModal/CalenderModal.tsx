@@ -20,12 +20,12 @@ interface DayObject {
 const CalendarModal: React.FC<ICalendarModalProps> = ({
   calendarModalVisible,
   setCalendarModalVisible,
-  setDate,
+  setDate
 }) => {
   const handleDayPress: any = (day: DayObject) => {
     if (setDate != null) {
       setDate(day.dateString);
-    } 
+    }
     setCalendarModalVisible(false);
   };
 

@@ -1,34 +1,37 @@
-import React, {useCallback, type FC} from 'react';
-import {Text, View, FlatList, Alert} from 'react-native';
+/* eslint-disable */
+import React, { type FC, useCallback } from 'react';
+import { Alert, FlatList, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DataTableComponent, {
-  ApiDataItem,
-} from '../../Components/DataTableComponent/DataTableComponent';
-import SelectLineModal from '../SelectLineModal/SelectLineModal';
-import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
-import CustomModalButton from '../CustomModalButton/CustomModalButton';
-import Styles from './style';
-import {useSelector} from 'react-redux';
-import {RootState} from '@/store';
-import {Detail, StockViewItem} from './interface';
+import { useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+
+import { type RootState } from '@/store';
+import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
 import {
   BASE_URL,
   CONFIRM_RECEIVE_REQUEST,
   GET_QMS_STOCK_FOR_RECEIVE,
-  ORG_TREE,
+  ORG_TREE
 } from '@/utils/environment';
-import {commonGetAPI, commonPostAPI} from '@/store/sagas/helper/api.saga';
-import {useFocusEffect} from '@react-navigation/native';
 import ToastPopUp from '@/utils/Toast.android';
+
+import DataTableComponent, {
+  type ApiDataItem
+} from '../../Components/DataTableComponent/DataTableComponent';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import SelectLineModal from '../SelectLineModal/SelectLineModal';
+
+import { type Detail, type StockViewItem } from './interface';
+import Styles from './style';
 
 const ReceiveTab: FC = () => {
   const [selectedLine, setSelectedLine] = React.useState<string>('');
+  const [selectedLineName, setSelectedLineName] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
-  const accessToken = useSelector(
-    (state: RootState) => state.users.user.data?.accessToken,
-  );
+  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
 
   // Use useRef to store the updated array without re-rendering
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
@@ -40,13 +43,12 @@ const ReceiveTab: FC = () => {
     // Create a new array by merging the old ref with the new filtered array
     updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
       const newItem = filteredArray.find(item => item.id === oldItem.id);
-      return newItem ? {...oldItem, ...newItem} : oldItem;
+      return newItem != null ? { ...oldItem, ...newItem } : oldItem;
     });
 
     // Add any new items that aren't already in the ref
     const newItems = filteredArray.filter(
-      newItem =>
-        !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id),
+      newItem => !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id)
     );
 
     updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
@@ -56,11 +58,11 @@ const ReceiveTab: FC = () => {
   const fetchData = async () => {
     try {
       // setLoading(true);
-      let props = {
+      const props = {
         url: BASE_URL + '/' + ORG_TREE,
-        token: accessToken !== undefined ? accessToken : '',
+        token: accessToken !== undefined ? accessToken : ''
       };
-      let response = await commonGetAPI(props);
+      const response = await commonGetAPI(props);
       if (response !== undefined) {
         setOrgTree(response.data[0].children);
       }
@@ -75,16 +77,16 @@ const ReceiveTab: FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchData(); // Call API whenever the screen comes into focus
-    }, []),
+    }, [])
   );
 
   const onClickLeaf = async (id: string): Promise<any> => {
     try {
-      let props = {
-        url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + '2002', //data.item.id,
-        token: accessToken !== undefined ? accessToken : '',
+      const props = {
+        url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + '2002', // data.item.id,
+        token: accessToken !== undefined ? accessToken : ''
       };
-      let response = await commonGetAPI(props);
+      const response = await commonGetAPI(props);
 
       if (response !== undefined) {
         setTableData(response.data.details);
@@ -101,16 +103,16 @@ const ReceiveTab: FC = () => {
   const confirmReceive = useCallback(async () => {
     if (updatedArrayRef.current.length > 0) {
       // Perform your API call or any other action with the updated array
-      let itemData = updatedArrayRef.current;
-      const filteredData = itemData.map(({id, ...rest}) => rest);
+      const itemData = updatedArrayRef.current;
+      const filteredData = itemData.map(({ id, ...rest }) => rest);
 
-      let props = {
+      const props = {
         url: BASE_URL + '/' + CONFIRM_RECEIVE_REQUEST,
         token: accessToken !== undefined ? accessToken : '',
-        data: filteredData,
+        data: filteredData
       };
 
-      let response = await commonPostAPI(props);
+      const response = await commonPostAPI(props);
 
       if (response !== undefined) ToastPopUp('Submit Successfully.');
     } else {
@@ -130,14 +132,7 @@ const ReceiveTab: FC = () => {
         order="PO"
         orderNumber={item.item.orderId}
         showCheckbox={true}
-        columnNames={[
-          'Color',
-          'Size',
-          'QC Qty.',
-          'Total Receive',
-          'Balance Qty.',
-          'Receive Qty.',
-        ]}
+        columnNames={['Color', 'Size', 'QC Qty.', 'Total Receive', 'Balance Qty.', 'Receive Qty.']}
         onUpdatedArray={handleUpdatedArray}
         rowData={item.item.breakdowns}
       />
@@ -145,12 +140,14 @@ const ReceiveTab: FC = () => {
   };
 
   return (
-    <View style={{backgroundColor: 'white', flex: 1}}>
+    <View style={{ backgroundColor: 'white', flex: 1 }}>
       <CustomModalButton
         buttonStyle={Styles.selectLineDateButton}
         buttonTextStyle={Styles.selectLineDateButtonText}
-        onPress={() => setLineModalVisible(true)}
-        text={selectedLine !== '' ? selectedLine : 'Select Line'}
+        onPress={() => {
+          setLineModalVisible(true);
+        }}
+        text={selectedLineName !== '' ? selectedLineName : 'Select Line'}
         icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
       />
       {/* Modal for TreeSelect */}
@@ -160,22 +157,23 @@ const ReceiveTab: FC = () => {
         lineModalVisible={lineModalVisible}
         setLineModalVisible={setLineModalVisible}
         pageName="receive"
-        onClickAble={(e: number) => onClickLeaf(e.toString())}
+        setSelectedLineName={setSelectedLineName}
+        onClickAble={async (e: number) => await onClickLeaf(e.toString())}
       />
-      {selectedLine === '' ? (
+      {selectedLineName === '' ? (
         <View
           style={{
             flex: 1,
             width: '100%',
             height: '100%',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}>
-          <Text style={{fontSize: 16}}>No Line Selected</Text>
+          <Text style={{ fontSize: 16 }}>No Line Selected</Text>
         </View>
       ) : (
         <FlatList
-          style={{marginBottom: 100}}
+          style={{ marginBottom: 60 }}
           data={tableData}
           renderItem={renderItem}
           keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
