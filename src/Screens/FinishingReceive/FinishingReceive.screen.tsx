@@ -12,7 +12,6 @@ import FinishingAlterTab from '@/Components/FinishingAlterTab/FinishingAlterTab'
 
 import Styles from './Styles';
 import LinearGradient from 'react-native-linear-gradient';
-import {moderateScale} from 'react-native-size-matters';
 
 // Create Top Tab Navigator
 const Tab = createMaterialTopTabNavigator();
@@ -50,8 +49,8 @@ const FinishingReceiveScreen = () => {
       <Tab.Navigator
         style={Styles.tabNavigatorStyle}
         initialRouteName="Receive"
-      
         screenOptions={({route}) => ({
+          swipeEnabled: false,
           title: route.name,
           tabBarStyle: Styles.tabBarStyle,
           tabBarIndicatorStyle: Styles.tabBarIndicatorStyle,

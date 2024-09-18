@@ -1,32 +1,22 @@
-import { StyleSheet } from 'react-native';
-import { scale, verticalScale } from 'react-native-size-matters';
-
-import { colors } from '../../theme/colors';
+import {StyleSheet} from 'react-native';
+import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    backgroundColor: colors.textInput,
-    borderRadius: scale(2),
-    borderWidth: scale(0.15),
-    flexDirection: 'row',
-    height: verticalScale(50),
-    position: 'relative',
-    width: scale(330)
-  },
-  iconLeft: {
-    left: scale(8),
-    position: 'absolute'
-  },
-  iconRight: {
-    position: 'absolute',
-    right: scale(10)
+    borderRadius: scale(3),
+    borderWidth: scale(1),
+    borderColor: '#ddd',
+    height: verticalScale(18),
+    width: scale(48),
+    marginLeft: scale(42),
+    backgroundColor: '#fff',
   },
   textInput: {
-    flex: 1,
-    paddingLeft: scale(38),
-    paddingVertical: verticalScale(8)
-  }
+    fontSize: moderateScale(10),
+    color: '#65637B',
+    paddingVertical: verticalScale(2),
+    textAlign: 'center',
+  },
 });
 
 export default styles;

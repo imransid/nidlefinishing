@@ -1,13 +1,8 @@
 import React, {FC, useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import Styles from './styles';
+import CustomTextInput from '../CustomTextInput/CustomTextInput';
 interface IDataTableProps {
   buyer: string;
   buyerName: string;
@@ -77,10 +72,11 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
               <DataTable.Cell>{row.size}</DataTable.Cell>
               <DataTable.Cell numeric>{row.receiveQty}</DataTable.Cell>
               <DataTable.Cell>
-                <TextInput
-                  style={Styles.textInput}
+                <CustomTextInput
+                  type="quantity"
+                  maxLength={4}
                   keyboardType="numeric"
-                  value={row.finishingAlterSendQty.toString()}
+                  value={row.finishingAlterSendQty.toString()} // Bind to textInputValues state
                   onChangeText={value => handleAdjustmentChange(index, value)}
                 />
               </DataTable.Cell>

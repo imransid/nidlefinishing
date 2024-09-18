@@ -15,7 +15,7 @@ const Styles = ScaledSheet.create({
   qualityTypeButtonIcon: {
     fontSize: 64,
   },
-  tabBarLabelStyle:{fontSize: moderateScale(9), fontWeight: '700'},
+  tabBarLabelStyle: {fontSize: moderateScale(9), fontWeight: '700'},
   drawerBtn: {
     alignSelf: 'flex-start',
     position: 'absolute',
