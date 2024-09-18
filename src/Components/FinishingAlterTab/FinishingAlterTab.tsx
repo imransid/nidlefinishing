@@ -87,7 +87,17 @@ const FinishingAlterTab: FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchData(); // Call API whenever the screen comes into focus
-    }, [])
+
+      // Cleanup function to reset state when the screen is unfocused
+      return () => {
+        setSelectedLine('');
+        setLineModalVisible(false);
+        setOrgTree([]);
+        setTableData([]);
+        setDate('')
+        updatedArrayRef.current = [];
+      };
+    }, []),
   );
 
   const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {

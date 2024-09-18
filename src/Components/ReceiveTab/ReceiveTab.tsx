@@ -1,18 +1,24 @@
-/* eslint-disable */
-import React, { type FC, useCallback } from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
+import React, { useCallback, type FC } from 'react';
+import { Text, View, FlatList, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import DataTableComponent, {
+  ApiDataItem,
+} from '../../Components/DataTableComponent/DataTableComponent';
+import SelectLineModal from '../SelectLineModal/SelectLineModal';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import Styles from './style';
 import { useSelector } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
-
-import { type RootState } from '@/store';
-import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
+import { RootState } from '@/store';
+import { Detail, StockViewItem } from './interface';
 import {
   BASE_URL,
   CONFIRM_RECEIVE_REQUEST,
   GET_QMS_STOCK_FOR_RECEIVE,
   ORG_TREE
 } from '@/utils/environment';
+import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
+import { useFocusEffect } from '@react-navigation/native';
 import ToastPopUp from '@/utils/Toast.android';
 
 import DataTableComponent, {
@@ -43,7 +49,7 @@ const ReceiveTab: FC = () => {
     // Create a new array by merging the old ref with the new filtered array
     updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
       const newItem = filteredArray.find(item => item.id === oldItem.id);
-      return newItem != null ? { ...oldItem, ...newItem } : oldItem;
+      return newItem ? { ...oldItem, ...newItem } : oldItem;
     });
 
     // Add any new items that aren't already in the ref
@@ -77,7 +83,16 @@ const ReceiveTab: FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchData(); // Call API whenever the screen comes into focus
-    }, [])
+
+      // Cleanup function to reset state when the screen is unfocused
+      return () => {
+        setSelectedLine('');
+        setLineModalVisible(false);
+        setOrgTree([]);
+        setTableData([]);
+        updatedArrayRef.current = [];
+      };
+    }, []),
   );
 
   const onClickLeaf = async (id: string): Promise<any> => {
@@ -103,7 +118,7 @@ const ReceiveTab: FC = () => {
   const confirmReceive = useCallback(async () => {
     if (updatedArrayRef.current.length > 0) {
       // Perform your API call or any other action with the updated array
-      const itemData = updatedArrayRef.current;
+      let itemData = updatedArrayRef.current;
       const filteredData = itemData.map(({ id, ...rest }) => rest);
 
       const props = {
@@ -173,7 +188,7 @@ const ReceiveTab: FC = () => {
         </View>
       ) : (
         <FlatList
-          style={{ marginBottom: 60 }}
+          style={{ marginBottom: 100 }}
           data={tableData}
           renderItem={renderItem}
           keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}

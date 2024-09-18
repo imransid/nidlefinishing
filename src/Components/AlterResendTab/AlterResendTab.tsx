@@ -113,8 +113,18 @@ const AlterResendTab: FC = () => {
   // Trigger API call when screen is focused
   useFocusEffect(
     React.useCallback(() => {
-      void fetchData(); // Call API whenever the screen comes into focus
-    }, [])
+      fetchData(); // Call API whenever the screen comes into focus
+
+      // Cleanup function to reset state when the screen is unfocused
+      return () => {
+        setSelectedLine('');
+        setLineModalVisible(false);
+        setOrgTree([]);
+        setTableData([]);
+        setDate('')
+        updatedArrayRef.current = [];
+      };
+    }, []),
   );
 
   // Callback to confirm receiving the items using useCallback
