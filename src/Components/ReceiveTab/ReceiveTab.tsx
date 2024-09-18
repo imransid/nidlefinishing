@@ -86,8 +86,6 @@ const ReceiveTab: FC = () => {
       };
       let response = await commonGetAPI(props);
 
-      console.log('response', response);
-
       if (response !== undefined) {
         setTableData(response.data.details);
       }

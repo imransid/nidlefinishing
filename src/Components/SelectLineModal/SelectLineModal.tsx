@@ -25,7 +25,7 @@ const SelectLineModal: FC<ISelectLineModalProps> = ({
       if (onClickAble) {
         onClickAble(data.item.id);  // or pass any number you need
       }
-      setSelectedLine(data.item.name);
+      setSelectedLine(data.item.id);
       setLineModalVisible(false);
     } catch (error) {
       console.error('Error during onClickLeaf execution:', error);
