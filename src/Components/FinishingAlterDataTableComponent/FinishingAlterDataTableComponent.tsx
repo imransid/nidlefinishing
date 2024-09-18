@@ -3,7 +3,10 @@ import {View, Text} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import Styles from './styles';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
+
 interface IDataTableProps {
+  styleID: number;
+  orderID: number;
   buyer: string;
   buyerName: string;
   style: string;
@@ -12,6 +15,8 @@ interface IDataTableProps {
   orderNumber: string;
   columnNames: string[];
   rowData: any;
+  selectedLine: string;
+  onUpdatedArray: (updatedArray: any[]) => void; // New prop to pass updated array to parent
 }
 
 const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
@@ -22,20 +27,46 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
   order: POheader,
   orderNumber: POnumber,
   columnNames,
+  selectedLine,
   rowData,
+  onUpdatedArray,
+  orderID,
+  styleID
 }) => {
-  const [finishingAlterSendQty, setFinishingAlterSendQty] = useState(rowData);
 
-  const finishingAlterSendQuantity = finishingAlterSendQty.reduce(
-    (total, row) => total + row.finishingAlterSendQty,
-    0,
+  const [textInputValues, setTextInputValues] = useState(
+    rowData.map((row: any) => ({
+      ...row,
+      finishingAlterSendQty: row.finishingAlterSendQty || '0',
+    }))
   );
 
-  const handleAdjustmentChange = (index: number, value: string) => {
-    const updatedQty = [...finishingAlterSendQty];
-    updatedQty[index].finishingAlterSendQty = parseInt(value, 10) || 0;
-    setFinishingAlterSendQty(updatedQty);
+  const handleTextInputChange = (index: number, value: string) => {
+    const updatedValues = [...textInputValues];
+    const numericValue = isNaN(Number(value)) ? '0' : value;
+
+    updatedValues[index].finishingAlterSendQty = numericValue;
+    setTextInputValues(updatedValues);
+
+    const updatedArray = updatedValues.map((row: any, i) => ({
+      id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+      styleId: styleID,
+      orderentityId: orderID,
+      varienceId: row.varienceId,
+      qmsOrgId: selectedLine,
+      finishingOrgId: 2002, // start time array
+      qty: row.finishingAlterSendQty,
+      isPacked: row.isPacked || false,
+    }));
+
+    // Pass the updated array to the parent component
+    onUpdatedArray(updatedArray);
   };
+
+  const finishingAlterSendQuantity = textInputValues.reduce(
+    (total: any, row: any) => total + (parseInt(row.finishingAlterSendQty, 10) || 0),
+    0,
+  );
 
   return (
     <View style={Styles.container}>
@@ -65,23 +96,22 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
           ))}
         </DataTable.Header>
 
-        {finishingAlterSendQty.map((row, index) => (
-          <>
-            <DataTable.Row key={index}>
-              <DataTable.Cell>{row.color}</DataTable.Cell>
-              <DataTable.Cell>{row.size}</DataTable.Cell>
-              <DataTable.Cell numeric>{row.receiveQty}</DataTable.Cell>
-              <DataTable.Cell>
-                <CustomTextInput
+
+        {textInputValues.map((row: any, index: any) => (
+          <DataTable.Row key={index}>
+            <DataTable.Cell>{row.color}</DataTable.Cell>
+            <DataTable.Cell>{row.size}</DataTable.Cell>
+            <DataTable.Cell numeric>{row.rcvQty}</DataTable.Cell>
+            <DataTable.Cell>
+              <CustomTextInput
                   type="quantity"
                   maxLength={4}
                   keyboardType="numeric"
                   value={row.finishingAlterSendQty.toString()} // Bind to textInputValues state
-                  onChangeText={value => handleAdjustmentChange(index, value)}
+                  onChangeText={value => handleTextInputChange(index, value)}
                 />
-              </DataTable.Cell>
-            </DataTable.Row>
-          </>
+            </DataTable.Cell>
+          </DataTable.Row>
         ))}
       </DataTable>
 

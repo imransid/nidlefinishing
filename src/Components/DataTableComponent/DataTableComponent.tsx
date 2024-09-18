@@ -44,7 +44,6 @@ const DataTableComponent: FC<IDataTableProps> = ({
   onUpdatedArray,
   styleID,
 }) => {
-  console.log('rowData', rowData);
 
   const [receiveQty, setReceiveQty] = useState(rowData);
 
