@@ -1,6 +1,5 @@
-/* eslint-disable */
-import React, { type FC, useCallback, useEffect } from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState, type FC } from 'react';
+import { Text, TouchableOpacity, View, FlatList, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
@@ -18,9 +17,28 @@ import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import { type ApiDataItem } from '../DataTableComponent/DataTableComponent';
 import FinishingAlterDataTableComponent from '../FinishingAlterDataTableComponent/FinishingAlterDataTableComponent';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
-
-import { type AlterAPIDetails } from './interface';
-import Styles from './style';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import {
+  commonGetAPI,
+  commonPostAPI,
+  commonPutAPI,
+} from '@/store/sagas/helper/api.saga';
+import { useFocusEffect } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import {
+  BASE_URL,
+  CONFIRM_RECEIVE_REQUEST,
+  GET_FINISHING_ALTER_LIST,
+  ORG_TREE,
+  SEND_TO_ALTER,
+} from '@/utils/environment';
+import moment from 'moment';
+import { AlterAPIDetails } from './interface';
+import { ApiDataItem } from '../DataTableComponent/DataTableComponent';
+import ToastPopUp from '@/utils/Toast.android';
+import { ScaledSheet } from 'react-native-size-matters';
 const FinishingAlterTab: FC = () => {
   // GET : http://localhost:8081/api/v1/getFinishingAlterList?lineId=2002&date=2024-09-12 12:00:15
 
@@ -30,7 +48,9 @@ const FinishingAlterTab: FC = () => {
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
   const [selectedDate, setDate] = React.useState('');
   const [orgTree, setOrgTree] = React.useState([]);
-  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
+  const accessToken = useSelector(
+    (state: RootState) => state.users.user.data?.accessToken,
+  );
   const [tableData, setTableData] = React.useState<AlterAPIDetails[]>([]);
 
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
@@ -40,9 +60,13 @@ const FinishingAlterTab: FC = () => {
     try {
       const formattedDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
       console.log('lineId', lineId, 'date', formattedDate);
-      const props = {
-        url: BASE_URL + '/' + GET_FINISHING_ALTER_LIST + `?lineId=${lineId}&date=${formattedDate}`,
-        token: accessToken !== undefined ? accessToken : ''
+      let props = {
+        url:
+          BASE_URL +
+          '/' +
+          GET_FINISHING_ALTER_LIST +
+          `?lineId=${lineId}&date=${formattedDate}`,
+        token: accessToken !== undefined ? accessToken : '',
       };
       const response = await commonGetAPI(props);
 
@@ -51,7 +75,7 @@ const FinishingAlterTab: FC = () => {
       }
 
       console.log('response', response.data);
-      // setTestData(data); // Assuming the API response is directly compatible with testData
+      //setTestData(data); // Assuming the API response is directly compatible with testData
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -94,7 +118,7 @@ const FinishingAlterTab: FC = () => {
         setLineModalVisible(false);
         setOrgTree([]);
         setTableData([]);
-        setDate('')
+        setDate('');
         updatedArrayRef.current = [];
       };
     }, []),
@@ -109,12 +133,13 @@ const FinishingAlterTab: FC = () => {
     // Create a new array by merging the old ref with the new filtered array
     updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
       const newItem = filteredArray.find(item => item.id === oldItem.id);
-      return newItem != null ? { ...oldItem, ...newItem } : oldItem;
+      return newItem ? { ...oldItem, ...newItem } : oldItem;
     });
 
     // Add any new items that aren't already in the ref
     const newItems = filteredArray.filter(
-      newItem => !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id)
+      newItem =>
+        !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id),
     );
 
     updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
@@ -131,7 +156,12 @@ const FinishingAlterTab: FC = () => {
         order={'Order Number'}
         orderNumber={item.po}
         orderID={item.orderId}
-        columnNames={['Color', 'Size', 'Receive Qty.', 'Finishing Alter Send Qty.']}
+        columnNames={[
+          'Color',
+          'Size',
+          'Receive Qty.',
+          'Finishing Alter Send Qty.',
+        ]}
         selectedLine={selectedLine}
         rowData={item.breakdowns}
         onUpdatedArray={handleUpdatedArray}
@@ -144,17 +174,19 @@ const FinishingAlterTab: FC = () => {
     if (updatedArrayRef.current.length > 0) {
       // Perform your API call or any other action with the updated array
 
-      const filteredDataZero = updatedArrayRef.current.filter((item: any) => item.qty !== '0');
+      const filteredDataZero = updatedArrayRef.current.filter(
+        (item: any) => item.qty !== '0',
+      );
 
       const filteredData = filteredDataZero.map(({ id, ...rest }) => rest);
 
       const props = {
         url: BASE_URL + '/' + SEND_TO_ALTER,
         token: accessToken !== undefined ? accessToken : '',
-        data: filteredData
+        data: filteredData,
       };
 
-      const response = await commonPutAPI(props);
+      let response = await commonPutAPI(props);
 
       if (response !== undefined) ToastPopUp('Submit Successfully.');
     } else {
@@ -211,12 +243,14 @@ const FinishingAlterTab: FC = () => {
           <Text style={{ fontSize: 16 }}>No Line & Date Selected</Text>
         </View>
       ) : (
-        <FlatList
-          style={{ marginBottom: 60 }}
-          data={tableData}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <View style={style.flatListContainer}>
+          <FlatList
+            style={{ marginBottom: 100 }}
+            data={tableData}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
       )}
 
       <CustomSubmitButton
@@ -227,5 +261,12 @@ const FinishingAlterTab: FC = () => {
     </View>
   );
 };
+
+const style = ScaledSheet.create({
+  flatListContainer: {
+    //flex: 1, // Allow FlatList to take remaining space
+    height: '180@s',
+  },
+});
 
 export default FinishingAlterTab;

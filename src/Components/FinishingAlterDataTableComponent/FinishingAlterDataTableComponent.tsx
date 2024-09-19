@@ -123,7 +123,7 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
                       focusedInputIndex === index ? '#1C98D8' : '#ddd',
                   },
                 ]}
-                value={row.finishingAlterSendQty.toString()}
+                value={row.finishingAlterSendQty}
                 keyboardType="numeric"
                 onChangeText={val => handleTextInputChange(index, val)}
                 onFocus={() => setFocusedInputIndex(index)}
