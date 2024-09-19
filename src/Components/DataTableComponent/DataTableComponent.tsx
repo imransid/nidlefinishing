@@ -56,12 +56,18 @@ const DataTableComponent: FC<IDataTableProps> = ({
   // State to track if the checkbox is checked
   const [isPacked, setIsPacked] = useState(false);
 
+  const finishingOrdID = useSelector((e: RootState) => e.setLine.finishingOrg);
+
   // Initialize textInputValues with empty strings or existing values
   const [textInputValues, setTextInputValues] = useState(
     rowData.map(row => ({
       ...row,
       tempReceived: '0',
     })),
+  );
+
+  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
+    null,
   );
 
   const handleTextInputChange = (index: number, value: string) => {
