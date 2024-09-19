@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { DataTable } from 'react-native-paper';
+import React, {FC, useState} from 'react';
+import {View, Text, TextInput} from 'react-native';
+import {DataTable} from 'react-native-paper';
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
-import { Breakdown } from '../ReceiveTab/interface';
-import CustomTextInput from '../CustomTextInput/CustomTextInput';
-import stylesTemp from '../CustomTextInput/style'
+import {Breakdown} from '../ReceiveTab/interface';
+import stylesTemp from '../CustomTextInput/style';
+
 export interface ApiDataItem {
   id?: string; // Unique identifier for each item
   styleId: number;
@@ -44,8 +44,12 @@ const DataTableComponent: FC<IDataTableProps> = ({
   onUpdatedArray,
   styleID,
 }) => {
-
   const [receiveQty, setReceiveQty] = useState(rowData);
+
+  // Track the focused state of each input field
+  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
+    null,
+  );
 
   // State to track if the checkbox is checked
   const [isPacked, setIsPacked] = useState(false);
@@ -58,34 +62,6 @@ const DataTableComponent: FC<IDataTableProps> = ({
     })),
   );
 
-  // const handleTextInputChange = (index: number, value: string) => {
-  //   // Ensure the value is a number and defaults to 0 if empty
-  //   const newValue = value.trim() === '' ? '0' : value;
-  //   const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
-
-  //   const updatedTextInputs = [...textInputValues];
-  //   updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
-  //   setTextInputValues(updatedTextInputs);
-
-  //   // Generate and log the array when input value changes
-  //   const updatedArray = updatedTextInputs.map((row: any, i) => ({
-  //     id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-  //     styleId: styleID,
-  //     orderentityId: POnumber,
-  //     varienceId: row.varienceId,
-  //     qmsOrgId: 2002,
-  //     finishingOrgId: 2002,
-  //     qty: row.tempReceived, // Use the updated quantity
-  //     isPacked: isPacked === undefined ? false : isPacked,
-  //   }));
-
-  //   // Call the handler to update the parent component's ref
-  //   onUpdatedArray(updatedArray);
-  //   // Optionally pass the updated array to the parent component
-  // };
-
-
-
   const handleTextInputChange = (index: number, value: string) => {
     // Ensure the value is a number and defaults to 0 if empty
     const newValue = value.trim() === '' ? '0' : value;
@@ -97,7 +73,9 @@ const DataTableComponent: FC<IDataTableProps> = ({
     // Check if the received quantity is greater than the balance
     if (numericValue > balanceQty) {
       // If the input value exceeds the balance, reset to the balance
-      alert(`Received quantity cannot be greater than the balance (${balanceQty})`);
+      alert(
+        `Received quantity cannot be greater than the balance (${balanceQty})`,
+      );
       setTextInputValues(prevState => {
         const updated = [...prevState];
         updated[index].tempReceived = balanceQty.toString(); // Set to balance value
@@ -125,7 +103,6 @@ const DataTableComponent: FC<IDataTableProps> = ({
       onUpdatedArray(updatedArray);
     }
   };
-
 
   const totalReceiveQuantity = receiveQty.reduce(
     (total, row) => total + (row.totalReceived || 0),
@@ -171,8 +148,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
           </View>
         </View>
         <View
-          style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-          {/* {showCheckbox && <CheckboxComponent />} */}
+          style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
           {showCheckbox && (
             <CheckboxComponent onChange={handleCheckboxChange} />
           )}
@@ -197,10 +173,19 @@ const DataTableComponent: FC<IDataTableProps> = ({
             <DataTable.Cell numeric>{row.totalReceived}</DataTable.Cell>
             <DataTable.Cell>
               <TextInput
-                style={[stylesTemp.container, stylesTemp.textInput]}
-                value={row.tempReceived} // Ensure value is bound here
-                keyboardType='numeric'
-                onChangeText={(val) => handleTextInputChange(index, val)} // Trigger this when input changes
+                style={[
+                  stylesTemp.container,
+                  stylesTemp.textInput,
+                  {
+                    borderColor:
+                      focusedInputIndex === index ? '#1C98D8' : '#ddd',
+                  },
+                ]}
+                value={row.tempReceived}
+                keyboardType="numeric"
+                onChangeText={val => handleTextInputChange(index, val)}
+                onFocus={() => setFocusedInputIndex(index)}
+                onBlur={() => setFocusedInputIndex(null)}
               />
             </DataTable.Cell>
           </DataTable.Row>

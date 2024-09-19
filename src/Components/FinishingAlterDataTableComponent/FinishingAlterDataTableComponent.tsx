@@ -1,8 +1,9 @@
 import React, {FC, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import Styles from './styles';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
+import stylesTemp from '../CustomTextInput/style';
 
 interface IDataTableProps {
   styleID: number;
@@ -31,14 +32,17 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
   rowData,
   onUpdatedArray,
   orderID,
-  styleID
+  styleID,
 }) => {
-
   const [textInputValues, setTextInputValues] = useState(
     rowData.map((row: any) => ({
       ...row,
       finishingAlterSendQty: row.finishingAlterSendQty || '0',
-    }))
+    })),
+  );
+
+  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
+    null,
   );
 
   const handleTextInputChange = (index: number, value: string) => {
@@ -64,7 +68,8 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
   };
 
   const finishingAlterSendQuantity = textInputValues.reduce(
-    (total: any, row: any) => total + (parseInt(row.finishingAlterSendQty, 10) || 0),
+    (total: any, row: any) =>
+      total + (parseInt(row.finishingAlterSendQty, 10) || 0),
     0,
   );
 
@@ -96,20 +101,34 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
           ))}
         </DataTable.Header>
 
-
         {textInputValues.map((row: any, index: any) => (
           <DataTable.Row key={index}>
             <DataTable.Cell>{row.color}</DataTable.Cell>
             <DataTable.Cell>{row.size}</DataTable.Cell>
             <DataTable.Cell numeric>{row.rcvQty}</DataTable.Cell>
             <DataTable.Cell>
-              <CustomTextInput
+              {/* <CustomTextInput
                   type="quantity"
                   maxLength={4}
                   keyboardType="numeric"
                   value={row.finishingAlterSendQty.toString()} // Bind to textInputValues state
                   onChangeText={value => handleTextInputChange(index, value)}
-                />
+                /> */}
+              <TextInput
+                style={[
+                  stylesTemp.container,
+                  stylesTemp.textInput,
+                  {
+                    borderColor:
+                      focusedInputIndex === index ? '#1C98D8' : '#ddd',
+                  },
+                ]}
+                value={row.finishingAlterSendQty.toString()}
+                keyboardType="numeric"
+                onChangeText={val => handleTextInputChange(index, val)}
+                onFocus={() => setFocusedInputIndex(index)}
+                onBlur={() => setFocusedInputIndex(null)}
+              />
             </DataTable.Cell>
           </DataTable.Row>
         ))}

@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(2),
     textAlign: 'center',
   },
+  focusedTextInput: {
+    borderColor: '#1C98D8', // Border color on focus
+  },
 });
 
 export default styles;
