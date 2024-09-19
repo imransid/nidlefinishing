@@ -1,11 +1,12 @@
-import React, {FC, useState} from 'react';
-import {View, Text, TextInput} from 'react-native';
-import {DataTable} from 'react-native-paper';
+import React, { FC, useState } from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
-import {Breakdown} from '../ReceiveTab/interface';
-import stylesTemp from '../CustomTextInput/style';
-
+import { Breakdown } from '../ReceiveTab/interface';
+import stylesTemp from '../CustomTextInput/style'
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 export interface ApiDataItem {
   id?: string; // Unique identifier for each item
   styleId: number;
@@ -45,6 +46,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
   styleID,
 }) => {
   const [receiveQty, setReceiveQty] = useState(rowData);
+  const finishingOrdID = useSelector((e: RootState) => e.setLine.finishingOrg)
 
   // Track the focused state of each input field
   const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
@@ -94,7 +96,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
         orderentityId: POnumber,
         varienceId: row.varienceId,
         qmsOrgId: 2002,
-        finishingOrgId: 2002,
+        finishingOrgId: finishingOrdID,
         qty: row.tempReceived, // Use the updated quantity
         isPacked: isPacked === undefined ? false : isPacked,
       }));
@@ -148,7 +150,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
           </View>
         </View>
         <View
-          style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+          style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
           {showCheckbox && (
             <CheckboxComponent onChange={handleCheckboxChange} />
           )}
