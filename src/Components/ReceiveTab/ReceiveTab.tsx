@@ -183,11 +183,10 @@ const ReceiveTab: FC = () => {
       {selectedLine === '' ? (
         <View
           style={{
-            flex: 1,
             width: '100%',
             height: '100%',
             alignItems: 'center',
-            justifyContent: 'center'
+            // justifyContent: 'center',
           }}>
           <Text style={{ fontSize: 16 }}>No Line Selected</Text>
         </View>
@@ -216,15 +215,8 @@ export default ReceiveTab;
 
 const style = ScaledSheet.create({
   flatListContainer: {
-    flex: 1, // Allow FlatList to take remaining space
+    //flex: 1, // Allow FlatList to take remaining space
+    height: '180@s'
+  },
 
-  },
-  noLineSelectedContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noLineSelectedText: {
-    fontSize: '16@s',
-  },
 });

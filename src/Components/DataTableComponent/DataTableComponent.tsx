@@ -5,7 +5,7 @@ import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
 import { Breakdown } from '../ReceiveTab/interface';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
-
+import stylesTemp from '../CustomTextInput/style'
 export interface ApiDataItem {
   id?: string; // Unique identifier for each item
   styleId: number;
@@ -153,12 +153,11 @@ const DataTableComponent: FC<IDataTableProps> = ({
             <DataTable.Cell numeric>{row.qcQty}</DataTable.Cell>
             <DataTable.Cell numeric>{row.totalReceived}</DataTable.Cell>
             <DataTable.Cell>
-              <CustomTextInput
-                type="quantity"
-                maxLength={4}
-                keyboardType="numeric"
-                value={row.tempReceived} // Bind to textInputValues state
-                onChangeText={value => handleTextInputChange(index, value)}
+              <TextInput
+                style={[stylesTemp.container, stylesTemp.textInput]}
+                value={row.tempReceived} // Ensure value is bound here
+                keyboardType='numeric'
+                onChangeText={(val) => handleTextInputChange(index, val)} // Trigger this when input changes
               />
             </DataTable.Cell>
           </DataTable.Row>
