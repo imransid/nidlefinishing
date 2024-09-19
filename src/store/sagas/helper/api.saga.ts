@@ -68,6 +68,8 @@ export const commonGetAPI = async (props: ICommonGetAPIProps): Promise<any> => {
     return axios
       .request(config)
       .then(response => {
+        console.log('response.data', response.data);
+
         return response.data;
       })
       .catch(error => {

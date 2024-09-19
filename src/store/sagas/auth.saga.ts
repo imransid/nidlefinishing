@@ -46,6 +46,13 @@ export function* loginSaga(
 
       const responseFinishProcessList: any = yield call(commonGetAPI, props);
 
+      console.log(
+        'responseSetLineProcess',
+        responseSetLineProcess,
+        'responseFinishProcessList',
+        responseFinishProcessList,
+      );
+
       if (responseSetLineProcess !== undefined) {
         let modFinishData = responseSetLineProcess.data.map((e: any) => {
           e.label = e.name;

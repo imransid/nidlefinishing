@@ -58,31 +58,74 @@ const DataTableComponent: FC<IDataTableProps> = ({
     })),
   );
 
+  // const handleTextInputChange = (index: number, value: string) => {
+  //   // Ensure the value is a number and defaults to 0 if empty
+  //   const newValue = value.trim() === '' ? '0' : value;
+  //   const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
+
+  //   const updatedTextInputs = [...textInputValues];
+  //   updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
+  //   setTextInputValues(updatedTextInputs);
+
+  //   // Generate and log the array when input value changes
+  //   const updatedArray = updatedTextInputs.map((row: any, i) => ({
+  //     id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+  //     styleId: styleID,
+  //     orderentityId: POnumber,
+  //     varienceId: row.varienceId,
+  //     qmsOrgId: 2002,
+  //     finishingOrgId: 2002,
+  //     qty: row.tempReceived, // Use the updated quantity
+  //     isPacked: isPacked === undefined ? false : isPacked,
+  //   }));
+
+  //   // Call the handler to update the parent component's ref
+  //   onUpdatedArray(updatedArray);
+  //   // Optionally pass the updated array to the parent component
+  // };
+
+
+
   const handleTextInputChange = (index: number, value: string) => {
     // Ensure the value is a number and defaults to 0 if empty
     const newValue = value.trim() === '' ? '0' : value;
     const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
 
-    const updatedTextInputs = [...textInputValues];
-    updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
-    setTextInputValues(updatedTextInputs);
+    // Fetch the balance for the current row
+    const balanceQty = textInputValues[index].totalReceived;
 
-    // Generate and log the array when input value changes
-    const updatedArray = updatedTextInputs.map((row: any, i) => ({
-      id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-      styleId: styleID,
-      orderentityId: POnumber,
-      varienceId: row.varienceId,
-      qmsOrgId: 2002,
-      finishingOrgId: 2002,
-      qty: row.tempReceived, // Use the updated quantity
-      isPacked: isPacked === undefined ? false : isPacked,
-    }));
+    // Check if the received quantity is greater than the balance
+    if (numericValue > balanceQty) {
+      // If the input value exceeds the balance, reset to the balance
+      alert(`Received quantity cannot be greater than the balance (${balanceQty})`);
+      setTextInputValues(prevState => {
+        const updated = [...prevState];
+        updated[index].tempReceived = balanceQty.toString(); // Set to balance value
+        return updated;
+      });
+    } else {
+      // If input is valid, update the state as usual
+      const updatedTextInputs = [...textInputValues];
+      updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
+      setTextInputValues(updatedTextInputs);
 
-    // Call the handler to update the parent component's ref
-    onUpdatedArray(updatedArray);
-    // Optionally pass the updated array to the parent component
+      // Generate and log the array when input value changes
+      const updatedArray = updatedTextInputs.map((row: any, i) => ({
+        id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+        styleId: styleID,
+        orderentityId: POnumber,
+        varienceId: row.varienceId,
+        qmsOrgId: 2002,
+        finishingOrgId: 2002,
+        qty: row.tempReceived, // Use the updated quantity
+        isPacked: isPacked === undefined ? false : isPacked,
+      }));
+
+      // Call the handler to update the parent component's ref
+      onUpdatedArray(updatedArray);
+    }
   };
+
 
   const totalReceiveQuantity = receiveQty.reduce(
     (total, row) => total + (row.totalReceived || 0),
