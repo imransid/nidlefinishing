@@ -21,10 +21,13 @@ export const settingSlice = createSlice({
     stopLoader: (state: ISettingState) => {
       state.isLoading = false;
     },
+    startLoader: (state: ISettingState) => {
+      state.isLoading = true;
+    },
   },
 });
 
-export const {setGlobalLoaderAction, checkingLoader, stopLoader} =
+export const {setGlobalLoaderAction, checkingLoader, stopLoader, startLoader} =
   settingSlice.actions;
 
 export default settingSlice.reducer;

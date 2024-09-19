@@ -102,7 +102,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/node_modules/@react-native-community/netinfo/react-native-netinfo.podspec",
-          "version": "11.3.2",
+          "version": "11.4.0",
           "configurations": [],
           "scriptPhases": []
         },
@@ -150,7 +150,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/node_modules/@sentry/react-native/RNSentry.podspec",
-          "version": "5.31.1",
+          "version": "5.33.0",
           "configurations": [],
           "scriptPhases": []
         },
@@ -430,7 +430,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/node_modules/react-native-reanimated/RNReanimated.podspec",
-          "version": "3.15.1",
+          "version": "3.15.2",
           "configurations": [],
           "scriptPhases": []
         },
@@ -542,7 +542,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/node_modules/react-native-svg/RNSVG.podspec",
-          "version": "15.6.0",
+          "version": "15.7.1",
           "configurations": [],
           "scriptPhases": []
         },

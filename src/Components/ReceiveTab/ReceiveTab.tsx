@@ -8,7 +8,7 @@ import SelectLineModal from '../SelectLineModal/SelectLineModal';
 import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import CustomModalButton from '../CustomModalButton/CustomModalButton';
 import Styles from './style';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { Detail, StockViewItem } from './interface';
 import {
@@ -21,24 +21,23 @@ import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
 import { useFocusEffect } from '@react-navigation/native';
 import ToastPopUp from '@/utils/Toast.android';
 import { scale, ScaledSheet } from 'react-native-size-matters'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
-import DataTableComponent, {
-  type ApiDataItem
-} from '../../Components/DataTableComponent/DataTableComponent';
-import CustomModalButton from '../CustomModalButton/CustomModalButton';
-import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
-import SelectLineModal from '../SelectLineModal/SelectLineModal';
-
-import { type Detail, type StockViewItem } from './interface';
-import Styles from './style';
 
 const ReceiveTab: FC = () => {
-  const [selectedLine, setSelectedLine] = React.useState<string>('2002');
+
+
+  const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
-  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
+  const [loader, setLoader] = React.useState<boolean>(false);
+  const [dataLoading, setDataLoading] = React.useState<boolean>(false);
+
+  const accessToken = useSelector(
+    (state: RootState) => state.users.user.data?.accessToken,
+  );
 
   // Use useRef to store the updated array without re-rendering
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
@@ -64,8 +63,8 @@ const ReceiveTab: FC = () => {
   // Function to fetch data from API
   const fetchData = async () => {
     try {
-      // setLoading(true);
-      const props = {
+      setLoader(true);
+      let props = {
         url: BASE_URL + '/' + ORG_TREE,
         token: accessToken !== undefined ? accessToken : ''
       };
@@ -76,7 +75,7 @@ const ReceiveTab: FC = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
-      // setLoading(false);
+      setLoader(false);
     }
   };
 
@@ -98,20 +97,27 @@ const ReceiveTab: FC = () => {
 
   const onClickLeaf = async (id: string): Promise<any> => {
     try {
-      const props = {
-        url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + '2002', // data.item.id,
-        token: accessToken !== undefined ? accessToken : ''
+
+      let props = {
+        url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + id,
+        token: accessToken !== undefined ? accessToken : '',
       };
-      const response = await commonGetAPI(props);
+
+      // setLoader(true)
+      // setDataLoading(true)
+
+      let response = await commonGetAPI(props);
 
       if (response !== undefined) {
         setTableData(response.data.details);
+        // setLoader(false)
       }
     } catch (error) {
       console.error('Error during onClickLeaf execution:', error);
-      // setLoader(false); // Stop loader
+      setLoader(false); // Stop loader
     } finally {
-      // setLoader(false); // Stop loader
+      // setDataLoading(false)
+      //setLoader(false); // Stop loader
     }
   };
 
@@ -128,7 +134,9 @@ const ReceiveTab: FC = () => {
         data: filteredData
       };
 
-      const response = await commonPostAPI(props);
+      // dispatch(startLoader())
+
+      let response = await commonPostAPI(props);
 
       if (response !== undefined) ToastPopUp('Submit Successfully.');
     } else {
@@ -163,6 +171,7 @@ const ReceiveTab: FC = () => {
 
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
+
       <View style={{ height: '20%' }}>
         <CustomModalButton
           buttonStyle={Styles.selectLineDateButton}
@@ -180,7 +189,7 @@ const ReceiveTab: FC = () => {
           onClickAble={(e: number) => onClickLeaf(e.toString())}
         />
       </View>
-      {selectedLine === '' ? (
+      {selectedLine === '' || dataLoading === true ? (
         <View
           style={{
             width: '100%',
@@ -188,7 +197,7 @@ const ReceiveTab: FC = () => {
             alignItems: 'center',
             // justifyContent: 'center',
           }}>
-          <Text style={{ fontSize: 16 }}>No Line Selected</Text>
+          <Text style={{ fontSize: 16 }}>{dataLoading ? 'Loading..' : 'No Line Selected'} </Text>
         </View>
       ) : (
         <View style={style.flatListContainer}>
@@ -207,6 +216,7 @@ const ReceiveTab: FC = () => {
         text="CONFIRM RECEIVE"
         onPress={confirmReceive}
       />
+      <Spinner visible={loader} textContent={'Loading...'} />
     </View >
   );
 };
