@@ -3,7 +3,7 @@ import * as Effects from 'redux-saga/effects';
 import {type AccessTokenInfo, type LoginResponse} from '../types/types';
 import {commonGetAPI, loginAPI} from './helper/api.saga';
 import ToastPopUp from '@/utils/Toast.android';
-import {settingSlice} from '../slices/features/settings/slice';
+import {settingSlice, stopLoader} from '../slices/features/settings/slice';
 import {usersSlice} from '../slices/features/users/slice';
 import {setLineSlice} from '../slices/features/setLineProcess/slice';
 import {
@@ -12,6 +12,7 @@ import {
   FINISHING_PROCESS_LIST,
   SIGN_IN_URL,
 } from '@/utils/environment';
+import {RootState} from '..';
 const {call} = Effects;
 interface IGetUserActionPayload {
   payload: {
@@ -72,6 +73,22 @@ export function* loginSaga(
       ToastPopUp(data);
       yield put(usersSlice.actions.getUserErrorAction('Login failed')); // Handle error case
     }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function* loaderChecker(): Generator<
+  any,
+  void,
+  AccessTokenInfo | undefined | any
+> {
+  try {
+    const isLoading = yield select(
+      (state: RootState) => state.settings.isLoading,
+    );
+
+    if (isLoading) yield put(stopLoader());
   } catch (error) {
     console.error(error);
   }

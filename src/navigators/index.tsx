@@ -7,14 +7,15 @@ import DrawerNavigator from './DrawerNavigator';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { RootState } from '@/store';
+import { checkingLoader } from '@/store/slices/features/settings/slice';
 
 const Navigator: FC = () => {
   const authStatus = useSelector((state: RootState) => state.users.user.loginStatus);
   const globalLoaderStatus = useSelector((state: RootState) => state.settings.isLoading);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(checkLoaderAction());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(checkingLoader());
+  }, []);
 
   return (
     <NavigationContainer>

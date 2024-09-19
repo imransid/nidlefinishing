@@ -20,6 +20,8 @@ import {
 import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
 import { useFocusEffect } from '@react-navigation/native';
 import ToastPopUp from '@/utils/Toast.android';
+import { scale, ScaledSheet } from 'react-native-size-matters'
+
 
 import DataTableComponent, {
   type ApiDataItem
@@ -32,8 +34,7 @@ import { type Detail, type StockViewItem } from './interface';
 import Styles from './style';
 
 const ReceiveTab: FC = () => {
-  const [selectedLine, setSelectedLine] = React.useState<string>('');
-  const [selectedLineName, setSelectedLineName] = React.useState<string>('');
+  const [selectedLine, setSelectedLine] = React.useState<string>('2002');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
@@ -136,46 +137,50 @@ const ReceiveTab: FC = () => {
     }
   }, []);
 
-  const renderItem = (item: StockViewItem) => {
-    return (
-      <DataTableComponent
-        buyer="Buyer"
-        buyerName={item.item.customer}
-        style="Style"
-        styleName={item.item.style}
-        styleID={item.item.styleId}
-        order="PO"
-        orderNumber={item.item.orderId}
-        showCheckbox={true}
-        columnNames={['Color', 'Size', 'QC Qty.', 'Total Receive', 'Balance Qty.', 'Receive Qty.']}
-        onUpdatedArray={handleUpdatedArray}
-        rowData={item.item.breakdowns}
-      />
-    );
-  };
+  const renderItem = (item: StockViewItem) => (
+    <DataTableComponent
+      buyer="Buyer"
+      buyerName={item.item.customer}
+      style="Style"
+      styleName={item.item.style}
+      styleID={item.item.styleId}
+      order="PO"
+      orderNumber={item.item.orderId}
+      showCheckbox={true}
+      columnNames={[
+        'Color',
+        'Size',
+        'QC Qty.',
+        'Total Receive',
+        'Balance Qty.',
+        'Receive Qty.',
+      ]}
+      onUpdatedArray={handleUpdatedArray}
+      rowData={item.item.breakdowns}
+    />
+  );
+
 
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
-      <CustomModalButton
-        buttonStyle={Styles.selectLineDateButton}
-        buttonTextStyle={Styles.selectLineDateButtonText}
-        onPress={() => {
-          setLineModalVisible(true);
-        }}
-        text={selectedLineName !== '' ? selectedLineName : 'Select Line'}
-        icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
-      />
-      {/* Modal for TreeSelect */}
-      <SelectLineModal
-        orgTreeData={orgTree}
-        setSelectedLine={setSelectedLine}
-        lineModalVisible={lineModalVisible}
-        setLineModalVisible={setLineModalVisible}
-        pageName="receive"
-        setSelectedLineName={setSelectedLineName}
-        onClickAble={async (e: number) => await onClickLeaf(e.toString())}
-      />
-      {selectedLineName === '' ? (
+      <View style={{ height: '20%' }}>
+        <CustomModalButton
+          buttonStyle={Styles.selectLineDateButton}
+          buttonTextStyle={Styles.selectLineDateButtonText}
+          onPress={() => setLineModalVisible(true)}
+          text={selectedLine !== '' ? selectedLine : 'Select Line'}
+          icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
+        />
+        <SelectLineModal
+          orgTreeData={orgTree}
+          setSelectedLine={setSelectedLine}
+          lineModalVisible={lineModalVisible}
+          setLineModalVisible={setLineModalVisible}
+          pageName="receive"
+          onClickAble={(e: number) => onClickLeaf(e.toString())}
+        />
+      </View>
+      {selectedLine === '' ? (
         <View
           style={{
             flex: 1,
@@ -187,21 +192,39 @@ const ReceiveTab: FC = () => {
           <Text style={{ fontSize: 16 }}>No Line Selected</Text>
         </View>
       ) : (
-        <FlatList
-          style={{ marginBottom: 100 }}
-          data={tableData}
-          renderItem={renderItem}
-          keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
-        />
-      )}
+        <View style={style.flatListContainer}>
+          <FlatList
+            data={tableData}
+            renderItem={renderItem}
+            keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
+            ListFooterComponent={<View style={{ height: 80 }} />}
+          />
+        </View>
+      )
+      }
 
       <CustomSubmitButton
         icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
         text="CONFIRM RECEIVE"
         onPress={confirmReceive}
       />
-    </View>
+    </View >
   );
 };
 
 export default ReceiveTab;
+
+const style = ScaledSheet.create({
+  flatListContainer: {
+    flex: 1, // Allow FlatList to take remaining space
+
+  },
+  noLineSelectedContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noLineSelectedText: {
+    fontSize: '16@s',
+  },
+});

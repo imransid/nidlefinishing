@@ -42,6 +42,7 @@ export const loginAPI = async (
     const response = await axios.post(apiUrl, requestData, config);
     return response.data;
   } catch (error) {
+    console.log('find');
     console.error('Error in loginAPI:', error);
     ToastPopUp('Sign In Failed. ');
     return undefined; // Or you could return a specific error object here
