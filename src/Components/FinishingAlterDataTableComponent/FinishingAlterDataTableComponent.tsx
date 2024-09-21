@@ -1,6 +1,6 @@
-import React, {FC, useState} from 'react';
-import {View, Text, TextInput} from 'react-native';
-import {DataTable} from 'react-native-paper';
+import React, { FC, useState } from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import Styles from './styles';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
 import stylesTemp from '../CustomTextInput/style';

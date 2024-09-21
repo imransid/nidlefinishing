@@ -4,7 +4,7 @@ import { DataTable } from 'react-native-paper';
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import Styles from './styles';
 import { Breakdown } from '../ReceiveTab/interface';
-import stylesTemp from '../CustomTextInput/style'
+import stylesTemp from '../CustomTextInput/style';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 export interface ApiDataItem {
@@ -127,6 +127,12 @@ const DataTableComponent: FC<IDataTableProps> = ({
     setTextInputValues(updatedTextInputs);
   };
 
+  // Calculate the total tempReceived
+  const totalTempReceived = textInputValues.reduce(
+    (total, row) => total + (Number(row.tempReceived) || 0),
+    0,
+  );
+
   return (
     <View style={Styles.container}>
       <View
@@ -206,17 +212,17 @@ const DataTableComponent: FC<IDataTableProps> = ({
             {name === 'Color'
               ? 'Total = '
               : name === 'Size'
-                ? '                                  '
+                ? ' '
                 : name === 'Input Qty.'
                   ? ' '
                   : name === 'QC Qty.'
-                    ? totalReceiveQuantity
+                    ? ' '
                     : name === 'Total Receive'
-                      ? totalReceiveQuantity
+                      ? ' '
                       : name === 'Balance Qty.'
                         ? ' '
                         : name === 'Receive Qty.'
-                          ? totalReceiveQuantity
+                          ? totalTempReceived
                           : 0}
           </Text>
         ))}

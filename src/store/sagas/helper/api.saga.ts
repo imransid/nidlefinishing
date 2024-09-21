@@ -50,8 +50,6 @@ export const loginAPI = async (
 
 export const commonGetAPI = async (props: ICommonGetAPIProps): Promise<any> => {
   try {
-    let data = '';
-
     const myHeaders = new Headers();
     myHeaders.append('Authorization', 'Bearer ' + props.token);
 

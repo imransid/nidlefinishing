@@ -46,13 +46,6 @@ export function* loginSaga(
 
       const responseFinishProcessList: any = yield call(commonGetAPI, props);
 
-      console.log(
-        'responseSetLineProcess',
-        responseSetLineProcess,
-        'responseFinishProcessList',
-        responseFinishProcessList,
-      );
-
       if (responseSetLineProcess !== undefined) {
         let modFinishData = responseSetLineProcess.data.map((e: any) => {
           e.label = e.name;
@@ -78,6 +71,7 @@ export function* loginSaga(
       const data =
         'The email or password you entered is incorrect. Please try again.';
       ToastPopUp(data);
+      yield put(stopLoader());
       yield put(usersSlice.actions.getUserErrorAction('Login failed')); // Handle error case
     }
   } catch (error) {

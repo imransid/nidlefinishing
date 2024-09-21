@@ -16,17 +16,7 @@ import {
   SEND_TO_FINISHING_ALTER_RECEIVE
 } from '@/utils/environment';
 import ToastPopUp from '@/utils/Toast.android';
-
-import DataTableComponent, {
-  type ApiDataItem
-} from '../../Components/DataTableComponent/DataTableComponent';
-import CalendarModal from '../CalendarModal/CalenderModal';
-import CustomModalButton from '../CustomModalButton/CustomModalButton';
-import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
-import { type Detail, type StockViewItem } from '../ReceiveTab/interface';
-import SelectLineModal from '../SelectLineModal/SelectLineModal';
-
-import Styles from './style';
+import { ScaledSheet } from 'react-native-size-matters';
 const AlterResendTab: FC = () => {
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [selectedLine, setSelectedLine] = React.useState<string>('');
@@ -220,12 +210,14 @@ const AlterResendTab: FC = () => {
           <Text style={{ fontSize: 16 }}>No Line & Date Selected</Text>
         </View>
       ) : (
-        <FlatList
-          style={{ marginBottom: 100 }}
-          data={tableData}
-          renderItem={renderItem}
-          keyExtractor={item => `${Math.random()}`}
-        />
+        <View style={style.flatListContainer}>
+          <FlatList
+            data={tableData}
+            renderItem={renderItem}
+            keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
+            ListFooterComponent={<View style={{ height: 80 }} />}
+          />
+        </View>
       )}
 
       <CustomSubmitButton
@@ -238,3 +230,11 @@ const AlterResendTab: FC = () => {
 };
 
 export default AlterResendTab;
+
+const style = ScaledSheet.create({
+  flatListContainer: {
+    //flex: 1, // Allow FlatList to take remaining space
+    height: '180@s'
+  },
+
+});
