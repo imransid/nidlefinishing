@@ -21,7 +21,6 @@ import { ScaledSheet } from 'react-native-size-matters';
 import { AlterAPIDetails } from './interface';
 import Styles from './style';
 const FinishingAlterTab: FC = () => {
-  // GET : http://localhost:8081/api/v1/getFinishingAlterList?lineId=2002&date=2024-09-12 12:00:15
 
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
@@ -170,12 +169,17 @@ const FinishingAlterTab: FC = () => {
 
       let response = await commonPutAPI(props);
 
-      if (response !== undefined) ToastPopUp('Submit Successfully.');
+      if (response !== undefined) {
+
+        fetchDataLineWise(selectedLine, selectedDate)
+        ToastPopUp('Submit Successfully.');
+
+      }
     } else {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
-  }, []);
+  }, [selectedLine, selectedDate]);
 
   return (
     <View style={Styles.alterResendTabContainer}>

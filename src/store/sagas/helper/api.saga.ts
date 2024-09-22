@@ -53,6 +53,8 @@ export const commonGetAPI = async (props: ICommonGetAPIProps): Promise<any> => {
     const myHeaders = new Headers();
     myHeaders.append('Authorization', 'Bearer ' + props.token);
 
+    console.log('props props', props);
+
     const requestOptions: any = {
       method: 'GET',
       headers: myHeaders,

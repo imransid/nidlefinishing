@@ -29,6 +29,7 @@ const ReceiveTab: FC = () => {
 
 
   const [selectedLine, setSelectedLine] = React.useState<string>('');
+  const [selectedLineName, setSelectedLineName] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
@@ -86,6 +87,9 @@ const ReceiveTab: FC = () => {
 
       // Cleanup function to reset state when the screen is unfocused
       return () => {
+
+        console.log("funkk")
+
         setSelectedLine('');
         setLineModalVisible(false);
         setOrgTree([]);
@@ -112,7 +116,9 @@ const ReceiveTab: FC = () => {
       console.log('response', response)
 
       if (response !== undefined) {
+        setSelectedLine(id)
         setTableData(response.data.details);
+        setLineModalVisible(false)
         // setLoader(false)
       }
     } catch (error) {
@@ -141,12 +147,17 @@ const ReceiveTab: FC = () => {
 
       let response = await commonPostAPI(props);
 
-      if (response !== undefined) ToastPopUp('Submit Successfully.');
+      if (response !== undefined) {
+
+        onClickLeaf(selectedLine)
+        ToastPopUp('Submit Successfully.');
+
+      }
     } else {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
-  }, []);
+  }, [selectedLine]);
 
   const renderItem = (item: StockViewItem) => (
     <DataTableComponent
@@ -180,7 +191,7 @@ const ReceiveTab: FC = () => {
           buttonStyle={Styles.selectLineDateButton}
           buttonTextStyle={Styles.selectLineDateButtonText}
           onPress={() => setLineModalVisible(true)}
-          text={selectedLine !== '' ? selectedLine : 'Select Line'}
+          text={selectedLine !== '' ? selectedLineName : 'Select Line'}
           icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
         />
         <SelectLineModal
@@ -189,7 +200,7 @@ const ReceiveTab: FC = () => {
           lineModalVisible={lineModalVisible}
           setLineModalVisible={setLineModalVisible}
           pageName="receive"
-          onClickAble={(e: number) => onClickLeaf(e.toString())} setSelectedLineName={undefined} />
+          onClickAble={(e: number) => onClickLeaf(e.toString())} setSelectedLineName={setSelectedLineName} />
       </View>
       {selectedLine === '' || dataLoading === true ? (
         <View

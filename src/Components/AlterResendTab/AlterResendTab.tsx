@@ -138,12 +138,16 @@ const AlterResendTab: FC = () => {
       };
 
       const response = await commonPutAPI(props);
-      if (response !== undefined) ToastPopUp('Submit Successfully.');
+      if (response !== undefined) {
+        ToastPopUp('Submit Successfully.');
+        fetchDataLineWise(selectedLine, selectedDate);
+
+      }
     } else {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
-  }, []);
+  }, [selectedLine, selectedDate]);
 
   const renderItem = (item: StockViewItem) => (
     <DataTableComponent
