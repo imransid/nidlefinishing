@@ -4,6 +4,8 @@ import { DataTable } from 'react-native-paper';
 import Styles from './styles';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
 import stylesTemp from '../CustomTextInput/style';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 interface IDataTableProps {
   styleID: number;
@@ -44,6 +46,9 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
   const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
     null,
   );
+  const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop)
+
+
 
   const handleTextInputChange = (index: number, value: string) => {
     const updatedValues = [...textInputValues];
@@ -58,7 +63,7 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
       orderentityId: orderID,
       varienceId: row.varienceId,
       qmsOrgId: selectedLine,
-      finishingOrgId: 2002, // start time array
+      finishingOrgId: finishingOrdID, // start time array
       qty: row.finishingAlterSendQty,
       isPacked: row.isPacked || false,
     }));

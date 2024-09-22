@@ -30,6 +30,7 @@ interface IDataTableProps {
   rowData: Breakdown[];
   onUpdatedArray: any;
   styleID: number;
+  selectedLine: number
 }
 
 const DataTableComponent: FC<IDataTableProps> = ({
@@ -44,9 +45,11 @@ const DataTableComponent: FC<IDataTableProps> = ({
   rowData,
   onUpdatedArray,
   styleID,
+  selectedLine
 }) => {
   const [receiveQty, setReceiveQty] = useState(rowData);
-  const finishingOrdID = useSelector((e: RootState) => e.setLine.finishingOrg)
+  const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop)
+
 
   // Track the focused state of each input field
   const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
@@ -71,6 +74,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
     const newValue = value.trim() === '' ? '0' : value;
     const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
 
+
     // Fetch the balance for the current row
     const balanceQty = textInputValues[index].balance;
 
@@ -85,8 +89,8 @@ const DataTableComponent: FC<IDataTableProps> = ({
         updated[index].tempReceived = balanceQty.toString(); // Set to balance value
         return updated;
       });
-    } else {
-      // If input is valid, update the state as usual
+    } else if (numericValue === balanceQty) {
+      // If input is exactly equal to the balance, update the state
       const updatedTextInputs = [...textInputValues];
       updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
       setTextInputValues(updatedTextInputs);
@@ -97,7 +101,27 @@ const DataTableComponent: FC<IDataTableProps> = ({
         styleId: styleID,
         orderentityId: POnumber,
         varienceId: row.varienceId,
-        qmsOrgId: 2002,
+        qmsOrgId: selectedLine,
+        finishingOrgId: finishingOrdID,
+        qty: row.tempReceived, // Use the updated quantity
+        isPacked: isPacked === undefined ? false : isPacked,
+      }));
+
+      // Call the handler to update the parent component's ref
+      onUpdatedArray(updatedArray);
+    } else {
+      // If input is valid but less than balance, update the state as usual
+      const updatedTextInputs = [...textInputValues];
+      updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
+      setTextInputValues(updatedTextInputs);
+
+      // Generate and log the array when input value changes
+      const updatedArray = updatedTextInputs.map((row: any, i) => ({
+        id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+        styleId: styleID,
+        orderentityId: POnumber,
+        varienceId: row.varienceId,
+        qmsOrgId: selectedLine,
         finishingOrgId: finishingOrdID,
         qty: row.tempReceived, // Use the updated quantity
         isPacked: isPacked === undefined ? false : isPacked,

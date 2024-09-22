@@ -35,9 +35,6 @@ const ReceiveTab: FC = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
-
-  console.log('tableData', tableData)
-
   const accessToken = useSelector(
     (state: RootState) => state.users.user.data?.accessToken,
   );
@@ -171,7 +168,7 @@ const ReceiveTab: FC = () => {
       ]}
       onUpdatedArray={handleUpdatedArray}
       rowData={item.item.breakdowns}
-    />
+      selectedLine={parseInt(selectedLine)} />
   );
 
 

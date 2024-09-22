@@ -146,6 +146,7 @@ const FinishingAlterTab: FC = () => {
         selectedLine={selectedLine}
         rowData={item.breakdowns}
         onUpdatedArray={handleUpdatedArray}
+
       />
     );
   };

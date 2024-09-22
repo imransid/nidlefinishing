@@ -111,7 +111,6 @@ export const commonPostAPI = async (
     return axios
       .request(config)
       .then((response: any) => {
-        console.log(JSON.stringify(response.data));
         return response.data;
       })
       .catch((err: any) => {

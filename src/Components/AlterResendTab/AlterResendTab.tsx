@@ -26,7 +26,7 @@ import CalendarModal from '../CalendarModal/CalenderModal';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
 const AlterResendTab: FC = () => {
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
-  const [selectedLine, setSelectedLine] = React.useState<string>('');
+  const [selectedLine, setSelectedLine] = React.useState<number>(0);
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
   const [selectedDate, setDate] = React.useState('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
@@ -37,7 +37,7 @@ const AlterResendTab: FC = () => {
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
 
   // Function to fetch data
-  const fetchDataLineWise = async (lineId: string, date: string) => {
+  const fetchDataLineWise = async (lineId: number, date: string) => {
     try {
       const formattedDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
 
@@ -65,7 +65,7 @@ const AlterResendTab: FC = () => {
 
   // UseEffect to call API when selectedLine or selectedDate changes
   useEffect(() => {
-    if (selectedLine.length > 0 && selectedDate.length > 0) {
+    if (selectedLine !== 0 && selectedDate.length > 0) {
       void fetchDataLineWise(selectedLine, selectedDate);
     }
   }, [selectedLine, selectedDate]);
@@ -114,7 +114,7 @@ const AlterResendTab: FC = () => {
 
       // Cleanup function to reset state when the screen is unfocused
       return () => {
-        setSelectedLine('');
+        setSelectedLine(0);
         setLineModalVisible(false);
         setOrgTree([]);
         setTableData([]);
@@ -165,8 +165,7 @@ const AlterResendTab: FC = () => {
       ]}
       rowData={item.item.breakdowns}
       onUpdatedArray={handleUpdatedArray}
-      styleID={item.item.styleId}
-    />
+      styleID={item.item.styleId} selectedLine={selectedLine} />
   );
 
   return (
@@ -178,7 +177,7 @@ const AlterResendTab: FC = () => {
           onPress={() => {
             setLineModalVisible(true);
           }}
-          text={selectedLine !== '' ? selectedLineName : 'Select Line'}
+          text={selectedLine !== 0 ? selectedLineName : 'Select Line'}
           icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
         />
         <CustomModalButton
@@ -194,18 +193,19 @@ const AlterResendTab: FC = () => {
       {/* Modal for TreeSelect */}
       <SelectLineModal
         orgTreeData={orgTree}
-        setSelectedLine={setSelectedLine}
+        setSelectedLine={(e: any) => setSelectedLine(parseInt(e))}
         lineModalVisible={lineModalVisible}
         setLineModalVisible={setLineModalVisible}
         pageName={''}
         setSelectedLineName={setSelectedLineName}
+      // onClickAble={(e: number) => setSelectedLine(e)}
       />
       <CalendarModal
         setDate={setDate}
         calendarModalVisible={calendarModalVisible}
         setCalendarModalVisible={setCalendarModalVisible}
       />
-      {selectedLine === '' && selectedDate === '' ? (
+      {selectedLine === 0 && selectedDate === '' ? (
         <View
           style={{
             flex: 1,
