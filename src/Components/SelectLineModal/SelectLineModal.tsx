@@ -11,6 +11,7 @@ interface ISelectLineModalProps {
   setLineModalVisible: (visible: boolean) => void;
   onClickAble?: (e: number) => void;
   pageName: string;
+  setSelectedLineName: any
 }
 const SelectLineModal: FC<ISelectLineModalProps> = ({
   lineModalVisible,

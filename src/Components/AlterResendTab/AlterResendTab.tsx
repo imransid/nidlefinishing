@@ -17,6 +17,13 @@ import {
 } from '@/utils/environment';
 import ToastPopUp from '@/utils/Toast.android';
 import { ScaledSheet } from 'react-native-size-matters';
+import { Detail, StockViewItem } from '../ReceiveTab/interface';
+import DataTableComponent, { ApiDataItem } from '../DataTableComponent/DataTableComponent';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import Styles from './style';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import CalendarModal from '../CalendarModal/CalenderModal';
+import SelectLineModal from '../SelectLineModal/SelectLineModal';
 const AlterResendTab: FC = () => {
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [selectedLine, setSelectedLine] = React.useState<string>('');

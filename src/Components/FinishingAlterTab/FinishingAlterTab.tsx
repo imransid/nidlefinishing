@@ -5,7 +5,6 @@ import TreeIcon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
-
 import { type RootState } from '@/store';
 import { commonGetAPI, commonPutAPI } from '@/store/sagas/helper/api.saga';
 import { BASE_URL, GET_FINISHING_ALTER_LIST, ORG_TREE, SEND_TO_ALTER } from '@/utils/environment';
@@ -17,28 +16,10 @@ import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import { type ApiDataItem } from '../DataTableComponent/DataTableComponent';
 import FinishingAlterDataTableComponent from '../FinishingAlterDataTableComponent/FinishingAlterDataTableComponent';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
-import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
-import CustomModalButton from '../CustomModalButton/CustomModalButton';
-import {
-  commonGetAPI,
-  commonPostAPI,
-  commonPutAPI,
-} from '@/store/sagas/helper/api.saga';
-import { useFocusEffect } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import {
-  BASE_URL,
-  CONFIRM_RECEIVE_REQUEST,
-  GET_FINISHING_ALTER_LIST,
-  ORG_TREE,
-  SEND_TO_ALTER,
-} from '@/utils/environment';
-import moment from 'moment';
-import { AlterAPIDetails } from './interface';
-import { ApiDataItem } from '../DataTableComponent/DataTableComponent';
-import ToastPopUp from '@/utils/Toast.android';
+
 import { ScaledSheet } from 'react-native-size-matters';
+import { AlterAPIDetails } from './interface';
+import Styles from './style';
 const FinishingAlterTab: FC = () => {
   // GET : http://localhost:8081/api/v1/getFinishingAlterList?lineId=2002&date=2024-09-12 12:00:15
 

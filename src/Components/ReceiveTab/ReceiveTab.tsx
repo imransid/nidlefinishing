@@ -111,6 +111,9 @@ const ReceiveTab: FC = () => {
 
       let response = await commonGetAPI(props);
 
+
+      console.log('response', response)
+
       if (response !== undefined) {
         setTableData(response.data.details);
         // setLoader(false)
@@ -189,8 +192,7 @@ const ReceiveTab: FC = () => {
           lineModalVisible={lineModalVisible}
           setLineModalVisible={setLineModalVisible}
           pageName="receive"
-          onClickAble={(e: number) => onClickLeaf(e.toString())}
-        />
+          onClickAble={(e: number) => onClickLeaf(e.toString())} setSelectedLineName={undefined} />
       </View>
       {selectedLine === '' || dataLoading === true ? (
         <View

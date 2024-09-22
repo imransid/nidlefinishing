@@ -56,8 +56,6 @@ const DataTableComponent: FC<IDataTableProps> = ({
   // State to track if the checkbox is checked
   const [isPacked, setIsPacked] = useState(false);
 
-  const finishingOrdID = useSelector((e: RootState) => e.setLine.finishingOrg);
-
   // Initialize textInputValues with empty strings or existing values
   const [textInputValues, setTextInputValues] = useState(
     rowData.map(row => ({
@@ -66,9 +64,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
     })),
   );
 
-  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
-    null,
-  );
+
 
   const handleTextInputChange = (index: number, value: string) => {
     // Ensure the value is a number and defaults to 0 if empty
@@ -76,7 +72,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
     const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
 
     // Fetch the balance for the current row
-    const balanceQty = textInputValues[index].totalReceived;
+    const balanceQty = textInputValues[index].balance;
 
     // Check if the received quantity is greater than the balance
     if (numericValue > balanceQty) {
@@ -182,9 +178,9 @@ const DataTableComponent: FC<IDataTableProps> = ({
           <DataTable.Row key={index}>
             <DataTable.Cell>{row.color}</DataTable.Cell>
             <DataTable.Cell>{row.size}</DataTable.Cell>
-            <DataTable.Cell numeric>{row.balance}</DataTable.Cell>
             <DataTable.Cell numeric>{row.qcQty}</DataTable.Cell>
             <DataTable.Cell numeric>{row.totalReceived}</DataTable.Cell>
+            <DataTable.Cell numeric>{row.balance}</DataTable.Cell>
             <DataTable.Cell>
               <TextInput
                 style={[
