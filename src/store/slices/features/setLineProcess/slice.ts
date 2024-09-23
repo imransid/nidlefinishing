@@ -7,6 +7,7 @@ const setLineInitialState: ISetLineState = {
   finishingProcessList: [],
   selectedOrgDrop: 0,
   selectedProcessList: 0,
+  totalPending: 0,
 };
 
 export const setLineSlice = createSlice({
@@ -37,6 +38,9 @@ export const setLineSlice = createSlice({
     ) => {
       state.selectedProcessList = payload.payload;
     },
+    setPendingData: (state: ISetLineState, payload: PayloadAction<number>) => {
+      state.totalPending = payload.payload;
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const {
   setProcessList,
   setDropdownOrgValue,
   setDropdownFinishValue,
+  setPendingData,
 } = setLineSlice.actions;
 
 export default setLineSlice.reducer;

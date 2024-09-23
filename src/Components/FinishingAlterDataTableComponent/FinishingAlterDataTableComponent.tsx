@@ -54,6 +54,25 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
     const updatedValues = [...textInputValues];
     const numericValue = isNaN(Number(value)) ? '0' : value;
 
+    const balanceQty = textInputValues[index].rcvQty;
+
+    let limitAccess: number = parseInt(textInputValues[index].rcvQty) - parseInt(textInputValues[index].pendingQty);
+
+    if (!isNaN(parseInt(numericValue)) && parseInt(numericValue) > limitAccess) {
+      // logic here
+      // If the input value exceeds the balance, reset to the balance
+      alert(
+        `Received quantity cannot be greater than the balance (${limitAccess})`,
+      );
+      setTextInputValues((prevState: any) => {
+        const updated = [...prevState];
+        updated[index].finishingAlterSendQty = limitAccess.toString(); // Set to balance value
+        return updated;
+      });
+
+    }
+
+
     updatedValues[index].finishingAlterSendQty = numericValue;
     setTextInputValues(updatedValues);
 

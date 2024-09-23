@@ -13,6 +13,8 @@ import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
 import ReceiveTab from '../../Components/ReceiveTab/ReceiveTab';
 
 import Styles from './Styles';
+import { RootState } from '@/store';
+import { useSelector } from 'react-redux';
 
 // Create Top Tab Navigator
 const Tab = createMaterialTopTabNavigator();
@@ -20,6 +22,8 @@ const Tab = createMaterialTopTabNavigator();
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const FinishingReceiveScreen = () => {
   const navigation = useNavigation();
+
+  const totalPending = useSelector((state: RootState) => state.setLine.totalPending);
 
   return (
     <>
@@ -56,7 +60,7 @@ const FinishingReceiveScreen = () => {
             if (route.name === 'Pending') {
               return (
                 <View style={Styles.counter}>
-                  <Text style={Styles.counterText}>{'100'}</Text>
+                  <Text style={Styles.counterText}>{totalPending}</Text>
                 </View>
               );
             }

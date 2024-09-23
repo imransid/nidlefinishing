@@ -28,6 +28,7 @@ export interface ISetLineState {
   finishingProcessList: IReceiveItem[];
   selectedOrgDrop: number;
   selectedProcessList: number;
+  totalPending: number;
 }
 
 export interface dropdownValue {}

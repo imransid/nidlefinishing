@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState, type FC } from 'react';
-import { Text, TouchableOpacity, View, FlatList, Alert } from 'react-native';
+import React, { useCallback, useEffect, type FC } from 'react';
+import { Text, View, FlatList, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
@@ -39,7 +39,6 @@ const FinishingAlterTab: FC = () => {
   const fetchDataLineWise = async (lineId: string, date: string) => {
     try {
       const formattedDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
-      console.log('lineId', lineId, 'date', formattedDate);
       let props = {
         url:
           BASE_URL +
@@ -168,6 +167,8 @@ const FinishingAlterTab: FC = () => {
       };
 
       let response = await commonPutAPI(props);
+
+      console.log('response >>', response, props)
 
       if (response !== undefined) {
 

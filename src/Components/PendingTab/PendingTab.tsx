@@ -1,102 +1,17 @@
-import {FC, useState} from 'react';
+import { FC, useState } from 'react';
 import CardComponent from '../CardComponent/CardComponent';
 import React from 'react';
-import {Col, Grid} from 'react-native-easy-grid';
-import {useSelector} from 'react-redux';
-import {RootState} from '@/store';
-import {BASE_URL, FINISHING_STATUS} from '@/utils/environment';
-import {commonGetAPI} from '@/store/sagas/helper/api.saga';
-import {useFocusEffect} from '@react-navigation/native';
+import { Col, Grid } from 'react-native-easy-grid';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { BASE_URL, FINISHING_STATUS } from '@/utils/environment';
+import { commonGetAPI } from '@/store/sagas/helper/api.saga';
+import { useFocusEffect } from '@react-navigation/native';
+import { setPendingData } from '@/store/slices/features/setLineProcess/slice';
 
-// const data = [
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'CONFIRM',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'PENDING',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'CONFIRM',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'CANCEL',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'PENDING',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'CANCEL',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'CANCEL',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'PENDING',
-//   },
-//   {
-//     line: 'Line 1',
-//     receiveInfo: 'Rcv: 2000pcs confirmation confirm',
-//     sizeS: 1000,
-//     sizeM: 500,
-//     sizeL: 500,
-//     status: 'CANCEL',
-//   },
-// ];
-
-// interface DataItem {
-//   lineName: string;
-//   customer: string;
-//   style: string;
-//   po: string;
-//   color: string;
-//   qty: number;
-//   totalPass: number;
-//   totalReceived: number;
-//   finishAlter: number;
-//   finishAlterReceive: number;
-// }
 
 const PendingTab: FC = () => {
+  const dispatch = useDispatch()
   const [data, setData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(true);
   const accessToken = useSelector(
@@ -113,6 +28,8 @@ const PendingTab: FC = () => {
       };
       let response = await commonGetAPI(props);
       if (response !== undefined) {
+        dispatch(setPendingData(response.data.totalPending))
+
         setData(response.data.statusBar);
       }
     } catch (error) {
@@ -129,7 +46,7 @@ const PendingTab: FC = () => {
     }, []),
   );
   return (
-    <Grid style={{backgroundColor: 'white'}}>
+    <Grid style={{ backgroundColor: 'white' }}>
       <Col
         style={{
           backgroundColor: '#F9F8FB',
@@ -140,7 +57,7 @@ const PendingTab: FC = () => {
         }}>
         <CardComponent
           cardHeading="Receive Confirmation"
-          cardContent={( data as any).finishReceive}
+          cardContent={(data as any).finishReceive}
         />
       </Col>
       <Col
@@ -153,7 +70,7 @@ const PendingTab: FC = () => {
         }}>
         <CardComponent
           cardHeading="F. Alter Acceptance"
-          cardContent={( data as any).finishAlterAcceptance}
+          cardContent={(data as any).finishAlterAcceptance}
         />
       </Col>
       <Col
@@ -166,7 +83,7 @@ const PendingTab: FC = () => {
         }}>
         <CardComponent
           cardHeading="F. Alter Receive Confirmation "
-          cardContent={( data as any).finishAlterReceive}
+          cardContent={(data as any).finishAlterReceive}
         />
       </Col>
     </Grid>

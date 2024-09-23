@@ -24,6 +24,7 @@ import Styles from './style';
 import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import CalendarModal from '../CalendarModal/CalenderModal';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
+import FinishingAlterResendDataTable from '../FinishingAlterResendDataTable/FinishingAlterResendDataTable';
 const AlterResendTab: FC = () => {
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [selectedLine, setSelectedLine] = React.useState<number>(0);
@@ -150,7 +151,7 @@ const AlterResendTab: FC = () => {
   }, [selectedLine, selectedDate]);
 
   const renderItem = (item: StockViewItem) => (
-    <DataTableComponent
+    <FinishingAlterResendDataTable
       buyer="Buyer"
       buyerName={item.item.customer}
       style="Style"
