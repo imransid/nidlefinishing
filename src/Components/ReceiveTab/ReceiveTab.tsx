@@ -1,44 +1,44 @@
-import React, { useCallback, type FC } from 'react';
-import { Text, View, FlatList, Alert } from 'react-native';
+/* eslint-disable */ 
+import React, { type FC, useCallback } from 'react';
+import { Alert, FlatList, Text, View } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { ScaledSheet } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DataTableComponent, {
-  ApiDataItem,
-} from '../../Components/DataTableComponent/DataTableComponent';
-import SelectLineModal from '../SelectLineModal/SelectLineModal';
-import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
-import CustomModalButton from '../CustomModalButton/CustomModalButton';
-import Styles from './style';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { Detail, StockViewItem } from './interface';
+import { useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+
+import { type RootState } from '@/store';
+import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
 import {
   BASE_URL,
   CONFIRM_RECEIVE_REQUEST,
   GET_QMS_STOCK_FOR_RECEIVE,
   ORG_TREE
 } from '@/utils/environment';
-import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
-import { useFocusEffect } from '@react-navigation/native';
 import ToastPopUp from '@/utils/Toast.android';
-import { scale, ScaledSheet } from 'react-native-size-matters'
-import Spinner from 'react-native-loading-spinner-overlay';
 
+import DataTableComponent, {
+  type ApiDataItem
+} from '../../Components/DataTableComponent/DataTableComponent';
+import CustomModalButton from '../CustomModalButton/CustomModalButton';
+import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
+import SelectLineModal from '../SelectLineModal/SelectLineModal';
 
+import { type Detail, type StockViewItem } from './interface';
+import Styles from './style';
 
 const ReceiveTab: FC = () => {
-
-
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
+  const [totalQCQty, setTotalQCQty] = React.useState<number>(0);
+  const [totalReceiveQty, setTotalReceiveQty] = React.useState<number>(0);
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
   const [loader, setLoader] = React.useState<boolean>(false);
   const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
-  const accessToken = useSelector(
-    (state: RootState) => state.users.user.data?.accessToken,
-  );
+  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
 
   // Use useRef to store the updated array without re-rendering
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
@@ -50,7 +50,7 @@ const ReceiveTab: FC = () => {
     // Create a new array by merging the old ref with the new filtered array
     updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
       const newItem = filteredArray.find(item => item.id === oldItem.id);
-      return newItem ? { ...oldItem, ...newItem } : oldItem;
+      return newItem != null ? { ...oldItem, ...newItem } : oldItem;
     });
 
     // Add any new items that aren't already in the ref
@@ -65,7 +65,7 @@ const ReceiveTab: FC = () => {
   const fetchData = async () => {
     try {
       setLoader(true);
-      let props = {
+      const props = {
         url: BASE_URL + '/' + ORG_TREE,
         token: accessToken !== undefined ? accessToken : ''
       };
@@ -87,8 +87,7 @@ const ReceiveTab: FC = () => {
 
       // Cleanup function to reset state when the screen is unfocused
       return () => {
-
-        console.log("funkk")
+        console.log('funkk');
 
         setSelectedLine('');
         setLineModalVisible(false);
@@ -96,29 +95,29 @@ const ReceiveTab: FC = () => {
         setTableData([]);
         updatedArrayRef.current = [];
       };
-    }, []),
+    }, [])
   );
 
   const onClickLeaf = async (id: string): Promise<any> => {
     try {
-
-      let props = {
+      const props = {
         url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + id,
-        token: accessToken !== undefined ? accessToken : '',
+        token: accessToken !== undefined ? accessToken : ''
       };
 
       // setLoader(true)
       // setDataLoading(true)
 
-      let response = await commonGetAPI(props);
+      const response = await commonGetAPI(props);
 
-
-      console.log('response', response)
+      console.log('response', response);
 
       if (response !== undefined) {
-        setSelectedLine(id)
+        setSelectedLine(id);
         setTableData(response.data.details);
-        setLineModalVisible(false)
+        setTotalQCQty(response.data.totalQcQty);
+        setTotalReceiveQty(response.data.totalReceive);
+        setLineModalVisible(false);
         // setLoader(false)
       }
     } catch (error) {
@@ -126,7 +125,7 @@ const ReceiveTab: FC = () => {
       setLoader(false); // Stop loader
     } finally {
       // setDataLoading(false)
-      //setLoader(false); // Stop loader
+      // setLoader(false); // Stop loader
     }
   };
 
@@ -134,7 +133,7 @@ const ReceiveTab: FC = () => {
   const confirmReceive = useCallback(async () => {
     if (updatedArrayRef.current.length > 0) {
       // Perform your API call or any other action with the updated array
-      let itemData = updatedArrayRef.current;
+      const itemData = updatedArrayRef.current;
       const filteredData = itemData.map(({ id, ...rest }) => rest);
 
       const props = {
@@ -145,13 +144,11 @@ const ReceiveTab: FC = () => {
 
       // dispatch(startLoader())
 
-      let response = await commonPostAPI(props);
+      const response = await commonPostAPI(props);
 
       if (response !== undefined) {
-
-        onClickLeaf(selectedLine)
+        onClickLeaf(selectedLine);
         ToastPopUp('Submit Successfully.');
-
       }
     } else {
       // If no items have been updated, show a warning message
@@ -169,28 +166,24 @@ const ReceiveTab: FC = () => {
       order="PO"
       orderNumber={item.item.orderId}
       showCheckbox={true}
-      columnNames={[
-        'Color',
-        'Size',
-        'QC Qty.',
-        'Total Receive',
-        'Balance Qty.',
-        'Receive Qty.',
-      ]}
+      columnNames={['Color', 'Size', 'QC Qty.', 'Total Receive', 'Balance Qty.', 'Receive Qty.']}
       onUpdatedArray={handleUpdatedArray}
       rowData={item.item.breakdowns}
-      selectedLine={parseInt(selectedLine)} />
+      selectedLine={parseInt(selectedLine)}
+      totalQCQty={totalQCQty}
+      totalReceiveQty={totalReceiveQty}
+    />
   );
-
 
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
-
       <View style={{ height: '20%' }}>
         <CustomModalButton
           buttonStyle={Styles.selectLineDateButton}
           buttonTextStyle={Styles.selectLineDateButtonText}
-          onPress={() => setLineModalVisible(true)}
+          onPress={() => {
+            setLineModalVisible(true);
+          }}
           text={selectedLine !== '' ? selectedLineName : 'Select Line'}
           icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
         />
@@ -200,14 +193,16 @@ const ReceiveTab: FC = () => {
           lineModalVisible={lineModalVisible}
           setLineModalVisible={setLineModalVisible}
           pageName="receive"
-          onClickAble={(e: number) => onClickLeaf(e.toString())} setSelectedLineName={setSelectedLineName} />
+          onClickAble={async (e: number) => await onClickLeaf(e.toString())}
+          setSelectedLineName={setSelectedLineName}
+        />
       </View>
-      {selectedLine === '' || dataLoading === true ? (
+      {selectedLine === '' || dataLoading ? (
         <View
           style={{
             width: '100%',
             height: '100%',
-            alignItems: 'center',
+            alignItems: 'center'
             // justifyContent: 'center',
           }}>
           <Text style={{ fontSize: 16 }}>{dataLoading ? 'Loading..' : 'No Line Selected'} </Text>
@@ -221,8 +216,7 @@ const ReceiveTab: FC = () => {
             ListFooterComponent={<View style={{ height: 80 }} />}
           />
         </View>
-      )
-      }
+      )}
 
       <CustomSubmitButton
         icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
@@ -230,7 +224,7 @@ const ReceiveTab: FC = () => {
         onPress={confirmReceive}
       />
       <Spinner visible={loader} textContent={'Loading...'} />
-    </View >
+    </View>
   );
 };
 
@@ -238,8 +232,7 @@ export default ReceiveTab;
 
 const style = ScaledSheet.create({
   flatListContainer: {
-    //flex: 1, // Allow FlatList to take remaining space
+    // flex: 1, // Allow FlatList to take remaining space
     height: '180@s'
-  },
-
+  }
 });

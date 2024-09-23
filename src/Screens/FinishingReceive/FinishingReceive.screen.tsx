@@ -1,7 +1,9 @@
+/* eslint-disable */ 
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSelector } from 'react-redux';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
 
@@ -9,12 +11,11 @@ import AlterResendTab from '@/Components/AlterResendTab/AlterResendTab';
 import FinishingAlterTab from '@/Components/FinishingAlterTab/FinishingAlterTab';
 import PendingTab from '@/Components/PendingTab/PendingTab';
 import TodaySummaryTab from '@/Components/TodaySummaryTab/TodaySummaryTab';
+import { type RootState } from '@/store';
 
 import ReceiveTab from '../../Components/ReceiveTab/ReceiveTab';
 
 import Styles from './Styles';
-import { RootState } from '@/store';
-import { useSelector } from 'react-redux';
 
 // Create Top Tab Navigator
 const Tab = createMaterialTopTabNavigator();
@@ -79,7 +80,7 @@ const FinishingReceiveScreen = () => {
               case 'Finishing Alter':
                 iconName = 'scissors';
                 break;
-              case 'F. Alter Resend':
+              case 'F. Alter Receive':
                 iconName = 'repeat';
                 break;
               case 'Today Summary':
@@ -94,7 +95,7 @@ const FinishingReceiveScreen = () => {
         <Tab.Screen name="Receive" component={ReceiveTab} />
         <Tab.Screen name="Pending" component={PendingTab} />
         <Tab.Screen name="Finishing Alter" component={FinishingAlterTab} />
-        <Tab.Screen name="F. Alter Resend" component={AlterResendTab} />
+        <Tab.Screen name="F. Alter Receive" component={AlterResendTab} />
         <Tab.Screen name="Today Summary" component={TodaySummaryTab} />
       </Tab.Navigator>
     </>

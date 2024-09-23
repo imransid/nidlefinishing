@@ -1,11 +1,14 @@
-import React, { FC, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+/* eslint-disable */ 
+import React, { type FC, useState } from 'react';
+import { Text, TextInput, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import Styles from './styles';
-import CustomTextInput from '../CustomTextInput/CustomTextInput';
-import stylesTemp from '../CustomTextInput/style';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+
+import { type RootState } from '@/store';
+
+import stylesTemp from '../CustomTextInput/style';
+
+import Styles from './styles';
 
 interface IDataTableProps {
   styleID: number;
@@ -34,21 +37,17 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
   rowData,
   onUpdatedArray,
   orderID,
-  styleID,
+  styleID
 }) => {
   const [textInputValues, setTextInputValues] = useState(
     rowData.map((row: any) => ({
       ...row,
-      finishingAlterSendQty: row.finishingAlterSendQty || '0',
-    })),
+      finishingAlterSendQty: row.finishingAlterSendQty || '0'
+    }))
   );
 
-  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
-    null,
-  );
-  const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop)
-
-
+  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(null);
+  const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop);
 
   const handleTextInputChange = (index: number, value: string) => {
     const updatedValues = [...textInputValues];
@@ -56,46 +55,41 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
 
     const balanceQty = textInputValues[index].rcvQty;
 
-    let limitAccess: number = parseInt(textInputValues[index].rcvQty) - parseInt(textInputValues[index].pendingQty);
+    const limitAccess: number =
+      parseInt(textInputValues[index].rcvQty) - parseInt(textInputValues[index].pendingQty);
 
     if (!isNaN(parseInt(numericValue)) && parseInt(numericValue) > limitAccess) {
       // logic here
       // If the input value exceeds the balance, reset to the balance
-      alert(
-        `Received quantity cannot be greater than the balance (${limitAccess})`,
-      );
+      alert(`Received quantity cannot be greater than the balance (${limitAccess})`);
       setTextInputValues((prevState: any) => {
         const updated = [...prevState];
         updated[index].finishingAlterSendQty = limitAccess.toString(); // Set to balance value
         return updated;
       });
-
-    } else {
-      updatedValues[index].finishingAlterSendQty = numericValue;
-      setTextInputValues(updatedValues);
-
-      const updatedArray = updatedValues.map((row: any, i) => ({
-        id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-        styleId: styleID,
-        orderentityId: orderID,
-        varienceId: row.varienceId,
-        qmsOrgId: selectedLine,
-        finishingOrgId: finishingOrdID, // start time array
-        qty: row.finishingAlterSendQty,
-        isPacked: row.isPacked || false,
-      }));
-
-      // Pass the updated array to the parent component
-      onUpdatedArray(updatedArray);
-
     }
 
+    updatedValues[index].finishingAlterSendQty = numericValue;
+    setTextInputValues(updatedValues);
+
+    const updatedArray = updatedValues.map((row: any, i) => ({
+      id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+      styleId: styleID,
+      orderentityId: orderID,
+      varienceId: row.varienceId,
+      qmsOrgId: selectedLine,
+      finishingOrgId: finishingOrdID, // start time array
+      qty: row.finishingAlterSendQty,
+      isPacked: row.isPacked || false
+    }));
+
+    // Pass the updated array to the parent component
+    onUpdatedArray(updatedArray);
   };
 
   const finishingAlterSendQuantity = textInputValues.reduce(
-    (total: any, row: any) =>
-      total + (parseInt(row.finishingAlterSendQty, 10) || 0),
-    0,
+    (total: any, row: any) => total + (parseInt(row.finishingAlterSendQty, 10) || 0),
+    0
   );
 
   return (
@@ -144,15 +138,20 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
                   stylesTemp.container,
                   stylesTemp.textInput,
                   {
-                    borderColor:
-                      focusedInputIndex === index ? '#1C98D8' : '#ddd',
-                  },
+                    borderColor: focusedInputIndex === index ? '#1C98D8' : '#ddd'
+                  }
                 ]}
                 value={row.finishingAlterSendQty}
                 keyboardType="numeric"
-                onChangeText={val => handleTextInputChange(index, val)}
-                onFocus={() => setFocusedInputIndex(index)}
-                onBlur={() => setFocusedInputIndex(null)}
+                onChangeText={val => {
+                  handleTextInputChange(index, val);
+                }}
+                onFocus={() => {
+                  setFocusedInputIndex(index);
+                }}
+                onBlur={() => {
+                  setFocusedInputIndex(null);
+                }}
               />
             </DataTable.Cell>
           </DataTable.Row>

@@ -1,19 +1,17 @@
-import {put, select} from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import * as Effects from 'redux-saga/effects';
-import {type AccessTokenInfo, type LoginResponse} from '../types/types';
-import {commonGetAPI, loginAPI} from './helper/api.saga';
+
+import { BASE_URL, FINISHING_ORG, FINISHING_PROCESS_LIST } from '@/utils/environment';
 import ToastPopUp from '@/utils/Toast.android';
-import {settingSlice, stopLoader} from '../slices/features/settings/slice';
-import {usersSlice} from '../slices/features/users/slice';
-import {setLineSlice} from '../slices/features/setLineProcess/slice';
-import {
-  BASE_URL,
-  FINISHING_ORG,
-  FINISHING_PROCESS_LIST,
-  SIGN_IN_URL,
-} from '@/utils/environment';
-import {RootState} from '..';
-const {call} = Effects;
+
+import { setLineSlice } from '../slices/features/setLineProcess/slice';
+import { settingSlice, stopLoader } from '../slices/features/settings/slice';
+import { usersSlice } from '../slices/features/users/slice';
+import { type AccessTokenInfo } from '../types/types';
+import { type RootState } from '..';
+
+import { commonGetAPI, loginAPI } from './helper/api.saga';
+const { call } = Effects;
 interface IGetUserActionPayload {
   payload: {
     email: string;
@@ -23,21 +21,21 @@ interface IGetUserActionPayload {
 }
 
 export function* loginSaga(
-  payload: IGetUserActionPayload,
+  payload: IGetUserActionPayload
 ): Generator<any, void, AccessTokenInfo | undefined | any> {
   try {
-    yield put(settingSlice.actions.setGlobalLoaderAction({status: true}));
+    yield put(settingSlice.actions.setGlobalLoaderAction({ status: true }));
 
     const response: any = yield call(loginAPI, payload.payload);
 
     if (response !== undefined) {
-      yield put(settingSlice.actions.setGlobalLoaderAction({status: false}));
+      yield put(settingSlice.actions.setGlobalLoaderAction({ status: false }));
       // update org tree
       yield put(usersSlice.actions.getUserSuccessAction(response.data));
 
-      let props = {
+      const props = {
         url: BASE_URL + '/' + FINISHING_PROCESS_LIST,
-        token: response.data.accessToken,
+        token: response.data.accessToken
       };
 
       const responseSetLineProcess: any = yield call(commonGetAPI, props);
@@ -47,7 +45,7 @@ export function* loginSaga(
       const responseFinishProcessList: any = yield call(commonGetAPI, props);
 
       if (responseSetLineProcess !== undefined) {
-        let modFinishData = responseSetLineProcess.data.map((e: any) => {
+        const modFinishData = responseSetLineProcess.data.map((e: any) => {
           e.label = e.name;
           e.value = e.id;
           return e;
@@ -58,7 +56,7 @@ export function* loginSaga(
 
       // for process List
       if (responseFinishProcessList !== undefined) {
-        let modFinishData = responseFinishProcessList.data.map((e: any) => {
+        const modFinishData = responseFinishProcessList.data.map((e: any) => {
           e.label = e.name;
           e.value = e.id;
           return e;
@@ -68,8 +66,7 @@ export function* loginSaga(
       }
     } else {
       // case undefined
-      const data =
-        'The email or password you entered is incorrect. Please try again.';
+      const data = 'The email or password you entered is incorrect. Please try again.';
       ToastPopUp(data);
       yield put(stopLoader());
       yield put(usersSlice.actions.getUserErrorAction('Login failed')); // Handle error case
@@ -79,15 +76,9 @@ export function* loginSaga(
   }
 }
 
-export function* loaderChecker(): Generator<
-  any,
-  void,
-  AccessTokenInfo | undefined | any
-> {
+export function* loaderChecker(): Generator<any, void, AccessTokenInfo | undefined | any> {
   try {
-    const isLoading = yield select(
-      (state: RootState) => state.settings.isLoading,
-    );
+    const isLoading: boolean = yield select((state: RootState) => state.settings.isLoading);
 
     if (isLoading) yield put(stopLoader());
   } catch (error) {

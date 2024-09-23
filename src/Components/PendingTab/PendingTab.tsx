@@ -1,34 +1,33 @@
-import { FC, useState } from 'react';
-import CardComponent from '../CardComponent/CardComponent';
-import React from 'react';
+/* eslint-disable */ 
+import React, { type FC, useState } from 'react';
 import { Col, Grid } from 'react-native-easy-grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { BASE_URL, FINISHING_STATUS } from '@/utils/environment';
-import { commonGetAPI } from '@/store/sagas/helper/api.saga';
 import { useFocusEffect } from '@react-navigation/native';
-import { setPendingData } from '@/store/slices/features/setLineProcess/slice';
 
+import { type RootState } from '@/store';
+import { commonGetAPI } from '@/store/sagas/helper/api.saga';
+import { setPendingData } from '@/store/slices/features/setLineProcess/slice';
+import { BASE_URL, FINISHING_STATUS } from '@/utils/environment';
+
+import CardComponent from '../CardComponent/CardComponent';
 
 const PendingTab: FC = () => {
-  const dispatch = useDispatch()
-  const [data, setData] = useState<Array<any>>([]);
+  const dispatch = useDispatch();
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const accessToken = useSelector(
-    (state: RootState) => state.users.user.data?.accessToken,
-  );
+  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
 
   // Function to fetch data from API
   const fetchData = async () => {
     try {
       setLoading(true);
-      let props = {
+      const props = {
         url: BASE_URL + '/' + FINISHING_STATUS,
-        token: accessToken !== undefined ? accessToken : '',
+        token: accessToken !== undefined ? accessToken : ''
       };
-      let response = await commonGetAPI(props);
+      const response = await commonGetAPI(props);
       if (response !== undefined) {
-        dispatch(setPendingData(response.data.totalPending))
+        dispatch(setPendingData(response.data.totalPending));
 
         setData(response.data.statusBar);
       }
@@ -43,7 +42,7 @@ const PendingTab: FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchData(); // Call API whenever the screen comes into focus
-    }, []),
+    }, [])
   );
   return (
     <Grid style={{ backgroundColor: 'white' }}>
@@ -53,7 +52,7 @@ const PendingTab: FC = () => {
           borderWidth: 1,
           borderColor: '#E3E1F0',
           margin: 10,
-          borderRadius: 10,
+          borderRadius: 10
         }}>
         <CardComponent
           cardHeading="Receive Confirmation"
@@ -66,7 +65,7 @@ const PendingTab: FC = () => {
           borderWidth: 1,
           borderColor: '#E3E1F0',
           margin: 10,
-          borderRadius: 10,
+          borderRadius: 10
         }}>
         <CardComponent
           cardHeading="F. Alter Acceptance"
@@ -79,7 +78,7 @@ const PendingTab: FC = () => {
           borderWidth: 1,
           borderColor: '#E3E1F0',
           margin: 10,
-          borderRadius: 10,
+          borderRadius: 10
         }}>
         <CardComponent
           cardHeading="F. Alter Receive Confirmation "

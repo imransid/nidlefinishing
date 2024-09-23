@@ -49,7 +49,9 @@ const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) =>
                         ? styles.statusTextCancel
                         : item.confirmationStatus === 'RECEIVED'
                           ? styles.statusTextConfirm
-                          : ''
+                          : item.confirmationStatus === 'REJECTED'
+                            ? styles.statusTextCancel
+                            : ''
             }>
             {item.confirmationStatus}
           </Text>

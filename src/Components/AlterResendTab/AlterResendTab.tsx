@@ -25,12 +25,15 @@ import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import CalendarModal from '../CalendarModal/CalenderModal';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
 import FinishingAlterResendDataTable from '../FinishingAlterResendDataTable/FinishingAlterResendDataTable';
+import { set } from 'date-fns';
 const AlterResendTab: FC = () => {
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [selectedLine, setSelectedLine] = React.useState<number>(0);
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
   const [selectedDate, setDate] = React.useState('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
+  const [totalFinishingAlterQty, setTotalFinishingAlterQty] = React.useState<number>(0);
+  const [totalFinishingAlterReceive, setTotalFinishingAlterReceive] = React.useState<number>(0);
   const [orgTree, setOrgTree] = React.useState([]);
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
@@ -54,10 +57,12 @@ const AlterResendTab: FC = () => {
 
       if (response !== undefined) {
         setTableData(response.data.details);
+        setTotalFinishingAlterQty(response.data.totalFinishAlter);
+        setTotalFinishingAlterReceive(response.data.totalFinishAlterReceive);
         console.log(tableData, 'tableData');
       }
 
-      console.log('response', response.data);
+      console.log('response>>>>>>>>>>', response.data);
       // setTestData(data); // Assuming the API response is directly compatible with testData
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -170,7 +175,11 @@ const AlterResendTab: FC = () => {
       ]}
       rowData={item.item.breakdowns}
       onUpdatedArray={handleUpdatedArray}
-      styleID={item.item.styleId} selectedLine={selectedLine} />
+      styleID={item.item.styleId} 
+      selectedLine={selectedLine} 
+      totalFinishAlter={totalFinishingAlterQty}
+      totalReceive={totalFinishingAlterReceive}
+      />
   );
 
   return (

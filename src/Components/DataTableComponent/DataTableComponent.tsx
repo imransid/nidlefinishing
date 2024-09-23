@@ -1,12 +1,16 @@
-import React, { FC, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+/* eslint-disable */ 
+import React, { type FC, useState } from 'react';
+import { Text, TextInput, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
-import Styles from './styles';
-import { Breakdown } from '../ReceiveTab/interface';
-import stylesTemp from '../CustomTextInput/style';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+
+import { type RootState } from '@/store';
+
+import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
+import stylesTemp from '../CustomTextInput/style';
+import { type Breakdown } from '../ReceiveTab/interface';
+
+import Styles from './styles';
 export interface ApiDataItem {
   id?: string; // Unique identifier for each item
   styleId: number;
@@ -30,7 +34,9 @@ interface IDataTableProps {
   rowData: Breakdown[];
   onUpdatedArray: any;
   styleID: number;
-  selectedLine: number
+  selectedLine: number;
+  totalQCQty: number;
+  totalReceiveQty: number;
 }
 
 const DataTableComponent: FC<IDataTableProps> = ({
@@ -45,16 +51,15 @@ const DataTableComponent: FC<IDataTableProps> = ({
   rowData,
   onUpdatedArray,
   styleID,
-  selectedLine
+  selectedLine,
+  totalQCQty,
+  totalReceiveQty
 }) => {
   const [receiveQty, setReceiveQty] = useState(rowData);
-  const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop)
-
+  const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop);
 
   // Track the focused state of each input field
-  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(
-    null,
-  );
+  const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(null);
 
   // State to track if the checkbox is checked
   const [isPacked, setIsPacked] = useState(false);
@@ -63,17 +68,14 @@ const DataTableComponent: FC<IDataTableProps> = ({
   const [textInputValues, setTextInputValues] = useState(
     rowData.map(row => ({
       ...row,
-      tempReceived: '0',
-    })),
+      tempReceived: '0'
+    }))
   );
-
-
 
   const handleTextInputChange = (index: number, value: string) => {
     // Ensure the value is a number and defaults to 0 if empty
     const newValue = value.trim() === '' ? '0' : value;
     const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
-
 
     // Fetch the balance for the current row
     const balanceQty = textInputValues[index].balance;
@@ -81,9 +83,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
     // Check if the received quantity is greater than the balance
     if (numericValue > balanceQty) {
       // If the input value exceeds the balance, reset to the balance
-      alert(
-        `Received quantity cannot be greater than the balance (${balanceQty})`,
-      );
+      alert(`Received quantity cannot be greater than the balance (${balanceQty})`);
       setTextInputValues(prevState => {
         const updated = [...prevState];
         updated[index].tempReceived = balanceQty.toString(); // Set to balance value
@@ -104,7 +104,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
         qmsOrgId: selectedLine,
         finishingOrgId: finishingOrdID,
         qty: row.tempReceived, // Use the updated quantity
-        isPacked: isPacked === undefined ? false : isPacked,
+        isPacked: isPacked === undefined ? false : isPacked
       }));
 
       // Call the handler to update the parent component's ref
@@ -124,7 +124,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
         qmsOrgId: selectedLine,
         finishingOrgId: finishingOrdID,
         qty: row.tempReceived, // Use the updated quantity
-        isPacked: isPacked === undefined ? false : isPacked,
+        isPacked: isPacked === undefined ? false : isPacked
       }));
 
       // Call the handler to update the parent component's ref
@@ -134,7 +134,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
 
   const totalReceiveQuantity = receiveQty.reduce(
     (total, row) => total + (row.totalReceived || 0),
-    0,
+    0
   );
 
   const handleCheckboxChange = (checked: boolean) => {
@@ -142,7 +142,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
     // Optionally, update the textInputValues to reflect this change
     const updatedTextInputs = textInputValues.map(row => ({
       ...row,
-      isPacked: checked,
+      isPacked: checked
     }));
     setTextInputValues(updatedTextInputs);
   };
@@ -150,7 +150,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
   // Calculate the total tempReceived
   const totalTempReceived = textInputValues.reduce(
     (total, row) => total + (Number(row.tempReceived) || 0),
-    0,
+    0
   );
 
   return (
@@ -160,13 +160,13 @@ const DataTableComponent: FC<IDataTableProps> = ({
           flexDirection: 'row',
           justifyContent: 'space-between',
           borderBottomWidth: 1,
-          borderColor: '#E3E1F0',
+          borderColor: '#E3E1F0'
         }}>
         <View
           style={{
             flexDirection: 'row',
             flex: 1,
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}>
           <View style={Styles.header}>
             <Text style={Styles.headerText}>{buyerHeader}</Text>
@@ -181,11 +181,8 @@ const DataTableComponent: FC<IDataTableProps> = ({
             <Text style={Styles.subHeaderText}>{POnumber}</Text>
           </View>
         </View>
-        <View
-          style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-          {showCheckbox && (
-            <CheckboxComponent onChange={handleCheckboxChange} />
-          )}
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+          {showCheckbox && <CheckboxComponent onChange={handleCheckboxChange} />}
         </View>
       </View>
 
@@ -211,15 +208,20 @@ const DataTableComponent: FC<IDataTableProps> = ({
                   stylesTemp.container,
                   stylesTemp.textInput,
                   {
-                    borderColor:
-                      focusedInputIndex === index ? '#1C98D8' : '#ddd',
-                  },
+                    borderColor: focusedInputIndex === index ? '#1C98D8' : '#ddd'
+                  }
                 ]}
                 value={row.tempReceived}
                 keyboardType="numeric"
-                onChangeText={val => handleTextInputChange(index, val)}
-                onFocus={() => setFocusedInputIndex(index)}
-                onBlur={() => setFocusedInputIndex(null)}
+                onChangeText={val => {
+                  handleTextInputChange(index, val);
+                }}
+                onFocus={() => {
+                  setFocusedInputIndex(index);
+                }}
+                onBlur={() => {
+                  setFocusedInputIndex(null);
+                }}
               />
             </DataTable.Cell>
           </DataTable.Row>
@@ -230,20 +232,18 @@ const DataTableComponent: FC<IDataTableProps> = ({
         {columnNames.map((name, index) => (
           <Text key={index} style={Styles.tableFooterValue}>
             {name === 'Color'
-              ? 'Total = '
+              ? 'Total =         '
               : name === 'Size'
-                ? ' '
-                : name === 'Input Qty.'
-                  ? ' '
-                  : name === 'QC Qty.'
-                    ? ' '
-                    : name === 'Total Receive'
-                      ? ' '
-                      : name === 'Balance Qty.'
-                        ? ' '
-                        : name === 'Receive Qty.'
-                          ? totalTempReceived
-                          : 0}
+                ? '          '
+                : name === 'QC Qty.'
+                  ? totalQCQty
+                  : name === 'Total Receive'
+                    ? totalReceiveQty
+                    : name === 'Balance Qty.'
+                      ? ''
+                      : name === 'Receive Qty.'
+                        ? totalTempReceived
+                        : 0}
           </Text>
         ))}
       </View>
