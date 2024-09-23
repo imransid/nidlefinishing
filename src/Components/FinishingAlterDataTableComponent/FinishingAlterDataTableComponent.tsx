@@ -70,25 +70,26 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
         return updated;
       });
 
+    } else {
+      updatedValues[index].finishingAlterSendQty = numericValue;
+      setTextInputValues(updatedValues);
+
+      const updatedArray = updatedValues.map((row: any, i) => ({
+        id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+        styleId: styleID,
+        orderentityId: orderID,
+        varienceId: row.varienceId,
+        qmsOrgId: selectedLine,
+        finishingOrgId: finishingOrdID, // start time array
+        qty: row.finishingAlterSendQty,
+        isPacked: row.isPacked || false,
+      }));
+
+      // Pass the updated array to the parent component
+      onUpdatedArray(updatedArray);
+
     }
 
-
-    updatedValues[index].finishingAlterSendQty = numericValue;
-    setTextInputValues(updatedValues);
-
-    const updatedArray = updatedValues.map((row: any, i) => ({
-      id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-      styleId: styleID,
-      orderentityId: orderID,
-      varienceId: row.varienceId,
-      qmsOrgId: selectedLine,
-      finishingOrgId: finishingOrdID, // start time array
-      qty: row.finishingAlterSendQty,
-      isPacked: row.isPacked || false,
-    }));
-
-    // Pass the updated array to the parent component
-    onUpdatedArray(updatedArray);
   };
 
   const finishingAlterSendQuantity = textInputValues.reduce(
