@@ -14,6 +14,10 @@ export interface Detail {
   varienceId: number;
   customer: string;
   po: string;
+  totalReceive: number;
+  totalQcQty: number;
+  totalFinishAlter: number;
+  totalFinishAlterReceive: number;
 }
 
 export interface Data {

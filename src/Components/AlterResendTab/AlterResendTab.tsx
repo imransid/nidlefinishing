@@ -32,8 +32,6 @@ const AlterResendTab: FC = () => {
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
   const [selectedDate, setDate] = React.useState('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
-  const [totalFinishingAlterQty, setTotalFinishingAlterQty] = React.useState<number>(0);
-  const [totalFinishingAlterReceive, setTotalFinishingAlterReceive] = React.useState<number>(0);
   const [orgTree, setOrgTree] = React.useState([]);
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
@@ -57,8 +55,6 @@ const AlterResendTab: FC = () => {
 
       if (response !== undefined) {
         setTableData(response.data.details);
-        setTotalFinishingAlterQty(response.data.totalFinishAlter);
-        setTotalFinishingAlterReceive(response.data.totalFinishAlterReceive);
         console.log(tableData, 'tableData');
       }
 
@@ -186,8 +182,8 @@ const AlterResendTab: FC = () => {
       onUpdatedArray={handleUpdatedArray}
       styleID={item.item.styleId}
       selectedLine={selectedLine}
-      totalFinishAlter={totalFinishingAlterQty}
-      totalReceive={totalFinishingAlterReceive}
+      totalFinishAlter={item.item.totalFinishAlter}
+      totalReceive={item.item.totalFinishAlterReceive}
     />
   );
 

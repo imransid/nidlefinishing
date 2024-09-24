@@ -1,10 +1,13 @@
-import React, { useCallback, useEffect, type FC } from 'react';
-import { Text, View, FlatList, Alert } from 'react-native';
+/* eslint-disable */
+import React, { type FC, useCallback, useEffect } from 'react';
+import { Alert, FlatList, Text, View } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TreeIcon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
+
 import { type RootState } from '@/store';
 import { commonGetAPI, commonPutAPI } from '@/store/sagas/helper/api.saga';
 import { BASE_URL, GET_FINISHING_ALTER_LIST, ORG_TREE, SEND_TO_ALTER } from '@/utils/environment';
@@ -17,20 +20,16 @@ import { type ApiDataItem } from '../DataTableComponent/DataTableComponent';
 import FinishingAlterDataTableComponent from '../FinishingAlterDataTableComponent/FinishingAlterDataTableComponent';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
 
-import { ScaledSheet } from 'react-native-size-matters';
-import { AlterAPIDetails } from './interface';
+import { type AlterAPIDetails } from './interface';
 import Styles from './style';
 const FinishingAlterTab: FC = () => {
-
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
   const [selectedDate, setDate] = React.useState('');
   const [orgTree, setOrgTree] = React.useState([]);
-  const accessToken = useSelector(
-    (state: RootState) => state.users.user.data?.accessToken,
-  );
+  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
   const [tableData, setTableData] = React.useState<AlterAPIDetails[]>([]);
 
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
@@ -39,13 +38,9 @@ const FinishingAlterTab: FC = () => {
   const fetchDataLineWise = async (lineId: string, date: string) => {
     try {
       const formattedDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
-      let props = {
-        url:
-          BASE_URL +
-          '/' +
-          GET_FINISHING_ALTER_LIST +
-          `?lineId=${lineId}&date=${formattedDate}`,
-        token: accessToken !== undefined ? accessToken : '',
+      const props = {
+        url: BASE_URL + '/' + GET_FINISHING_ALTER_LIST + `?lineId=${lineId}&date=${formattedDate}`,
+        token: accessToken !== undefined ? accessToken : ''
       };
       const response = await commonGetAPI(props);
 
@@ -54,7 +49,7 @@ const FinishingAlterTab: FC = () => {
       }
 
       console.log('response', response.data);
-      //setTestData(data); // Assuming the API response is directly compatible with testData
+      // setTestData(data); // Assuming the API response is directly compatible with testData
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -100,7 +95,7 @@ const FinishingAlterTab: FC = () => {
         setDate('');
         updatedArrayRef.current = [];
       };
-    }, []),
+    }, [])
   );
 
   const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {
@@ -112,13 +107,12 @@ const FinishingAlterTab: FC = () => {
     // Create a new array by merging the old ref with the new filtered array
     updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
       const newItem = filteredArray.find(item => item.id === oldItem.id);
-      return newItem ? { ...oldItem, ...newItem } : oldItem;
+      return newItem != null ? { ...oldItem, ...newItem } : oldItem;
     });
 
     // Add any new items that aren't already in the ref
     const newItems = filteredArray.filter(
-      newItem =>
-        !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id),
+      newItem => !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id)
     );
 
     updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
@@ -136,16 +130,10 @@ const FinishingAlterTab: FC = () => {
         orderNumber={item.po}
         orderID={item.orderId}
         oderName={item.po}
-        columnNames={[
-          'Color',
-          'Size',
-          'Receive Qty.',
-          'Finishing Alter Send Qty.',
-        ]}
+        columnNames={['Color', 'Size', 'Receive Qty.', 'Finishing Alter Send Qty.']}
         selectedLine={selectedLine}
         rowData={item.breakdowns}
         onUpdatedArray={handleUpdatedArray}
-
       />
     );
   };
@@ -155,33 +143,27 @@ const FinishingAlterTab: FC = () => {
     if (updatedArrayRef.current.length > 0) {
       // Perform your API call or any other action with the updated array
 
-      const filteredDataZero = updatedArrayRef.current.filter(
-        (item: any) => item.qty !== '0',
-      );
+      const filteredDataZero = updatedArrayRef.current.filter((item: any) => item.qty !== '0');
 
       const filteredData = filteredDataZero.map(({ id, ...rest }) => rest);
 
-      const allQtyNotZero = filteredData.every((item: any) => item.qty === "0");
+      const allQtyNotZero = filteredData.every((item: any) => item.qty === '0');
 
       if (allQtyNotZero) {
         Alert.alert('Warning', 'No items have been updated.');
       } else {
-
-
         const props = {
           url: BASE_URL + '/' + SEND_TO_ALTER,
           token: accessToken !== undefined ? accessToken : '',
-          data: filteredData,
+          data: filteredData
         };
 
-        let response = await commonPutAPI(props);
-
+        const response = await commonPutAPI(props);
 
         if (response !== undefined) {
           updatedArrayRef.current = [];
-          fetchDataLineWise(selectedLine, selectedDate)
+          fetchDataLineWise(selectedLine, selectedDate);
           ToastPopUp('Submit Successfully.');
-
         }
       }
     } else {
@@ -259,9 +241,9 @@ const FinishingAlterTab: FC = () => {
 
 const style = ScaledSheet.create({
   flatListContainer: {
-    //flex: 1, // Allow FlatList to take remaining space
-    height: '180@s',
-  },
+    // flex: 1, // Allow FlatList to take remaining space
+    height: '180@s'
+  }
 });
 
 export default FinishingAlterTab;

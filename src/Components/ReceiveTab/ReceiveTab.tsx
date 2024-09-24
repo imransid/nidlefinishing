@@ -30,8 +30,6 @@ import Styles from './style';
 const ReceiveTab: FC = () => {
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
-  const [totalQCQty, setTotalQCQty] = React.useState<number>(0);
-  const [totalReceiveQty, setTotalReceiveQty] = React.useState<number>(0);
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
@@ -114,8 +112,6 @@ const ReceiveTab: FC = () => {
       if (response !== undefined) {
         setSelectedLine(id);
         setTableData(response.data.details);
-        setTotalQCQty(response.data.totalQcQty);
-        setTotalReceiveQty(response.data.totalReceive);
         setLineModalVisible(false);
         // setLoader(false)
       }
@@ -179,8 +175,8 @@ const ReceiveTab: FC = () => {
       onUpdatedArray={handleUpdatedArray}
       rowData={item.item.breakdowns}
       selectedLine={parseInt(selectedLine)}
-      totalQCQty={totalQCQty}
-      totalReceiveQty={totalReceiveQty}
+      totalQCQty={item.item.totalQcQty}
+      totalReceiveQty={item.item.totalReceive}
     />
   );
 
