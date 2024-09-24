@@ -86,7 +86,7 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = (
           }}
           label="Home"
           onPress={() => {
-            props.navigation.navigate('FinishingReceive');
+            props.navigation.navigate('SetLineProcess');
           }}
         />
         {/* <Divider /> */}
