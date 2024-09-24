@@ -149,7 +149,10 @@ const ReceiveTab: FC = () => {
 
         if (response !== undefined) {
           updatedArrayRef.current = [];
-          onClickLeaf(selectedLine);
+          setTableData([])
+          setSelectedLine('')
+          setSelectedLineName('')
+          // onClickLeaf(selectedLine);
           ToastPopUp('Submit Successfully.');
         }
       }
@@ -158,7 +161,7 @@ const ReceiveTab: FC = () => {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
-  }, [selectedLine]);
+  }, [setSelectedLine, setTableData, setSelectedLineName]);
 
   const renderItem = (item: StockViewItem) => (
     <DataTableComponent

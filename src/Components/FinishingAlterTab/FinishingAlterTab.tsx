@@ -162,7 +162,11 @@ const FinishingAlterTab: FC = () => {
 
         if (response !== undefined) {
           updatedArrayRef.current = [];
-          fetchDataLineWise(selectedLine, selectedDate);
+          // fetchDataLineWise(selectedLine, selectedDate)
+          setSelectedLineName('')
+          setSelectedLine('')
+          setTableData([])
+          setDate('')
           ToastPopUp('Submit Successfully.');
         }
       }
@@ -170,7 +174,8 @@ const FinishingAlterTab: FC = () => {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
-  }, [selectedLine, selectedDate]);
+  }, [setSelectedLineName, setSelectedLine, setTableData, setDate]);
+
 
   return (
     <View style={Styles.alterResendTabContainer}>

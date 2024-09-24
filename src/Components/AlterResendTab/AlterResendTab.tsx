@@ -148,16 +148,19 @@ const AlterResendTab: FC = () => {
         const response = await commonPutAPI(props);
         if (response !== undefined) {
           updatedArrayRef.current = [];
+          setSelectedLineName('')
+          setSelectedLine(0)
+          setTableData([])
+          setDate('')
           ToastPopUp('Submit Successfully.');
-          fetchDataLineWise(selectedLine, selectedDate);
-
+          // fetchDataLineWise(selectedLine, selectedDate);
         }
       }
     } else {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
-  }, [selectedLine, selectedDate]);
+  }, [setSelectedLineName, setSelectedLine, setTableData, setDate]);
 
   const renderItem = (item: StockViewItem) => (
     <FinishingAlterResendDataTable
