@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { type FC, useState } from 'react';
-import { ScrollView, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 
@@ -123,8 +123,6 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
             </DataTable.Title>
           ))}
         </DataTable.Header>
-
-
 
         {textInputValues.map((row: any, index: any) => (
           <DataTable.Row key={index}>

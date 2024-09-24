@@ -234,7 +234,6 @@ const AlterResendTab: FC = () => {
       ) : (
         <View style={style.flatListContainer}>
           <FlatList
-            style={{ marginBottom: 100 }}
             data={tableData}
             renderItem={renderItem}
             keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
