@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { type FC, useCallback } from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -136,6 +136,9 @@ const ReceiveTab: FC = () => {
       const itemData = updatedArrayRef.current;
       const filteredData = itemData.map(({ id, ...rest }) => rest);
 
+
+      console.log('filteredData', filteredData)
+
       const props = {
         url: BASE_URL + '/' + CONFIRM_RECEIVE_REQUEST,
         token: accessToken !== undefined ? accessToken : '',
@@ -164,6 +167,7 @@ const ReceiveTab: FC = () => {
       styleName={item.item.style}
       styleID={item.item.styleId}
       order="PO"
+      oderName={item.item.po}
       orderNumber={item.item.orderId}
       showCheckbox={true}
       columnNames={['Color', 'Size', 'QC Qty.', 'Total Receive', 'Balance Qty.', 'Receive Qty.']}

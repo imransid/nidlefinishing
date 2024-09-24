@@ -135,6 +135,7 @@ const FinishingAlterTab: FC = () => {
         order={'Order Number'}
         orderNumber={item.po}
         orderID={item.orderId}
+        oderName={item.po}
         columnNames={[
           'Color',
           'Size',

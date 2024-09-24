@@ -163,6 +163,7 @@ const AlterResendTab: FC = () => {
       styleName={item.item.style}
       order="PO"
       orderNumber={item.item.orderId}
+      oderName={item.item.po}
       showCheckbox={true}
       columnNames={[
         'Color',
@@ -175,11 +176,11 @@ const AlterResendTab: FC = () => {
       ]}
       rowData={item.item.breakdowns}
       onUpdatedArray={handleUpdatedArray}
-      styleID={item.item.styleId} 
-      selectedLine={selectedLine} 
+      styleID={item.item.styleId}
+      selectedLine={selectedLine}
       totalFinishAlter={totalFinishingAlterQty}
       totalReceive={totalFinishingAlterReceive}
-      />
+    />
   );
 
   return (

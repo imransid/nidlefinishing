@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { type FC, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
@@ -23,6 +23,7 @@ interface IDataTableProps {
   rowData: any;
   selectedLine: string;
   onUpdatedArray: (updatedArray: any[]) => void; // New prop to pass updated array to parent
+  oderName: string
 }
 
 const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
@@ -37,7 +38,8 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
   rowData,
   onUpdatedArray,
   orderID,
-  styleID
+  styleID,
+  oderName
 }) => {
   const [textInputValues, setTextInputValues] = useState(
     rowData.map((row: any) => ({
@@ -67,24 +69,26 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
         updated[index].finishingAlterSendQty = limitAccess.toString(); // Set to balance value
         return updated;
       });
+    } else {
+      updatedValues[index].finishingAlterSendQty = numericValue;
+      setTextInputValues(updatedValues);
+
+      const updatedArray = updatedValues.map((row: any, i) => ({
+        id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
+        styleId: styleID,
+        orderentityId: orderID,
+        varienceId: row.varienceId,
+        qmsOrgId: selectedLine,
+        finishingOrgId: finishingOrdID, // start time array
+        qty: row.finishingAlterSendQty,
+        isPacked: row.isPacked || false
+      }));
+
+      // Pass the updated array to the parent component
+      onUpdatedArray(updatedArray);
     }
 
-    updatedValues[index].finishingAlterSendQty = numericValue;
-    setTextInputValues(updatedValues);
 
-    const updatedArray = updatedValues.map((row: any, i) => ({
-      id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-      styleId: styleID,
-      orderentityId: orderID,
-      varienceId: row.varienceId,
-      qmsOrgId: selectedLine,
-      finishingOrgId: finishingOrdID, // start time array
-      qty: row.finishingAlterSendQty,
-      isPacked: row.isPacked || false
-    }));
-
-    // Pass the updated array to the parent component
-    onUpdatedArray(updatedArray);
   };
 
   const finishingAlterSendQuantity = textInputValues.reduce(
@@ -106,7 +110,7 @@ const FinishingAlterDataTableComponent: FC<IDataTableProps> = ({
           </View>
           <View style={Styles.header}>
             <Text style={Styles.headerText}>{POheader}</Text>
-            <Text style={Styles.subHeaderText}>{POnumber}</Text>
+            <Text style={Styles.subHeaderText}>{oderName}</Text>
           </View>
         </View>
       </View>

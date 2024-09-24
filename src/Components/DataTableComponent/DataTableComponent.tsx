@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { type FC, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
@@ -37,6 +37,7 @@ interface IDataTableProps {
   selectedLine: number;
   totalQCQty: number;
   totalReceiveQty: number;
+  oderName: string
 }
 
 const DataTableComponent: FC<IDataTableProps> = ({
@@ -53,7 +54,8 @@ const DataTableComponent: FC<IDataTableProps> = ({
   styleID,
   selectedLine,
   totalQCQty,
-  totalReceiveQty
+  totalReceiveQty,
+  oderName
 }) => {
   const [receiveQty, setReceiveQty] = useState(rowData);
   const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop);
@@ -178,7 +180,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
           </View>
           <View style={Styles.header}>
             <Text style={Styles.headerText}>{POheader}</Text>
-            <Text style={Styles.subHeaderText}>{POnumber}</Text>
+            <Text style={Styles.subHeaderText}>{oderName}</Text>
           </View>
         </View>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
