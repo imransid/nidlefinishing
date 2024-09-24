@@ -161,21 +161,29 @@ const FinishingAlterTab: FC = () => {
 
       const filteredData = filteredDataZero.map(({ id, ...rest }) => rest);
 
-      const props = {
-        url: BASE_URL + '/' + SEND_TO_ALTER,
-        token: accessToken !== undefined ? accessToken : '',
-        data: filteredData,
-      };
+      const allQtyNotZero = filteredData.every((item: any) => item.qty === "0");
 
-      let response = await commonPutAPI(props);
+      if (allQtyNotZero) {
+        Alert.alert('Warning', 'No items have been updated.');
+      } else {
 
-      console.log('response >>', response, props)
 
-      if (response !== undefined) {
+        const props = {
+          url: BASE_URL + '/' + SEND_TO_ALTER,
+          token: accessToken !== undefined ? accessToken : '',
+          data: filteredData,
+        };
 
-        fetchDataLineWise(selectedLine, selectedDate)
-        ToastPopUp('Submit Successfully.');
+        let response = await commonPutAPI(props);
 
+        console.log('response >>', response, props)
+
+        if (response !== undefined) {
+
+          fetchDataLineWise(selectedLine, selectedDate)
+          ToastPopUp('Submit Successfully.');
+
+        }
       }
     } else {
       // If no items have been updated, show a warning message

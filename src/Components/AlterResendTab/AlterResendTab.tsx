@@ -137,17 +137,24 @@ const AlterResendTab: FC = () => {
       const itemData = updatedArrayRef.current;
       const filteredData = itemData.map(({ id, ...rest }) => rest);
 
-      const props = {
-        url: BASE_URL + '/' + SEND_TO_FINISHING_ALTER_RECEIVE,
-        token: accessToken !== undefined ? accessToken : '',
-        data: filteredData
-      };
+      const allQtyNotZero = filteredData.every((item: any) => item.qty === "0");
 
-      const response = await commonPutAPI(props);
-      if (response !== undefined) {
-        ToastPopUp('Submit Successfully.');
-        fetchDataLineWise(selectedLine, selectedDate);
+      if (allQtyNotZero) {
+        Alert.alert('Warning', 'No items have been updated.');
+      } else {
 
+        const props = {
+          url: BASE_URL + '/' + SEND_TO_FINISHING_ALTER_RECEIVE,
+          token: accessToken !== undefined ? accessToken : '',
+          data: filteredData
+        };
+
+        const response = await commonPutAPI(props);
+        if (response !== undefined) {
+          ToastPopUp('Submit Successfully.');
+          fetchDataLineWise(selectedLine, selectedDate);
+
+        }
       }
     } else {
       // If no items have been updated, show a warning message
@@ -234,7 +241,7 @@ const AlterResendTab: FC = () => {
       ) : (
         <View style={style.flatListContainer}>
           <FlatList
-          style={{marginBottom: 100}}
+            style={{ marginBottom: 100 }}
             data={tableData}
             renderItem={renderItem}
             keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
