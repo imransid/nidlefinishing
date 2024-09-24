@@ -71,7 +71,11 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = (
             variant="titleSmall"
           />
           <View style={Styles.customDivider}></View>
-          {/* <CustomTextItem txt={`Version : ${getAppVersionName()}`} color="white" variant="labelSmall" /> */}
+          <CustomTextItem 
+          // txt={`Version : ${getAppVersionName()}`} 
+          txt={`Version : 0.0.4 FinishingApp-QA-24-09-2024`} 
+          color="white" 
+          variant="labelSmall" />
           <CustomTextItem
             txt={`Device ID: ${deviceId.current}`}
             color="white"
