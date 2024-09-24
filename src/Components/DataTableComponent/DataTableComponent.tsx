@@ -88,7 +88,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
       alert(`Received quantity cannot be greater than the balance (${balanceQty})`);
       setTextInputValues(prevState => {
         const updated = [...prevState];
-        updated[index].tempReceived = balanceQty.toString(); // Set to balance value
+        updated[index].tempReceived = '0'//balanceQty.toString(); // Set to balance value
         return updated;
       });
     } else if (numericValue === balanceQty) {

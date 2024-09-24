@@ -137,22 +137,27 @@ const ReceiveTab: FC = () => {
       const filteredData = itemData.map(({ id, ...rest }) => rest);
 
 
-      console.log('filteredData', filteredData)
+      const allQtyNotZero = filteredData.every((item: any) => item.qty === "0");
 
-      const props = {
-        url: BASE_URL + '/' + CONFIRM_RECEIVE_REQUEST,
-        token: accessToken !== undefined ? accessToken : '',
-        data: filteredData
-      };
+      if (allQtyNotZero) {
+        Alert.alert('Warning', 'No items have been updated.');
+      } else {
+        const props = {
+          url: BASE_URL + '/' + CONFIRM_RECEIVE_REQUEST,
+          token: accessToken !== undefined ? accessToken : '',
+          data: filteredData
+        };
 
-      // dispatch(startLoader())
+        // dispatch(startLoader())
 
-      const response = await commonPostAPI(props);
+        const response = await commonPostAPI(props);
 
-      if (response !== undefined) {
-        onClickLeaf(selectedLine);
-        ToastPopUp('Submit Successfully.');
+        if (response !== undefined) {
+          onClickLeaf(selectedLine);
+          ToastPopUp('Submit Successfully.');
+        }
       }
+
     } else {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
