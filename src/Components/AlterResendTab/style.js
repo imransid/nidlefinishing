@@ -1,36 +1,34 @@
+/* eslint-disable */
 import { StyleSheet } from 'react-native';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
-
-import { colors } from '../../theme/colors';
 
 const Styles = StyleSheet.create({
-    alterResendTabContainer:{backgroundColor: 'white', flex: 1},
-    selectButtonContainer:{flexDirection: 'row', marginBottom:10},
-  confirmButton:{
-    position: 'absolute',
-    bottom: 0,
-    justifyContent: 'center',
+  alterResendTabContainer: { backgroundColor: 'white', flex: 1 },
+  confirmButton: {
     alignItems: 'center',
-    width: '100%',
-    height: 50,
     backgroundColor: '#3C4FE9',
+    bottom: 0,
     flexDirection: 'row',
-  },
-  confirmButtonText:{color: 'white', marginStart: 10},
-  selectLineDateButton:{
-    width: '30%',
     height: 50,
-    borderRadius: 10,
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: '#E5E5E5',
-    marginTop: 20,
-    marginLeft: 20,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    justifyContent: 'center',
+    position: 'absolute',
+    width: '100%'
   },
-  selectLineDateButtonText:{fontSize: 16, color: '#000'}
+  confirmButtonText: { color: 'white', marginStart: 10 },
+  selectButtonContainer: { flexDirection: 'row', marginBottom: 10 },
+  selectLineDateButton: {
+    alignItems: 'center',
+    borderColor: '#E5E5E5',
+    borderRadius: 10,
+    borderWidth: 1,
+    flexDirection: 'row',
+    height: 50,
+    justifyContent: 'space-between',
+    marginLeft: 20,
+    marginTop: 20,
+    paddingHorizontal: 20,
+    width: '30%'
+  },
+  selectLineDateButtonText: { color: '#000', fontSize: 16 }
 });
 
 export default Styles;
