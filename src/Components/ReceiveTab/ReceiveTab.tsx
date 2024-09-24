@@ -87,7 +87,6 @@ const ReceiveTab: FC = () => {
 
       // Cleanup function to reset state when the screen is unfocused
       return () => {
-        console.log('funkk');
 
         setSelectedLine('');
         setLineModalVisible(false);
@@ -153,6 +152,7 @@ const ReceiveTab: FC = () => {
         const response = await commonPostAPI(props);
 
         if (response !== undefined) {
+          updatedArrayRef.current = [];
           onClickLeaf(selectedLine);
           ToastPopUp('Submit Successfully.');
         }
@@ -219,7 +219,7 @@ const ReceiveTab: FC = () => {
       ) : (
         <View style={style.flatListContainer}>
           <FlatList
-           style={{marginBottom: 100}}
+            style={{ marginBottom: 100 }}
             data={tableData}
             renderItem={renderItem}
             keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}

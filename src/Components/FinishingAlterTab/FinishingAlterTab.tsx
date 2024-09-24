@@ -176,10 +176,9 @@ const FinishingAlterTab: FC = () => {
 
         let response = await commonPutAPI(props);
 
-        console.log('response >>', response, props)
 
         if (response !== undefined) {
-
+          updatedArrayRef.current = [];
           fetchDataLineWise(selectedLine, selectedDate)
           ToastPopUp('Submit Successfully.');
 

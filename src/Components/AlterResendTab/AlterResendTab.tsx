@@ -151,6 +151,7 @@ const AlterResendTab: FC = () => {
 
         const response = await commonPutAPI(props);
         if (response !== undefined) {
+          updatedArrayRef.current = [];
           ToastPopUp('Submit Successfully.');
           fetchDataLineWise(selectedLine, selectedDate);
 
