@@ -3,7 +3,6 @@ import React, { type FC, useCallback, useEffect } from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import TreeIcon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
@@ -12,8 +11,6 @@ import { type RootState } from '@/store';
 import { commonGetAPI, commonPutAPI } from '@/store/sagas/helper/api.saga';
 import { BASE_URL, GET_FINISHING_ALTER_LIST, ORG_TREE, SEND_TO_ALTER } from '@/utils/environment';
 import ToastPopUp from '@/utils/Toast.android';
-
-import CalendarModal from '../CalendarModal/CalenderModal';
 import CustomModalButton from '../CustomModalButton/CustomModalButton';
 import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import { type ApiDataItem } from '../DataTableComponent/DataTableComponent';
@@ -26,8 +23,6 @@ const FinishingAlterTab: FC = () => {
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
   const [lineModalVisible, setLineModalVisible] = React.useState(false);
-  const [calendarModalVisible, setCalendarModalVisible] = React.useState(false);
-  const [selectedDate, setDate] = React.useState('');
   const [orgTree, setOrgTree] = React.useState([]);
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
   const [tableData, setTableData] = React.useState<AlterAPIDetails[]>([]);
@@ -35,11 +30,11 @@ const FinishingAlterTab: FC = () => {
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
 
   // Function to fetch data
-  const fetchDataLineWise = async (lineId: string, date: string) => {
+  const fetchDataLineWise = async (lineId: string) => {
     try {
-      const formattedDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
+      // const formattedDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
       const props = {
-        url: BASE_URL + '/' + GET_FINISHING_ALTER_LIST + `?lineId=${lineId}&date=${formattedDate}`,
+        url: BASE_URL + '/' + GET_FINISHING_ALTER_LIST + `?lineId=${lineId}`,
         token: accessToken !== undefined ? accessToken : ''
       };
       const response = await commonGetAPI(props);
@@ -56,11 +51,11 @@ const FinishingAlterTab: FC = () => {
   };
 
   // UseEffect to call API when selectedLine or selectedDate changes
-  useEffect(() => {
-    if (selectedLine && selectedDate) {
-      fetchDataLineWise(selectedLine, selectedDate);
-    }
-  }, [selectedLine, selectedDate]);
+  // useEffect(() => {
+  //   if (selectedLine) {
+  //     fetchDataLineWise(selectedLine);
+  //   }
+  // }, [selectedLine]);
 
   // Function to fetch data from API
   const fetchData = async () => {
@@ -92,7 +87,7 @@ const FinishingAlterTab: FC = () => {
         setLineModalVisible(false);
         setOrgTree([]);
         setTableData([]);
-        setDate('');
+
         updatedArrayRef.current = [];
       };
     }, [])
@@ -101,8 +96,6 @@ const FinishingAlterTab: FC = () => {
   const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {
     // Filter out items where qty is "0"
     const filteredArray = updatedArray.filter(item => item.qty !== 0);
-
-    console.log(updatedArray, 'updatedArray', filteredArray, 'filteredArray');
 
     // Create a new array by merging the old ref with the new filtered array
     updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
@@ -162,11 +155,9 @@ const FinishingAlterTab: FC = () => {
 
         if (response !== undefined) {
           updatedArrayRef.current = [];
-          // fetchDataLineWise(selectedLine, selectedDate)
           setSelectedLineName('')
           setSelectedLine('')
           setTableData([])
-          setDate('')
           ToastPopUp('Submit Successfully.');
         }
       }
@@ -174,7 +165,7 @@ const FinishingAlterTab: FC = () => {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
-  }, [setSelectedLineName, setSelectedLine, setTableData, setDate]);
+  }, [setSelectedLineName, setSelectedLine, setTableData]);
 
 
   return (
@@ -189,15 +180,7 @@ const FinishingAlterTab: FC = () => {
           text={selectedLine !== '' ? selectedLineName : 'Select Line'}
           icon={<Icon name="caret-down" size={25} color="#1C98D8" />}
         />
-        <CustomModalButton
-          buttonStyle={Styles.selectLineDateButton}
-          buttonTextStyle={Styles.selectLineDateButtonText}
-          onPress={() => {
-            setCalendarModalVisible(true);
-          }}
-          text={selectedDate !== '' ? selectedDate : 'Select Date'}
-          icon={<TreeIcon name="calendar-clear-outline" size={25} color="#1C98D8" />}
-        />
+
       </View>
       {/* Modal for TreeSelect */}
       <SelectLineModal
@@ -208,12 +191,8 @@ const FinishingAlterTab: FC = () => {
         pageName={''}
         setSelectedLineName={setSelectedLineName}
       />
-      <CalendarModal
-        setDate={setDate}
-        calendarModalVisible={calendarModalVisible}
-        setCalendarModalVisible={setCalendarModalVisible}
-      />
-      {selectedLine === '' && selectedDate === '' ? (
+
+      {selectedLine === '' ? (
         <View
           style={{
             flex: 1,
@@ -222,7 +201,7 @@ const FinishingAlterTab: FC = () => {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-          <Text style={{ fontSize: 16 }}>No Line & Date Selected</Text>
+          <Text style={{ fontSize: 16 }}>No Line Selected</Text>
         </View>
       ) : (
         <View style={style.flatListContainer}>

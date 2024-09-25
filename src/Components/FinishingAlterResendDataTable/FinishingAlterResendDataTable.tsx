@@ -3,7 +3,6 @@ import React, { type FC, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { useSelector } from 'react-redux';
-
 import { type RootState } from '@/store';
 
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
