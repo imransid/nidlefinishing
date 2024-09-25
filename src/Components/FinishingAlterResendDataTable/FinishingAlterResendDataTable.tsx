@@ -214,12 +214,12 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
                 onChangeText={val => {
                   handleTextInputChange(index, val);
                 }}
-                onFocus={() => {
-                  setFocusedInputIndex(index);
-                }}
-                onBlur={() => {
-                  setFocusedInputIndex(null);
-                }}
+              // onFocus={() => {
+              //   setFocusedInputIndex(index);
+              // }}
+              // onBlur={() => {
+              //   setFocusedInputIndex(null);
+              // }}
               />
             </DataTable.Cell>
           </DataTable.Row>
