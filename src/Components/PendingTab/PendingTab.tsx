@@ -1,6 +1,6 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { type FC, useState } from 'react';
-import { Col, Grid } from 'react-native-easy-grid';
+import { Col, Grid, Row } from 'react-native-easy-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -10,6 +10,7 @@ import { setPendingData } from '@/store/slices/features/setLineProcess/slice';
 import { BASE_URL, FINISHING_STATUS } from '@/utils/environment';
 
 import CardComponent from '../CardComponent/CardComponent';
+import { Text } from 'react-native';
 
 const PendingTab: FC = () => {
   const dispatch = useDispatch();
@@ -46,45 +47,49 @@ const PendingTab: FC = () => {
   );
   return (
     <Grid style={{ backgroundColor: 'white' }}>
-      <Col
-        style={{
-          backgroundColor: '#F9F8FB',
-          borderWidth: 1,
-          borderColor: '#E3E1F0',
-          margin: 10,
-          borderRadius: 10
-        }}>
-        <CardComponent
-          cardHeading="Receive Confirmation"
-          cardContent={(data as any).finishReceive}
-        />
-      </Col>
-      <Col
-        style={{
-          backgroundColor: '#F9F8FB',
-          borderWidth: 1,
-          borderColor: '#E3E1F0',
-          margin: 10,
-          borderRadius: 10
-        }}>
-        <CardComponent
-          cardHeading="F. Alter Acceptance"
-          cardContent={(data as any).finishAlterAcceptance}
-        />
-      </Col>
-      <Col
-        style={{
-          backgroundColor: '#F9F8FB',
-          borderWidth: 1,
-          borderColor: '#E3E1F0',
-          margin: 10,
-          borderRadius: 10
-        }}>
-        <CardComponent
-          cardHeading="F. Alter Receive Confirmation "
-          cardContent={(data as any).finishAlterReceive}
-        />
-      </Col>
+      <Row size={1}><Text>Selected Line</Text></Row>
+      <Row size={6}>
+        <Col
+          style={{
+            backgroundColor: '#F9F8FB',
+            borderWidth: 1,
+            borderColor: '#E3E1F0',
+            margin: 10,
+            borderRadius: 10
+          }}>
+          <CardComponent
+            cardHeading="Receive Confirmation"
+            cardContent={(data as any).finishReceive}
+          />
+        </Col>
+        <Col
+          style={{
+            backgroundColor: '#F9F8FB',
+            borderWidth: 1,
+            borderColor: '#E3E1F0',
+            margin: 10,
+            borderRadius: 10
+          }}>
+          <CardComponent
+            cardHeading="F. Alter Acceptance"
+            cardContent={(data as any).finishAlterAcceptance}
+          />
+        </Col>
+        <Col
+          style={{
+            backgroundColor: '#F9F8FB',
+            borderWidth: 1,
+            borderColor: '#E3E1F0',
+            margin: 10,
+            borderRadius: 10
+          }}>
+          <CardComponent
+            cardHeading="F. Alter Receive Confirmation "
+            cardContent={(data as any).finishAlterReceive}
+          />
+        </Col>
+      </Row>
+
     </Grid>
   );
 };

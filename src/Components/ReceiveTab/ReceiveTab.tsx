@@ -35,28 +35,41 @@ const ReceiveTab: FC = () => {
   const [tableData, setTableData] = React.useState<Detail[]>([]);
   const [loader, setLoader] = React.useState<boolean>(false);
   const [dataLoading, setDataLoading] = React.useState<boolean>(false);
-
+  const [message, setMessage] = React.useState<string>('No Line Selected');
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
 
   // Use useRef to store the updated array without re-rendering
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
 
   const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {
+
     // Filter out items where qty is "0"
-    const filteredArray = updatedArray.filter(item => item.qty !== 0);
+    const filteredArray = updatedArray.filter(item => item.qty !== '0' && item.qty !== '');
+    if (filteredArray.length === 0) {
+      // when error
+      let ids = updatedArray.map(item => item.id);
 
-    // Create a new array by merging the old ref with the new filtered array
-    updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
-      const newItem = filteredArray.find(item => item.id === oldItem.id);
-      return newItem != null ? { ...oldItem, ...newItem } : oldItem;
-    });
+      updatedArrayRef.current = updatedArrayRef.current.filter(
+        item => !ids.includes(item.id)
+      );
 
-    // Add any new items that aren't already in the ref
-    const newItems = filteredArray.filter(
-      newItem => !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id)
-    );
+    } else {
 
-    updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
+      // Create a new array by merging the old ref with the new filtered array
+      updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
+        const newItem = filteredArray.find(item => item.id === oldItem.id);
+        return newItem != null ? { ...oldItem, ...newItem } : oldItem;
+      });
+
+      // Add any new items that aren't already in the ref
+      const newItems = filteredArray.filter(
+        newItem => !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id)
+      );
+      updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
+
+    }
+
+
   }, []);
 
   // Function to fetch data from API
@@ -90,6 +103,7 @@ const ReceiveTab: FC = () => {
         setLineModalVisible(false);
         setOrgTree([]);
         setTableData([]);
+        setMessage('No Line Selected')
         updatedArrayRef.current = [];
       };
     }, [])
@@ -107,12 +121,12 @@ const ReceiveTab: FC = () => {
 
       const response = await commonGetAPI(props);
 
-      console.log('response', response);
 
       if (response !== undefined) {
         setSelectedLine(id);
         setTableData(response.data.details);
         setLineModalVisible(false);
+        if (response.data.details.length === 0) setMessage('No Data Found. ')
         // setLoader(false)
       }
     } catch (error) {
@@ -131,10 +145,11 @@ const ReceiveTab: FC = () => {
       const itemData = updatedArrayRef.current;
       const filteredData = itemData.map(({ id, ...rest }) => rest);
 
-
       const allQtyNotZero = filteredData.every((item: any) => item.qty === "0");
+      const anyBlankValue = filteredData.every((item: any) => item.qty === '')
 
-      if (allQtyNotZero) {
+      if (allQtyNotZero || anyBlankValue) {
+        updatedArrayRef.current = [];
         Alert.alert('Warning', 'No items have been updated.');
       } else {
         const props = {
@@ -205,7 +220,7 @@ const ReceiveTab: FC = () => {
           setSelectedLineName={setSelectedLineName}
         />
       </View>
-      {selectedLine === '' || dataLoading ? (
+      {tableData.length === 0 ? (
         <View
           style={{
             width: '100%',
@@ -213,7 +228,7 @@ const ReceiveTab: FC = () => {
             alignItems: 'center'
             // justifyContent: 'center',
           }}>
-          <Text style={{ fontSize: 16 }}>{dataLoading ? 'Loading..' : 'No Line Selected'} </Text>
+          <Text style={{ fontSize: 16 }}>{message} </Text>
         </View>
       ) : (
         <View style={style.flatListContainer}>

@@ -5,7 +5,6 @@ import { ScaledSheet } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import moment from 'moment';
 
 import { type RootState } from '@/store';
 import { commonGetAPI, commonPutAPI } from '@/store/sagas/helper/api.saga';
@@ -26,6 +25,7 @@ const FinishingAlterTab: FC = () => {
   const [orgTree, setOrgTree] = React.useState([]);
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
   const [tableData, setTableData] = React.useState<AlterAPIDetails[]>([]);
+  const [message, setMessage] = React.useState<string>('No Line Selected');
 
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
 
@@ -39,23 +39,19 @@ const FinishingAlterTab: FC = () => {
       };
       const response = await commonGetAPI(props);
 
+      console.log('response >> . ', response)
+
       if (response !== undefined) {
+
+        if (response.data.details.length === 0) setMessage('No Data Found. ')
+
         setTableData(response.data.details);
       }
 
-      console.log('response', response.data);
-      // setTestData(data); // Assuming the API response is directly compatible with testData
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-
-  // UseEffect to call API when selectedLine or selectedDate changes
-  // useEffect(() => {
-  //   if (selectedLine) {
-  //     fetchDataLineWise(selectedLine);
-  //   }
-  // }, [selectedLine]);
 
   // Function to fetch data from API
   const fetchData = async () => {
@@ -87,7 +83,7 @@ const FinishingAlterTab: FC = () => {
         setLineModalVisible(false);
         setOrgTree([]);
         setTableData([]);
-
+        setMessage('No Line Selected.')
         updatedArrayRef.current = [];
       };
     }, [])
@@ -110,6 +106,40 @@ const FinishingAlterTab: FC = () => {
 
     updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
   }, []);
+
+
+
+  const onClickLeaf = async (id: string): Promise<any> => {
+    try {
+
+      console.log('id >>> .. L >> ', id)
+
+      fetchDataLineWise(id);
+
+      // const props = {
+      //   url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + id,
+      //   token: accessToken !== undefined ? accessToken : ''
+      // };
+
+      // // setLoader(true)
+      // // setDataLoading(true)
+
+      // const response = await commonGetAPI(props);
+
+      // console.log('response', response);
+
+      // if (response !== undefined) {
+      //   // setSelectedLine(id);
+      //   // setTableData(response.data.details);
+      //   // setLineModalVisible(false);
+      //   // setLoader(false)
+      // }
+    } catch (error) {
+      console.error('Error during onClickLeaf execution:', error);
+      // setLoader(false); // Stop loader
+    }
+  };
+
 
   const renderItem = ({ item }: { item: AlterAPIDetails }) => {
     return (
@@ -137,12 +167,13 @@ const FinishingAlterTab: FC = () => {
       // Perform your API call or any other action with the updated array
 
       const filteredDataZero = updatedArrayRef.current.filter((item: any) => item.qty !== '0');
-
       const filteredData = filteredDataZero.map(({ id, ...rest }) => rest);
-
       const allQtyNotZero = filteredData.every((item: any) => item.qty === '0');
+      const allQtyNotSpace = filteredData.every((item: any) => item.qty === '');
 
-      if (allQtyNotZero) {
+
+      if (allQtyNotZero || allQtyNotSpace) {
+        updatedArrayRef.current = [];
         Alert.alert('Warning', 'No items have been updated.');
       } else {
         const props = {
@@ -190,9 +221,10 @@ const FinishingAlterTab: FC = () => {
         setLineModalVisible={setLineModalVisible}
         pageName={''}
         setSelectedLineName={setSelectedLineName}
+        onClickAble={async (e: number) => await onClickLeaf(e.toString())}
       />
 
-      {selectedLine === '' ? (
+      {tableData.length == 0 ? (
         <View
           style={{
             flex: 1,
@@ -201,7 +233,7 @@ const FinishingAlterTab: FC = () => {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-          <Text style={{ fontSize: 16 }}>No Line Selected</Text>
+          <Text style={{ fontSize: 16 }}>{message}</Text>
         </View>
       ) : (
         <View style={style.flatListContainer}>
