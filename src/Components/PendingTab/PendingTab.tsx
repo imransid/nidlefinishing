@@ -78,6 +78,7 @@ const PendingTab: FC = () => {
         setSelectedLine(id);
         if (response.data.statusBar.finishAlterAcceptance.length === 0 && response.data.statusBar.finishAlterReceive.length === 0 && response.data.statusBar.finishReceive.length === 0) { setData([]) };
         setData(response.data.statusBar);
+        dispatch(setPendingData(response.data.totalPending));
         setLineModalVisible(false);
         if (response.data.statusBar.finishAlterAcceptance.length === 0) setMessage('No Finish Alter Acceptance Found. ')
         if (response.data.statusBar.finishAlterReceive.length === 0) setMessage('No Finish Alter Receive Found. ')
