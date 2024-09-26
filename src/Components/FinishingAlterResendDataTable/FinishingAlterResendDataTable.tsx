@@ -7,9 +7,19 @@ import { type RootState } from '@/store';
 
 import CheckboxComponent from '../CheckboxComponent/CheckboxComponent';
 import stylesTemp from '../CustomTextInput/style';
-import { type Breakdown } from '../ReceiveTab/interface';
-
 import Styles from './styles';
+import { scale } from 'react-native-size-matters';
+
+interface Breakdown {
+  finishAlterReceive: number;
+  rcvQty: number;
+  size: string;
+  color: string;
+  balanceQty: number;
+  varienceId: number;
+  finishAlterQty: number;
+}
+
 export interface ApiDataItem {
   id?: string; // Unique identifier for each item
   styleId: number;
@@ -17,7 +27,7 @@ export interface ApiDataItem {
   varienceId: number;
   qmsOrgId: number;
   finishingOrgId: number;
-  qty: number;
+  qty: string;
   isPacked: boolean;
 }
 
@@ -34,12 +44,12 @@ interface IDataTableProps {
   onUpdatedArray: any;
   styleID: number;
   selectedLine: number;
-  totalFinishAlter: number;
-  totalReceive: number;
-  oderName: string;
+  totalFAltQty: number;
+  totalFaltRecQty: number;
+  oderName: string
 }
 
-const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
+const DataTableComponent: FC<IDataTableProps> = ({
   buyer: buyerHeader,
   buyerName,
   style: styleHeader,
@@ -52,10 +62,11 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
   onUpdatedArray,
   styleID,
   selectedLine,
-  totalFinishAlter,
-  totalReceive,
+  totalFAltQty,
+  totalFaltRecQty,
   oderName
 }) => {
+
   const [receiveQty, setReceiveQty] = useState(rowData);
   const finishingOrdID = useSelector((e: RootState) => e.setLine.selectedOrgDrop);
 
@@ -64,14 +75,17 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
 
   // State to track if the checkbox is checked
   const [isPacked, setIsPacked] = useState(false);
+  const generateUniqueId = `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+  const uniqueId = generateUniqueId;
 
   // Initialize textInputValues with empty strings or existing values
   const [textInputValues, setTextInputValues] = useState(
     rowData.map(row => ({
       ...row,
-      tempReceived: '0'
+      tempReceived: ''
     }))
   );
+
 
   const handleTextInputChange = (index: number, value: string) => {
     // Ensure the value is a number and defaults to 0 if empty
@@ -79,56 +93,41 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
     const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
 
     // Fetch the balance for the current row
-    const { balanceQty } = textInputValues[index];
+    const balanceQty = textInputValues[index].balanceQty;
+    const updateTextInputValues = (tempReceivedValue: string) => {
+      const updatedTextInputs = [...textInputValues];
+      updatedTextInputs[index].tempReceived = tempReceivedValue; // Store as string
+      setTextInputValues(updatedTextInputs);
+      return updatedTextInputs;
+    };
 
-    // Check if the received quantity is greater than the balance
+    const generateUpdatedArray = (textInputs: typeof textInputValues) => {
+      return textInputs.map((row: any) => ({
+        id: row.varienceId + POnumber, // Include the unique ID here
+        styleId: styleID,
+        orderentityId: POnumber,
+        varienceId: row.varienceId,
+        qmsOrgId: selectedLine,
+        finishingOrgId: finishingOrdID,
+        qty: row.tempReceived, // Use the updated quantity
+        isPacked: isPacked === undefined ? false : isPacked,
+      }));
+    };
+
+    // Handle input validation
     if (numericValue > balanceQty) {
-      // If the input value exceeds the balance, reset to the balance
+      // If the input value exceeds the balance
       alert(`Received quantity cannot be greater than the balance (${balanceQty})`);
-      setTextInputValues(prevState => {
-        const updated = [...prevState];
-        updated[index].tempReceived = balanceQty.toString(); // Set to balance value
-        return updated;
-      });
-    } else if (numericValue === balanceQty) {
-      // If input is exactly equal to the balance, update the state
-      const updatedTextInputs = [...textInputValues];
-      updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
-      setTextInputValues(updatedTextInputs);
-
-      // Generate and log the array when input value changes
-      const updatedArray = updatedTextInputs.map((row: any, i) => ({
-        id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-        styleId: styleID,
-        orderentityId: POnumber,
-        varienceId: row.varienceId,
-        qmsOrgId: selectedLine,
-        finishingOrgId: finishingOrdID,
-        qty: row.tempReceived, // Use the updated quantity
-        isPacked: isPacked === undefined ? false : isPacked
-      }));
-
-      // Call the handler to update the parent component's ref
+      const updatedTextInputs = updateTextInputValues(''); // Reset to balance value
+      const updatedArray = generateUpdatedArray(updatedTextInputs);
       onUpdatedArray(updatedArray);
+
     } else {
-      // If input is valid but less than balance, update the state as usual
-      const updatedTextInputs = [...textInputValues];
-      updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
-      setTextInputValues(updatedTextInputs);
+      // Update the state with the new value
+      const updatedTextInputs = updateTextInputValues(numericValue.toString());
 
-      // Generate and log the array when input value changes
-      const updatedArray = updatedTextInputs.map((row: any, i) => ({
-        id: `${styleName}-${POnumber}-${row.varienceId}-${i}`,
-        styleId: styleID,
-        orderentityId: POnumber,
-        varienceId: row.varienceId,
-        qmsOrgId: selectedLine,
-        finishingOrgId: finishingOrdID,
-        qty: row.tempReceived, // Use the updated quantity
-        isPacked: isPacked === undefined ? false : isPacked
-      }));
-
-      // Call the handler to update the parent component's ref
+      // Generate the updated array when input value changes
+      const updatedArray = generateUpdatedArray(updatedTextInputs);
       onUpdatedArray(updatedArray);
     }
   };
@@ -143,9 +142,8 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
     setTextInputValues(updatedTextInputs);
   };
 
-  // Calculate the total tempReceived
-  const totalTempReceived = textInputValues.reduce(
-    (total, row) => total + (Number(row.tempReceived) || 0),
+  const finishingAlterSendQuantity = textInputValues.reduce(
+    (total: any, row: any) => total + (parseInt(row.tempReceived, 10) || 0),
     0
   );
 
@@ -195,7 +193,8 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
           <DataTable.Row key={index}>
             <DataTable.Cell>{row.color}</DataTable.Cell>
             <DataTable.Cell>{row.size}</DataTable.Cell>
-            <DataTable.Cell>{row.rcvQty}</DataTable.Cell>
+
+            <DataTable.Cell numeric>{row.rcvQty}</DataTable.Cell>
             <DataTable.Cell numeric>{row.finishAlterQty}</DataTable.Cell>
             <DataTable.Cell numeric>{row.finishAlterReceive}</DataTable.Cell>
             <DataTable.Cell numeric>{row.balanceQty}</DataTable.Cell>
@@ -205,7 +204,7 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
                   stylesTemp.container,
                   stylesTemp.textInput,
                   {
-                    borderColor: focusedInputIndex === index ? '#1C98D8' : '#ddd'
+                    borderColor: focusedInputIndex === index ? '#1C98D8' : '#ddd', marginLeft: scale(25)
                   }
                 ]}
                 value={row.tempReceived}
@@ -213,40 +212,30 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
                 onChangeText={val => {
                   handleTextInputChange(index, val);
                 }}
-              // onFocus={() => {
-              //   setFocusedInputIndex(index);
-              // }}
-              // onBlur={() => {
-              //   setFocusedInputIndex(null);
-              // }}
+                onFocus={() => {
+                  setFocusedInputIndex(index);
+                }}
+                onBlur={val => {
+                  setFocusedInputIndex(null);
+                }}
               />
             </DataTable.Cell>
           </DataTable.Row>
         ))}
       </DataTable>
 
-      {/* {
-        console.log('textInputValues', textInputValues)
-      } */}
-
       <View style={Styles.tableFooter}>
         {columnNames.map((name, index) => (
           <Text key={index} style={Styles.tableFooterValue}>
             {name === 'Color'
-              ? 'Total =       '
+              ? 'Total =         '
               : name === 'Size'
-                ? '     '
-                : name === 'Received Qty.'
-                  ? '        '
-                  : name === 'Finishing Alter Qty.'
-                    ? totalFinishAlter
-                    : name === 'Finishing Alter Receive'
-                      ? totalReceive
-                      : name === 'Balance Qty.'
-                        ? ''
-                        : name === 'Receive Qty.'
-                          ? totalTempReceived
-                          : 0}
+                ? '         '
+                : name === 'Receive Qty.'
+                  ? '         '
+                  : name === 'Finish Alter Qty.'
+                    ? totalFAltQty
+                    : name === 'Finish Alter Receive' ? totalFaltRecQty : name === 'Balance Qty.' ? '' : name === 'F. Alter Receive Qty.' ? finishingAlterSendQuantity : 0}
           </Text>
         ))}
       </View>
@@ -254,4 +243,4 @@ const FinishingAlterResendDataTable: FC<IDataTableProps> = ({
   );
 };
 
-export default FinishingAlterResendDataTable;
+export default DataTableComponent;

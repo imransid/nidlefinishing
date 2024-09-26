@@ -253,7 +253,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/Users/rafa/Documents/github/nidle_app_finishing/nidlefinishing/node_modules/react-native-device-info/RNDeviceInfo.podspec",
-          "version": "11.1.0",
+          "version": "13.0.0",
           "configurations": [],
           "scriptPhases": []
         },

@@ -3,6 +3,7 @@ export interface Breakdown {
   size: string;
   color: string;
   varienceId: number;
+  balanceQty: number;
 }
 
 export interface AlterAPIDetails {

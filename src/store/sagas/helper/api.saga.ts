@@ -53,8 +53,6 @@ export const commonGetAPI = async (props: ICommonGetAPIProps): Promise<any> => {
     const myHeaders = new Headers();
     myHeaders.append('Authorization', 'Bearer ' + props.token);
 
-    console.log('props props', props);
-
     const requestOptions: any = {
       method: 'GET',
       headers: myHeaders,
@@ -73,7 +71,6 @@ export const commonGetAPI = async (props: ICommonGetAPIProps): Promise<any> => {
       })
       .then(result => {
         if (result) {
-          console.log(result);
           // Process your result here
           return result;
         } else {
@@ -96,7 +93,6 @@ export const commonPostAPI = async (
   props: ICommonPostAPIProps,
 ): Promise<any> => {
   try {
-    console.log('props', props);
     let data = JSON.stringify(props.data);
 
     let config = {
@@ -116,7 +112,6 @@ export const commonPostAPI = async (
         return response.data;
       })
       .catch((err: any) => {
-        console.log('err', err);
         ToastPopUp('Something went wrong. Please try again later. ');
         return undefined;
       });
@@ -149,7 +144,6 @@ export const commonPutAPI = async (props: ICommonPostAPIProps) => {
         return response.data;
       })
       .catch(error => {
-        console.log(error);
         ToastPopUp('Something went wrong. Please try again later. ');
         return undefined;
       });

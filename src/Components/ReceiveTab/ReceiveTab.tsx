@@ -34,7 +34,6 @@ const ReceiveTab: FC = () => {
   const [orgTree, setOrgTree] = React.useState([]);
   const [tableData, setTableData] = React.useState<Detail[]>([]);
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [dataLoading, setDataLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>('No Line Selected');
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
 
@@ -244,7 +243,7 @@ const ReceiveTab: FC = () => {
 
       <CustomSubmitButton
         icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
-        text="CONFIRM RECEIVE"
+        text="REQUEST CONFIRMATION"
         onPress={confirmReceive}
       />
       <Spinner visible={loader} textContent={'Loading...'} />

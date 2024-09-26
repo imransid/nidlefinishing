@@ -7,6 +7,7 @@ import type ICalendarModalProps from '../../Interfaces/ICalendarModalProps';
 import { colors } from '../../theme/colors';
 
 import styles from './style';
+import moment from 'moment';
 
 // Define the type for the day parameter
 interface DayObject {
@@ -15,18 +16,44 @@ interface DayObject {
   month: number;
   year: number;
   timestamp: number;
+  onClickAble?: (e: number) => void;
+  setDateTime?: string
 }
 
 const CalendarModal: React.FC<ICalendarModalProps> = ({
   calendarModalVisible,
   setCalendarModalVisible,
-  setDate
+  onClickAble,
+  setDate,
+  setDateTime
 }) => {
   const handleDayPress: any = (day: DayObject) => {
     if (setDate != null) {
       setDate(day.dateString);
     }
     setCalendarModalVisible(false);
+  };
+
+  const onClickLeaf = async (data: any): Promise<any> => {
+    try {
+
+      if (onClickAble != null) {
+        onClickAble(data.dateString); // or pass any number you need
+      }
+
+      if (data !== undefined) {
+        setDate?.(data.dateString);
+        setDateTime?.(moment(data.timestamp).format('YYYY-MM-DD HH:mm:ss'))
+      }
+
+      setCalendarModalVisible(false);
+    } catch (error) {
+      console.error('Error during onClickLeaf execution:', error);
+      // setLoader(false); // Stop loader
+    } finally {
+      // setLoader(false); // Stop loader
+      // setTreeOpen(false);
+    }
   };
 
   return (
@@ -40,7 +67,7 @@ const CalendarModal: React.FC<ICalendarModalProps> = ({
         }}>
         <View style={styles.modalContainer}>
           <Calendar
-            onDayPress={handleDayPress}
+            onDayPress={onClickLeaf}
             theme={{
               todayTextColor: colors.buttonBg,
               dayTextColor: colors.calendarDate,

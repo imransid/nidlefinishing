@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { type FC, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
@@ -26,7 +26,7 @@ interface DataItem {
 
 const TodaySummaryTab: FC = () => {
   useFocusEffect(() => {
-    console.log('summary');
+
   });
   const [data, setData] = useState<DataItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ const TodaySummaryTab: FC = () => {
       };
       const response = await commonGetAPI(props);
       if (response !== undefined) {
-        console.log('response', response);
+
         setData(response.data);
       }
     } catch (error) {

@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     height: verticalScale(18),
     width: scale(48),
-    marginLeft: scale(42),
     backgroundColor: '#fff',
   },
   textInput: {

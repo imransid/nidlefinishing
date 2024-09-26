@@ -78,7 +78,6 @@ const DataTableComponent: FC<IDataTableProps> = ({
 
 
   const handleTextInputChange = (index: number, value: string) => {
-    console.log('index', index);
 
     // Ensure the value is a number and defaults to 0 if empty
     const newValue = value.trim() === '' ? '0' : value;
