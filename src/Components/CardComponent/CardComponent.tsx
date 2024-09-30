@@ -1,8 +1,8 @@
 /* eslint-disable */
-import React, { type FC } from 'react';
-import { Text, View } from 'react-native';
-import { Col, Grid, Row } from 'react-native-easy-grid';
-import { FlatList } from 'react-native-gesture-handler';
+import React, {type FC} from 'react';
+import {Text, View} from 'react-native';
+import {Col, Grid, Row} from 'react-native-easy-grid';
+import {FlatList} from 'react-native-gesture-handler';
 
 import styles from './style';
 
@@ -24,7 +24,7 @@ interface ICardComponentProps {
   }>;
 }
 
-const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) => {
+const CardComponent: FC<ICardComponentProps> = ({cardHeading, cardContent}) => {
   // Check if cardContent is an array and has items
   if (!Array.isArray(cardContent) || cardContent.length === 0) {
     return (
@@ -33,8 +33,8 @@ const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) =>
           <Row size={1} style={styles.cardHeaderContainer}>
             <Text style={styles.cardHeading}>{cardHeading}</Text>
           </Row>
-          <Row style={[styles.cardStyle, { justifyContent: 'center' }]} size={8}>
-            <Text style={{ alignSelf: 'center' }}>No data found</Text>
+          <Row style={[styles.cardStyle, {justifyContent: 'center'}]} size={8}>
+            <Text style={{alignSelf: 'center'}}>No data found</Text>
           </Row>
         </Col>
       </Grid>
@@ -46,21 +46,24 @@ const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) =>
       switch (status) {
         case 'PENDING':
           return 1;
-        case 'CANCELLED':
-        case 'REJECTED':
-          return 2;
         case 'CONFIRMED':
         case 'ACCEPTED':
         case 'RECEIVED':
+          return 2;
+        case 'CANCELLED':
+        case 'REJECTED':
           return 3;
         default:
           return 4;
       }
     };
-    return statusPriority(a.confirmationStatus) - statusPriority(b.confirmationStatus);
+    return (
+      statusPriority(a.confirmationStatus) -
+      statusPriority(b.confirmationStatus)
+    );
   });
 
-  const renderItem = ({ item }: { item: (typeof cardContent)[0] }) => {
+  const renderItem = ({item}: {item: (typeof cardContent)[0]}) => {
     return (
       <Grid style={styles.cardContentStyle}>
         <Col size={1.5} style={styles.lineContentStyle}>

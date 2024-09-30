@@ -269,7 +269,7 @@ const ReceiveTab: FC = () => {
       <CustomSubmitButton
         icon={
           <Icon
-            name="sign-out"
+            name="send"
             size={20}
             color={'white'}
           />
