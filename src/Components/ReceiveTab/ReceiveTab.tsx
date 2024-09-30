@@ -1,30 +1,30 @@
 /* eslint-disable */
-import React, { type FC, useCallback } from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
+import React, {type FC, useCallback, useEffect} from 'react';
+import {Alert, FlatList, Text, View} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { ScaledSheet } from 'react-native-size-matters';
+import {ScaledSheet} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
 
-import { type RootState } from '@/store';
-import { commonGetAPI, commonPostAPI } from '@/store/sagas/helper/api.saga';
+import {type RootState} from '@/store';
+import {commonGetAPI, commonPostAPI} from '@/store/sagas/helper/api.saga';
 import {
   BASE_URL,
   CONFIRM_RECEIVE_REQUEST,
   GET_QMS_STOCK_FOR_RECEIVE,
-  ORG_TREE
+  ORG_TREE,
 } from '@/utils/environment';
 import ToastPopUp from '@/utils/Toast.android';
-
+import NetInfo from '@react-native-community/netinfo';
 import DataTableComponent, {
-  type ApiDataItem
+  type ApiDataItem,
 } from '../../Components/DataTableComponent/DataTableComponent';
 import CustomModalButton from '../CustomModalButton/CustomModalButton';
 import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
 
-import { type Detail, type StockViewItem } from './interface';
+import {type Detail, type StockViewItem} from './interface';
 import Styles from './style';
 
 const ReceiveTab: FC = () => {
@@ -35,40 +35,41 @@ const ReceiveTab: FC = () => {
   const [tableData, setTableData] = React.useState<Detail[]>([]);
   const [loader, setLoader] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>('No Line Selected');
-  const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
+  const accessToken = useSelector(
+    (state: RootState) => state.users.user.data?.accessToken,
+  );
+  const [isButtonDisabled, setIsButtonDisabled] =
+    React.useState<boolean>(false);
 
   // Use useRef to store the updated array without re-rendering
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
 
   const handleUpdatedArray = useCallback((updatedArray: ApiDataItem[]) => {
-
     // Filter out items where qty is "0"
-    const filteredArray = updatedArray.filter(item => item.qty !== '0' && item.qty !== '');
+    const filteredArray = updatedArray.filter(
+      item => item.qty !== '0' && item.qty !== '',
+    );
     if (filteredArray.length === 0) {
       // when error
       let ids = updatedArray.map(item => item.id);
 
       updatedArrayRef.current = updatedArrayRef.current.filter(
-        item => !ids.includes(item.id)
+        item => !ids.includes(item.id),
       );
-
     } else {
-
       // Create a new array by merging the old ref with the new filtered array
       updatedArrayRef.current = updatedArrayRef.current.map(oldItem => {
         const newItem = filteredArray.find(item => item.id === oldItem.id);
-        return newItem != null ? { ...oldItem, ...newItem } : oldItem;
+        return newItem != null ? {...oldItem, ...newItem} : oldItem;
       });
 
       // Add any new items that aren't already in the ref
       const newItems = filteredArray.filter(
-        newItem => !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id)
+        newItem =>
+          !updatedArrayRef.current.some(oldItem => oldItem.id === newItem.id),
       );
       updatedArrayRef.current = [...updatedArrayRef.current, ...newItems];
-
     }
-
-
   }, []);
 
   // Function to fetch data from API
@@ -77,7 +78,7 @@ const ReceiveTab: FC = () => {
       setLoader(true);
       const props = {
         url: BASE_URL + '/' + ORG_TREE,
-        token: accessToken !== undefined ? accessToken : ''
+        token: accessToken !== undefined ? accessToken : '',
       };
       const response = await commonGetAPI(props);
       if (response !== undefined) {
@@ -97,22 +98,40 @@ const ReceiveTab: FC = () => {
 
       // Cleanup function to reset state when the screen is unfocused
       return () => {
-
         setSelectedLine('');
         setLineModalVisible(false);
         setOrgTree([]);
         setTableData([]);
-        setMessage('No Line Selected')
+        setMessage('No Line Selected');
         updatedArrayRef.current = [];
       };
-    }, [])
+    }, []),
   );
+
+  // Check for internet connectivity and fetch data
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      if (state.isConnected) {
+        fetchData();
+      } else {
+        // Set default values when offline
+        setTableData([]);
+        setSelectedLine('');
+        setLineModalVisible(false);
+        setOrgTree([]);
+        setLoader(false);
+        ToastPopUp('No internet connection.');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const onClickLeaf = async (id: string): Promise<any> => {
     try {
       const props = {
         url: BASE_URL + '/' + GET_QMS_STOCK_FOR_RECEIVE + id,
-        token: accessToken !== undefined ? accessToken : ''
+        token: accessToken !== undefined ? accessToken : '',
       };
 
       // setLoader(true)
@@ -120,12 +139,11 @@ const ReceiveTab: FC = () => {
 
       const response = await commonGetAPI(props);
 
-
       if (response !== undefined) {
         setSelectedLine(id);
         setTableData(response.data.details);
         setLineModalVisible(false);
-        if (response.data.details.length === 0) setMessage('No Data Found. ')
+        if (response.data.details.length === 0) setMessage('No Data Found. ');
         // setLoader(false)
       }
     } catch (error) {
@@ -142,10 +160,10 @@ const ReceiveTab: FC = () => {
     if (updatedArrayRef.current.length > 0) {
       // Perform your API call or any other action with the updated array
       const itemData = updatedArrayRef.current;
-      const filteredData = itemData.map(({ id, ...rest }) => rest);
+      const filteredData = itemData.map(({id, ...rest}) => rest);
 
-      const allQtyNotZero = filteredData.every((item: any) => item.qty === "0");
-      const anyBlankValue = filteredData.every((item: any) => item.qty === '')
+      const allQtyNotZero = filteredData.every((item: any) => item.qty === '0');
+      const anyBlankValue = filteredData.every((item: any) => item.qty === '');
 
       if (allQtyNotZero || anyBlankValue) {
         updatedArrayRef.current = [];
@@ -154,27 +172,27 @@ const ReceiveTab: FC = () => {
         const props = {
           url: BASE_URL + '/' + CONFIRM_RECEIVE_REQUEST,
           token: accessToken !== undefined ? accessToken : '',
-          data: filteredData
+          data: filteredData,
         };
 
         // dispatch(startLoader())
-
+        setIsButtonDisabled(true); // Disable the button
         const response = await commonPostAPI(props);
 
         if (response !== undefined) {
           updatedArrayRef.current = [];
-          setTableData([])
-          setSelectedLine('')
-          setSelectedLineName('')
+          setTableData([]);
+          setSelectedLine('');
+          setSelectedLineName('');
           // onClickLeaf(selectedLine);
           ToastPopUp('Submit Successfully.');
         }
       }
-
     } else {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
+    setIsButtonDisabled(false); // Disable the button
   }, [setSelectedLine, setTableData, setSelectedLineName]);
 
   const renderItem = (item: StockViewItem) => (
@@ -188,7 +206,14 @@ const ReceiveTab: FC = () => {
       oderName={item.item.po}
       orderNumber={item.item.orderId}
       showCheckbox={true}
-      columnNames={['Color', 'Size', 'QC Qty.', 'Total Receive', 'Balance Qty.', 'Receive Qty.']}
+      columnNames={[
+        'Color',
+        'Size',
+        'QC Qty.',
+        'Total Receive',
+        'Balance Qty.',
+        'Receive Qty.',
+      ]}
       onUpdatedArray={handleUpdatedArray}
       rowData={item.item.breakdowns}
       selectedLine={parseInt(selectedLine)}
@@ -198,8 +223,8 @@ const ReceiveTab: FC = () => {
   );
 
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
-      <View style={{ height: '20%' }}>
+    <View style={{backgroundColor: 'white', flex: 1}}>
+      <View style={{height: '20%'}}>
         <CustomModalButton
           buttonStyle={Styles.selectLineDateButton}
           buttonTextStyle={Styles.selectLineDateButtonText}
@@ -224,27 +249,34 @@ const ReceiveTab: FC = () => {
           style={{
             width: '100%',
             height: '100%',
-            alignItems: 'center'
+            alignItems: 'center',
             // justifyContent: 'center',
           }}>
-          <Text style={{ fontSize: 16 }}>{message} </Text>
+          <Text style={{fontSize: 16}}>{message} </Text>
         </View>
       ) : (
         <View style={style.flatListContainer}>
           <FlatList
-            style={{ marginBottom: 100 }}
+            style={{marginBottom: 100}}
             data={tableData}
             renderItem={renderItem}
             keyExtractor={item => `${Math.random()}` + `${item.varienceId}`}
-            ListFooterComponent={<View style={{ height: 80 }} />}
+            ListFooterComponent={<View style={{height: 80}} />}
           />
         </View>
       )}
 
       <CustomSubmitButton
-        icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
+        icon={
+          <Icon
+            name="sign-out"
+            size={20}
+            color={'white'}
+          />
+        }
         text="REQUEST CONFIRMATION"
         onPress={confirmReceive}
+        disabled={isButtonDisabled}
       />
       <Spinner visible={loader} textContent={'Loading...'} />
     </View>
@@ -256,6 +288,6 @@ export default ReceiveTab;
 const style = ScaledSheet.create({
   flatListContainer: {
     // flex: 1, // Allow FlatList to take remaining space
-    height: '180@s'
-  }
+    height: '180@s',
+  },
 });

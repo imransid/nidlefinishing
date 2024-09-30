@@ -152,7 +152,8 @@ const Styles = ScaledSheet.create({
     elevation: 5,
     shadowOpacity: 0,
     borderBottomWidth: 0,
-    borderTopWidth: 0
+    borderTopWidth: 0,
+    height: verticalScale(33)
   },
   tabBarIndicatorStyle: { backgroundColor: '#1C98D8', height: 3 },
   tabNavigatorStyle: {
@@ -168,8 +169,8 @@ const Styles = ScaledSheet.create({
     paddingHorizontal: scale(5),
     marginStart: scale(1),
     position: 'absolute',
-    top: verticalScale(13),
-    right: scale(5)
+    top: verticalScale(9),
+    right: scale(8)
   },
   counterText: {
     color: '#fff',

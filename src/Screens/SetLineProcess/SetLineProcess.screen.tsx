@@ -7,18 +7,21 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { type RootState } from '@/store';
+import {
+  setDropdownFinishValue,
+  setDropdownOrgValue
+} from '@/store/slices/features/setLineProcess/slice';
 
 import Styles from './Styles';
-import { setDropdownFinishValue, setDropdownOrgValue } from '@/store/slices/features/setLineProcess/slice';
-
-
 
 const SetLineProcessScreen: FC = ({ navigation }: any) => {
   const dispatch = useDispatch();
 
   // Retrieve data from Redux store
   const finishingOrganizationData = useSelector((state: RootState) => state.setLine.finishingOrg);
-  const finishingProgressListData = useSelector((state: RootState) => state.setLine.finishingProcessList);
+  const finishingProgressListData = useSelector(
+    (state: RootState) => state.setLine.finishingProcessList
+  );
 
   // Local state for dropdown values
   const [finishingOrganization, setFinishingOrganization] = useState<string | null>(null);

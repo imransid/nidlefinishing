@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { type FC } from 'react';
 import { Text, View } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
@@ -14,11 +15,52 @@ interface ICardComponentProps {
     sizeM: number;
     sizeL: number;
     status: string;
+    confirmationStatus: string; // Make sure this field exists in the props
+    transanction: {
+      qmsOrgName: string;
+      qty: number;
+      size: string;
+    };
   }>;
 }
 
 const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) => {
-  const renderItem: any = ({ item }) => {
+  // Check if cardContent is an array and has items
+  if (!Array.isArray(cardContent) || cardContent.length === 0) {
+    return (
+      <Grid>
+        <Col>
+          <Row size={1} style={styles.cardHeaderContainer}>
+            <Text style={styles.cardHeading}>{cardHeading}</Text>
+          </Row>
+          <Row style={[styles.cardStyle, { justifyContent: 'center' }]} size={8}>
+            <Text style={{ alignSelf: 'center' }}>No data found</Text>
+          </Row>
+        </Col>
+      </Grid>
+    );
+  }
+  // Sorting cardContent based on confirmationStatus
+  const sortedCardContent = [...cardContent].sort((a, b) => {
+    const statusPriority = (status: string) => {
+      switch (status) {
+        case 'PENDING':
+          return 1;
+        case 'CANCELLED':
+        case 'REJECTED':
+          return 2;
+        case 'CONFIRMED':
+        case 'ACCEPTED':
+        case 'RECEIVED':
+          return 3;
+        default:
+          return 4;
+      }
+    };
+    return statusPriority(a.confirmationStatus) - statusPriority(b.confirmationStatus);
+  });
+
+  const renderItem = ({ item }: { item: (typeof cardContent)[0] }) => {
     return (
       <Grid style={styles.cardContentStyle}>
         <Col size={1.5} style={styles.lineContentStyle}>
@@ -47,10 +89,10 @@ const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) =>
                       ? styles.statusTextPending
                       : item.confirmationStatus === 'CANCELLED'
                         ? styles.statusTextCancel
-                        : item.confirmationStatus === 'RECEIVED'
-                          ? styles.statusTextConfirm
-                          : item.confirmationStatus === 'REJECTED'
-                            ? styles.statusTextCancel
+                        : item.confirmationStatus === 'REJECTED'
+                          ? styles.statusTextCancel
+                          : item.confirmationStatus === 'RECEIVED'
+                            ? styles.statusTextConfirm
                             : ''
             }>
             {item.confirmationStatus}
@@ -59,6 +101,7 @@ const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) =>
       </Grid>
     );
   };
+
   return (
     <Grid>
       <Col>
@@ -69,7 +112,7 @@ const CardComponent: FC<ICardComponentProps> = ({ cardHeading, cardContent }) =>
           <FlatList
             maxToRenderPerBatch={5}
             renderItem={renderItem}
-            data={cardContent}
+            data={sortedCardContent}
             keyExtractor={(item, index) => index.toString()}
             showsHorizontalScrollIndicator={true}
           />

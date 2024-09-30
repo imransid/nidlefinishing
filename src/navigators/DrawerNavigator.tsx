@@ -61,19 +61,19 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = (
       <LinearGradient colors={['#47B5FF', '#B09EFF']}>
         <View style={Styles.header}>
           <CustomTextItem
-            txt="Lionel Messi"
+            txt={userName}
             color="white"
             variant="titleMedium"
           />
           <CustomTextItem
-            txt="admin@gmail.com"
+            txt={userEmail}
             color="white"
             variant="titleSmall"
           />
           <View style={Styles.customDivider}></View>
           <CustomTextItem 
           // txt={`Version : ${getAppVersionName()}`} 
-          txt={`Version : 0.0.4 FinishingApp-QA-24-09-2024`} 
+          txt={`Version : 0.0.5 FinishingApp-QA-30-09-2024`} 
           color="white" 
           variant="labelSmall" />
           <CustomTextItem

@@ -10,7 +10,6 @@ import { setPendingData } from '@/store/slices/features/setLineProcess/slice';
 import { BASE_URL, FINISHING_STATUS, ORG_TREE } from '@/utils/environment';
 
 import CardComponent from '../CardComponent/CardComponent';
-import { Text } from 'react-native';
 import CustomModalButton from '../CustomModalButton/CustomModalButton';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
 import Styles from './style';
@@ -21,7 +20,6 @@ const PendingTab: FC = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const [orgTree, setOrgTree] = React.useState([]);
-  const [message, setMessage] = React.useState<string>('No Line Selected');
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
   const [selectedLine, setSelectedLine] = React.useState<string>('');
   const [selectedLineName, setSelectedLineName] = React.useState<string>('');
@@ -80,10 +78,6 @@ const PendingTab: FC = () => {
         setData(response.data.statusBar);
         dispatch(setPendingData(response.data.totalPending));
         setLineModalVisible(false);
-        if (response.data.statusBar.finishAlterAcceptance.length === 0) setMessage('No Finish Alter Acceptance Found. ')
-        if (response.data.statusBar.finishAlterReceive.length === 0) setMessage('No Finish Alter Receive Found. ')
-        if (response.data.statusBar.finishReceive.length === 0) setMessage('No Finish Receive Found. ')
-        // setLoader(false)
       }
     } catch (error) {
       console.error('Error during onClickLeaf execution:', error);

@@ -16,6 +16,8 @@ import { type RootState } from '@/store';
 import ReceiveTab from '../../Components/ReceiveTab/ReceiveTab';
 
 import Styles from './Styles';
+import moment from 'moment';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 // Create Top Tab Navigator
 const Tab = createMaterialTopTabNavigator();
@@ -23,6 +25,7 @@ const Tab = createMaterialTopTabNavigator();
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const FinishingReceiveScreen = () => {
   const navigation = useNavigation();
+  const currentDate = moment().format('DD MMM YYYY');
 
   const totalPending = useSelector((state: RootState) => state.setLine.totalPending);
 
@@ -63,6 +66,12 @@ const FinishingReceiveScreen = () => {
                 <View style={Styles.counter}>
                   <Text style={Styles.counterText}>{totalPending}</Text>
                 </View>
+              );
+            }
+
+            if(route.name === 'Today Summary'){
+              return (
+                  <Text style={{color:'#000', position:'absolute', right:scale(35), top:34, fontSize:moderateScale(7)}}>{currentDate}</Text>
               );
             }
             return undefined;

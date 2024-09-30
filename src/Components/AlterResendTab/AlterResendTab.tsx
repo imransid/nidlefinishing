@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { type FC, useCallback } from 'react';
+import React, { type FC, useCallback, useEffect } from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { ScaledSheet } from 'react-native-size-matters';
@@ -21,7 +21,7 @@ import DataTableComponent from '../../Components/FinishingAlterResendDataTable/F
 import CustomModalButton from '../CustomModalButton/CustomModalButton';
 import CustomSubmitButton from '../CustomSubmitButton/CustomSubmitButton';
 import SelectLineModal from '../SelectLineModal/SelectLineModal';
-
+import NetInfo from '@react-native-community/netinfo';
 import { type Detail, type StockViewItem } from '../ReceiveTab/interface';
 import Styles from './style';
 
@@ -34,6 +34,7 @@ const AlterResendTab: FC = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>('No Line Selected');
   const accessToken = useSelector((state: RootState) => state.users.user.data?.accessToken);
+  const [isButtonDisabled, setIsButtonDisabled] = React.useState<boolean>(false);
 
   // Use useRef to store the updated array without re-rendering
   const updatedArrayRef = React.useRef<ApiDataItem[]>([]);
@@ -103,6 +104,25 @@ const AlterResendTab: FC = () => {
     }, [])
   );
 
+      // Check for internet connectivity and fetch data
+      useEffect(() => {
+        const unsubscribe = NetInfo.addEventListener(state => {
+          if (state.isConnected) {
+            fetchData();
+          } else {
+            // Set default values when offline
+            setTableData([]);
+            setSelectedLine('');
+            setLineModalVisible(false);
+            setOrgTree([]);
+            setLoader(false);
+            ToastPopUp('No internet connection.');
+          }
+        });
+    
+        return () => unsubscribe();
+      }, []);
+
   const onClickLeaf = async (id: string): Promise<any> => {
     try {
       const props = {
@@ -145,7 +165,7 @@ const AlterResendTab: FC = () => {
           token: accessToken !== undefined ? accessToken : '',
           data: filteredData
         };
-
+        setIsButtonDisabled(true); // Disable the button
         const response = await commonPutAPI(props);
 
         if (response !== undefined) {
@@ -162,6 +182,7 @@ const AlterResendTab: FC = () => {
       // If no items have been updated, show a warning message
       Alert.alert('Warning', 'No items have been updated.');
     }
+    setIsButtonDisabled(false); // Re-enable the button after operation
   }, [setSelectedLine, setTableData, setSelectedLineName]);
 
   const renderItem = (item: StockViewItem) => (
@@ -229,9 +250,10 @@ const AlterResendTab: FC = () => {
       )}
 
       <CustomSubmitButton
-        icon={<Icon name="tencent-weibo" size={20} color={'white'} />}
+        icon={<Icon name="send" size={20} color={'white'} />}
         text="REQUEST CONFIRMATION"
         onPress={confirmReceive}
+        disabled={isButtonDisabled} // Disable based on state
       />
       <Spinner visible={loader} textContent={'Loading...'} />
     </View>

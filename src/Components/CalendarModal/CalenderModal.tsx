@@ -1,15 +1,16 @@
+/*eslint-disable */
+
 import React from 'react';
 import { Modal, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { moderateScale } from 'react-native-size-matters';
+import moment from 'moment';
 
 import type ICalendarModalProps from '../../Interfaces/ICalendarModalProps';
 import { colors } from '../../theme/colors';
 
 import styles from './style';
-import moment from 'moment';
 
-// Define the type for the day parameter
 interface DayObject {
   dateString: string;
   day: number;
@@ -17,7 +18,7 @@ interface DayObject {
   year: number;
   timestamp: number;
   onClickAble?: (e: number) => void;
-  setDateTime?: string
+  setDateTime?: string;
 }
 
 const CalendarModal: React.FC<ICalendarModalProps> = ({
@@ -36,25 +37,24 @@ const CalendarModal: React.FC<ICalendarModalProps> = ({
 
   const onClickLeaf = async (data: any): Promise<any> => {
     try {
-
       if (onClickAble != null) {
         onClickAble(data.dateString); // or pass any number you need
       }
 
       if (data !== undefined) {
         setDate?.(data.dateString);
-        setDateTime?.(moment(data.timestamp).format('YYYY-MM-DD HH:mm:ss'))
+        setDateTime?.(moment(data.timestamp).format('YYYY-MM-DD HH:mm:ss'));
       }
 
       setCalendarModalVisible(false);
     } catch (error) {
       console.error('Error during onClickLeaf execution:', error);
-      // setLoader(false); // Stop loader
-    } finally {
-      // setLoader(false); // Stop loader
-      // setTreeOpen(false);
     }
   };
+
+  // Get today's date and 7 days before
+  const today = moment().format('YYYY-MM-DD');
+  const sevenDaysAgo = moment().subtract(7, 'days').format('YYYY-MM-DD');
 
   return (
     <View>
@@ -68,6 +68,8 @@ const CalendarModal: React.FC<ICalendarModalProps> = ({
         <View style={styles.modalContainer}>
           <Calendar
             onDayPress={onClickLeaf}
+            maxDate={today} // Today is the maximum selectable date
+            minDate={sevenDaysAgo} // 7 days before today is the minimum selectable date
             theme={{
               todayTextColor: colors.buttonBg,
               dayTextColor: colors.calendarDate,

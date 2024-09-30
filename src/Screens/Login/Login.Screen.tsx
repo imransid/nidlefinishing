@@ -66,6 +66,7 @@ const Login: FC = () => {
           <View style={styles.appNameContainer}>
             <Text style={styles.appNameTxt}>Finishing App</Text>
             {/* <Text style={styles.versionTxt}>Version : {` ${getAppVersionName()}`}</Text> */}
+            <Text style={styles.versionTxt}>Version : 0.0.5 FinishingApp-QA-30-09-2024</Text>
           </View>
           <View>
             <Controller

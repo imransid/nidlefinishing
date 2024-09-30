@@ -11,6 +11,7 @@ import stylesTemp from '../CustomTextInput/style';
 import { type Breakdown } from '../ReceiveTab/interface';
 
 import Styles from './styles';
+import { scale } from 'react-native-size-matters';
 export interface ApiDataItem {
   id?: string; // Unique identifier for each item
   styleId: number;
@@ -195,7 +196,7 @@ const DataTableComponent: FC<IDataTableProps> = ({
                   stylesTemp.container,
                   stylesTemp.textInput,
                   {
-                    borderColor: focusedInputIndex === index ? '#1C98D8' : '#ddd'
+                    borderColor: focusedInputIndex === index ? '#1C98D8' : '#ddd', marginLeft:scale(35)
                   }
                 ]}
                 value={row.tempReceived}
@@ -242,82 +243,3 @@ const DataTableComponent: FC<IDataTableProps> = ({
 
 export default DataTableComponent;
 
-
-
-
-
-// const handleTextInputChange = (index: number, value: string) => {
-
-//   console.log('index', index)
-
-//   // Ensure the value is a number and defaults to 0 if empty
-//   const newValue = value.trim() === '' ? '0' : value;
-//   const numericValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
-
-//   // Fetch the balance for the current row
-//   const balanceQty = textInputValues[index].balance;
-
-//   // Check if the received quantity is greater than the balance
-//   if (numericValue > balanceQty) {
-//     // If the input value exceeds the balance, reset to the balance
-//     alert(`Received quantity cannot be greater than the balance (${balanceQty})`);
-//     setTextInputValues(prevState => {
-//       const updated = [...prevState];
-//       updated[index].tempReceived = ''//balanceQty.toString(); // Set to balance value
-//       return updated;
-//     });
-//     const updatedTextInputs = [...textInputValues];
-//     const updatedArray = updatedTextInputs.map((row: any, i) => ({
-//       id: row.varienceId + POnumber, // Include the unique ID here
-//       styleId: styleID,
-//       orderentityId: POnumber,
-//       varienceId: row.varienceId,
-//       qmsOrgId: selectedLine,
-//       finishingOrgId: finishingOrdID,
-//       qty: '', // Use the updated quantity
-//       isPacked: isPacked === undefined ? false : isPacked
-//     }));
-//     onUpdatedArray(updatedArray);
-
-//   } else if (numericValue === balanceQty) {
-//     // If input is exactly equal to the balance, update the state
-//     const updatedTextInputs = [...textInputValues];
-//     updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
-//     setTextInputValues(updatedTextInputs);
-
-//     // Generate and log the array when input value changes
-//     const updatedArray = updatedTextInputs.map((row: any, i) => ({
-//       id: row.varienceId + POnumber,, // Include the unique ID here
-//       styleId: styleID,
-//       orderentityId: POnumber,
-//       varienceId: row.varienceId,
-//       qmsOrgId: selectedLine,
-//       finishingOrgId: finishingOrdID,
-//       qty: row.tempReceived, // Use the updated quantity
-//       isPacked: isPacked === undefined ? false : isPacked
-//     }));
-
-//     // Call the handler to update the parent component's ref
-//     onUpdatedArray(updatedArray);
-//   } else {
-//     // If input is valid but less than balance, update the state as usual
-//     const updatedTextInputs = [...textInputValues];
-//     updatedTextInputs[index].tempReceived = numericValue.toString(); // Store as string
-//     setTextInputValues(updatedTextInputs);
-
-//     // Generate and log the array when input value changes
-//     const updatedArray = updatedTextInputs.map((row: any, i) => ({
-//       id: row.varienceId + POnumber, // Include the unique ID here
-//       styleId: styleID,
-//       orderentityId: POnumber,
-//       varienceId: row.varienceId,
-//       qmsOrgId: selectedLine,
-//       finishingOrgId: finishingOrdID,
-//       qty: row.tempReceived, // Use the updated quantity
-//       isPacked: isPacked === undefined ? false : isPacked
-//     }));
-
-//     // Call the handler to update the parent component's ref
-//     onUpdatedArray(updatedArray);
-//   }
-// };
