@@ -111,7 +111,7 @@ const ReceiveTab: FC = () => {
   // Check for internet connectivity and fetch data
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      if (state.isConnected) {
+      if (state.isConnected && state.isInternetReachable) {
         fetchData();
       } else {
         // Set default values when offline

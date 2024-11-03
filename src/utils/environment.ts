@@ -1,4 +1,4 @@
-// Rafa
+// QA
 const BASE_URL = 'http://192.168.10.53:8081';
 
 const SIGN_IN_URL = 'auth/login';
